@@ -2,7 +2,7 @@
 #include <graphics.h>
 #include <winbgim.h>
 #include <cmath>
-
+#define bulangiu 1
 using namespace std;
 
 
@@ -142,7 +142,7 @@ void initMeniu()
     settextstyle(6, HORIZ_DIR, 1);
     outtextxy(207, 120,"MULTIPLAYER");
     int x,y;
-    int gatu=1;
+    int gatu=bulangiu;
     while(gatu>0){
         if(ismouseclick(WM_LBUTTONDOWN))
         {
