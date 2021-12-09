@@ -26,17 +26,21 @@ void patrat(int a,int b, int c,int d)
     }
     if(a==30&&c==165)
     {
+        setcolor(BLACK);
         setfillstyle(1,BLACK);
         fillellipse(((b+d)/2+b)/2,((a+c)/2+a)/2,20,20);
         fillellipse(((b+d)/2+d)/2,((a+c)/2+c)/2,20,20);
+        setcolor(YELLOW);
         //circle(((b+d)/2+b)/2,((a+c)/2+a)/2,20);
         //circle(((b+d)/2+d)/2,((a+c)/2+c)/2,20);
     }
     if(a==435&&c==570)
     {
+        setcolor(WHITE);
         setfillstyle(1,WHITE);
         fillellipse(((b+d)/2+b)/2,((a+c)/2+a)/2,20,20);
         fillellipse(((b+d)/2+d)/2,((a+c)/2+c)/2,20,20);
+        setcolor(YELLOW);
     }
 }
 struct joc
@@ -213,8 +217,11 @@ void initMeniu()
                                 else L1--;
                                 if(C1>C)C1--;
                                 else C1++;
+                                setcolor(BLACK);
                                 setfillstyle(1,BLACK);
                                 fillellipse(A[L1][C1].x,A[L1][C1].y,20,20);
+                                A[L1][C1].player=player2;
+                                A[L][C].player=neocupat;
                             }
                             if(rand==2)
                             {
@@ -222,8 +229,11 @@ void initMeniu()
                                 else L1--;
                                 if(C1>C)C1--;
                                 else C1++;
+                                setcolor(WHITE);
                                 setfillstyle(1,WHITE);
                                 fillellipse(A[L1][C1].x,A[L1][C1].y,20,20);
+                                A[L1][C1].player=player1;
+                                A[L][C].player=neocupat;
                             }
                             if(rand==1)rand=2;
                             else if(rand==2)rand=1;
@@ -231,6 +241,19 @@ void initMeniu()
                         time--;
                     }
                 }
+                for(int i=1;i<=8;++i)
+                    for(int j=1;j<=8;++j)
+                        if(A[i][j].player==player1)
+                            if((A[i-1][j-1].player==player2||A[i-1][j-1].player==inexistent)
+                                &&(A[i+1][j-1].player==player2||A[i+1][j-1].player==inexistent)
+                                    &&(A[i+1][j+1].player==player2||A[i+1][j+1].player==inexistent)
+                                        &&(A[i-1][j+1].player==player2||A[i-1][j+1].player==inexistent))
+                                        {
+                                            A[i][j].player=neocupat;
+                                            setcolor(RED);
+                                            setfillstyle(1,RED);
+                                            fillellipse(A[i][j].x,A[i][j].y,30,30);
+                                        }
                 time=2;
             }
 
