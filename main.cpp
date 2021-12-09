@@ -90,12 +90,23 @@ void initCoordonate()
 }
 void initJoc()
 {
-    initwindow(600,600);
+    initwindow(1000,1000);
     setbkcolor(RED);
     cleardevice();
     setcolor(YELLOW);
     rectangle(30,30,570,570);
     patrat(30,30,570,570);
+    settextstyle(6, HORIZ_DIR, 2);
+    outtextxy(709,30, "RAZBOI IN 8");
+    setcolor(BLACK);
+    settextstyle(6, HORIZ_DIR, 1);
+    outtextxy(650,100,"Piese ramase:");
+    settextstyle(6, HORIZ_DIR, 1);
+    outtextxy(800,100,"8");
+    setcolor(WHITE);
+    settextstyle(6, HORIZ_DIR, 1);
+    outtextxy(650,450,"Piese ramase:");
+    setcolor(YELLOW);
 }
 void mutareDreapta(joc A[][10], int i, int j)
 {
@@ -213,47 +224,83 @@ void initMeniu()
                             cout<<L<<" "<<C<<"\n";
                             if(rand==1)
                             {
-                                if(L>L1)L1++;
-                                else L1--;
-                                if(C1>C)C1--;
-                                else C1++;
-                                setcolor(BLACK);
-                                setfillstyle(1,BLACK);
-                                fillellipse(A[L1][C1].x,A[L1][C1].y,20,20);
-                                A[L1][C1].player=player2;
-                                A[L][C].player=neocupat;
+                                if(L>L1)L=L1+1;
+                                else L=L1-1;
+                                if(C1>C)C=C1-1;
+                                else C=C1+1;
+                                if(A[L][C].player==neocupat)
+                                {
+                                    setcolor(BLACK);
+                                    setfillstyle(1,BLACK);
+                                    fillellipse(A[L][C].x,A[L][C].y,20,20);
+                                    A[L][C].player=player2;
+                                    A[L1][C1].player=neocupat;
+                                }
+                                //else time=3;
                             }
                             if(rand==2)
                             {
-                                if(L>L1)L1++;
-                                else L1--;
-                                if(C1>C)C1--;
-                                else C1++;
-                                setcolor(WHITE);
-                                setfillstyle(1,WHITE);
-                                fillellipse(A[L1][C1].x,A[L1][C1].y,20,20);
-                                A[L1][C1].player=player1;
-                                A[L][C].player=neocupat;
+                                if(L>L1)L=L1+1;
+                                else L=L1-1;
+                                if(C1>C)C=C1-1;
+                                else C=C1+1;
+                                if(A[L][C].player==neocupat)
+                                {
+                                    setcolor(WHITE);
+                                    setfillstyle(1,WHITE);
+                                    fillellipse(A[L][C].x,A[L][C].y,20,20);
+                                    A[L][C].player=player1;
+                                    A[L1][C1].player=neocupat;
+                                }
+                                //else time=3;
                             }
                             if(rand==1)rand=2;
                             else if(rand==2)rand=1;
                         }
                         time--;
-                    }
-                }
+                        int nr1=0,nr2=0;
+                        for(int i=1;i<=8;++i)
+                            for(int j=1;j<=8;++i)
+                                if(A[i][j].player==player1)nr1++;
+                                else if(A[i][j].player==player2)nr2++;
+                        /*switch(nr1)
+                        {
+                            settextstyle(6, HORIZ_DIR, 1);
+                            case 8:outtextxy(800,100,"8");
+                            case 7:outtextxy(800,100,"7");
+                            case 6:outtextxy(800,100,"6");
+                            case 5:outtextxy(800,100,"5");
+                            case 4:outtextxy(800,100,"4");
+                            case 3:outtextxy(800,100,"3");
+                            case 2:outtextxy(800,100,"2");
+                            case 1:outtextxy(800,100,"1");
+                            case 0:outtextxy(800,100,"0");
+                        }*/
                 for(int i=1;i<=8;++i)
                     for(int j=1;j<=8;++j)
                         if(A[i][j].player==player1)
-                            if((A[i-1][j-1].player==player2||A[i-1][j-1].player==inexistent)
-                                &&(A[i+1][j-1].player==player2||A[i+1][j-1].player==inexistent)
-                                    &&(A[i+1][j+1].player==player2||A[i+1][j+1].player==inexistent)
-                                        &&(A[i-1][j+1].player==player2||A[i-1][j+1].player==inexistent))
+                            if(((A[i-1][j-1].player==player2||A[i-1][j-1].player==inexistent)||A[i-1][j-1].player==player1)
+                                &&((A[i+1][j-1].player==player2||A[i+1][j-1].player==inexistent)||A[i+1][j-1].player==player1)
+                                    &&((A[i+1][j+1].player==player2||A[i+1][j+1].player==inexistent)||A[i+1][j+1].player==player1)
+                                        &&((A[i-1][j+1].player==player2||A[i-1][j+1].player==inexistent)||A[i-1][j+1].player==player1))
                                         {
-                                            A[i][j].player=neocupat;
-                                            setcolor(RED);
-                                            setfillstyle(1,RED);
-                                            fillellipse(A[i][j].x,A[i][j].y,30,30);
+                                            if(i!=8)
+                                            {
+                                                A[i][j].player=neocupat;
+                                                setcolor(RED);
+                                                setfillstyle(1,RED);
+                                                fillellipse(A[i][j].x,A[i][j].y,30,30);
+                                            }
+                                            else if(A[i-1][j+1].player!=player1&&A[i-1][j-1].player!=player1)
+                                            {
+                                                A[i][j].player=neocupat;
+                                                setcolor(RED);
+                                                setfillstyle(1,RED);
+                                                fillellipse(A[i][j].x,A[i][j].y,30,30);
+                                            }
                                         }
+                }
+                    }
                 time=2;
             }
 
