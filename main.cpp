@@ -2,7 +2,10 @@
 #include <graphics.h>
 #include <winbgim.h>
 #include <cmath>
-
+#define player1 1
+#define player2 2
+#define neocupat 0
+#define inexistent 3
 using namespace std;
 
 
@@ -23,11 +26,15 @@ void patrat(int a,int b, int c,int d)
     }
     if(a==30&&c==165)
     {
-        circle(((b+d)/2+b)/2,((a+c)/2+a)/2,20);
-        circle(((b+d)/2+d)/2,((a+c)/2+c)/2,20);
+        setfillstyle(1,BLACK);
+        fillellipse(((b+d)/2+b)/2,((a+c)/2+a)/2,20,20);
+        fillellipse(((b+d)/2+d)/2,((a+c)/2+c)/2,20,20);
+        //circle(((b+d)/2+b)/2,((a+c)/2+a)/2,20);
+        //circle(((b+d)/2+d)/2,((a+c)/2+c)/2,20);
     }
     if(a==435&&c==570)
     {
+        setfillstyle(1,WHITE);
         fillellipse(((b+d)/2+b)/2,((a+c)/2+a)/2,20,20);
         fillellipse(((b+d)/2+d)/2,((a+c)/2+c)/2,20,20);
     }
@@ -160,6 +167,7 @@ void initMeniu()
                 {
                     if(ismouseclick(WM_LBUTTONDOWN))
                     {
+                        int L1,C1;
                         if(time==2)
                         {
                             getmouseclick(WM_LBUTTONDOWN, X, Y);
@@ -180,6 +188,8 @@ void initMeniu()
                             setfillstyle(1,RED);
                             fillellipse(A[L][C].x,A[L][C].y,30,30);
                             setcolor(YELLOW);
+                            L1=L;C1=C;
+
                         }
                         if(time==1)
                         {
@@ -198,11 +208,22 @@ void initMeniu()
                                         }
                             cout<<L<<" "<<C<<"\n";
                             if(rand==1)
-                                circle(A[L][C].x,A[L][C].y,20);
+                            {
+                                if(L>L1)L1++;
+                                else L1--;
+                                if(C1>C)C1--;
+                                else C1++;
+                                setfillstyle(1,BLACK);
+                                fillellipse(A[L1][C1].x,A[L1][C1].y,20,20);
+                            }
                             if(rand==2)
                             {
+                                if(L>L1)L1++;
+                                else L1--;
+                                if(C1>C)C1--;
+                                else C1++;
                                 setfillstyle(1,WHITE);
-                                fillellipse(A[L][C].x,A[L][C].y,20,20);
+                                fillellipse(A[L1][C1].x,A[L1][C1].y,20,20);
                             }
                             if(rand==1)rand=2;
                             else if(rand==2)rand=1;
@@ -224,14 +245,14 @@ int main()
         for(int j=0; j<=9; ++j)
         {
             if(((i<1||i>8)||(j<1||j>8))||(i+j)%2)
-                A[i][j].player=3;///noteaza cu 3 locatiile in  care nu pot ajunge piesele
-            else A[i][j].player=0;///noteaza cu 0 potentialele locatii in care pot ajunge piesele
+                A[i][j].player=inexistent;///noteaza cu 3 locatiile in  care nu pot ajunge piesele
+            else A[i][j].player=neocupat;///noteaza cu 0 potentialele locatii in care pot ajunge piesele
         }
 //   A[]
     for(int j=1; j<=8; j+=2)
     {
-        A[1][j].player=A[2][j+1].player=1;
-        A[7][j].player=A[8][j+1].player=2;
+        A[1][j].player=A[2][j+1].player=player2;
+        A[7][j].player=A[8][j+1].player=player1;
     }
     /**for(int i=0;i<=9;++i) ///afisarea matricii din spatele jocului
     {
