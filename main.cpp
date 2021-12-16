@@ -40,7 +40,7 @@ void patrat(int a,int b, int c,int d)
         fillellipse(((b+d)/2+d)/2,((a+c)/2+c)/2,20,20);
     }
 }
-void form_tabla(int a, int b, int c, int d)
+void form_tabla()
 {
     int i,j,k=0,poly[8],l,m=0;
     double x=68;
@@ -156,7 +156,7 @@ void mutareDreaptaJOS(joc tabla[][10], int i, int j)
     //semimutare
 
     setcolor(WHITE);
-    form_tabla(30,30,570,570);
+    form_tabla();
 
     setcolor(BLACK);
 
@@ -170,8 +170,10 @@ void mutareDreaptaJOS(joc tabla[][10], int i, int j)
     setfillstyle(1,RED);
     fillellipse(X+34,Y+34,30,30);
 
+    delay(0);
+
     setcolor(WHITE);
-    form_tabla(30,30,570,570);
+    form_tabla();
 
     //mutare
 
@@ -199,7 +201,7 @@ void mutareDreaptaSUS(joc tabla[][10], int i, int j)
     //semimutare
 
     setcolor(WHITE);
-    form_tabla(30,30,570,570);
+    form_tabla();
 
     setcolor(BLACK);
 
@@ -213,8 +215,10 @@ void mutareDreaptaSUS(joc tabla[][10], int i, int j)
     setfillstyle(1,RED);
     fillellipse(X+34,Y-34,30,30);
 
+    delay(0);
+
     setcolor(WHITE);
-    form_tabla(30,30,570,570);
+    form_tabla();
 
     //mutare
 
@@ -241,7 +245,7 @@ void mutareStangaJOS(joc A[][10], int i, int j)
     //semimutare
 
     setcolor(WHITE);
-    form_tabla(30,30,570,570);
+    form_tabla();
 
     setcolor(BLACK);
 
@@ -255,8 +259,10 @@ void mutareStangaJOS(joc A[][10], int i, int j)
     setfillstyle(1,RED);
     fillellipse(X-34,Y+34,30,30);
 
+    delay(0);
+
     setcolor(WHITE);
-    form_tabla(30,30,570,570);
+    form_tabla();
 
     //mutare
 
@@ -284,7 +290,7 @@ void mutareStangaSUS(joc A[][10], int i, int j)
     //semimutare
 
     setcolor(WHITE);
-    form_tabla(30,30,570,570);
+    form_tabla();
 
     setcolor(BLACK);
 
@@ -298,8 +304,10 @@ void mutareStangaSUS(joc A[][10], int i, int j)
     setfillstyle(1,RED);
     fillellipse(X-34,Y-34,30,30);
 
+    delay(0);
+
     setcolor(WHITE);
-    form_tabla(30,30,570,570);
+    form_tabla();
 
     //mutare
 
