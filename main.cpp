@@ -16,15 +16,12 @@ void patrat(int a,int b, int c,int d)
     ///a left, b top, c right, d bottom
     if(abs(a-c)>70&&abs(b-d)>70)
     {
-        ///rectangle(a,(b+d)/2,(a+c)/2,d);
-        ///rectangle((a+c)/2,b,c,(b+d)/2);
-        rectangle(a,b,(a+c)/2,(b+d)/2);
-        rectangle((a+c)/2,(b+d)/2,c,d);
+        //rectangle(a,(b+d)/2,(a+c)/2,d);
+        //rectangle((a+c)/2,b,c,(b+d)/2);
         patrat(a,(b+d)/2,(a+c)/2,d);
         patrat((a+c)/2,b,c,(b+d)/2);
         patrat(a,b,(a+c)/2,(b+d)/2);
         patrat((a+c)/2,(b+d)/2,c,d);
-
     }
     if(a==30&&c==165)
     {
@@ -32,7 +29,6 @@ void patrat(int a,int b, int c,int d)
         setfillstyle(1,BLACK);
         fillellipse(((b+d)/2+b)/2,((a+c)/2+a)/2,20,20);
         fillellipse(((b+d)/2+d)/2,((a+c)/2+c)/2,20,20);
-        setcolor(WHITE);
         //circle(((b+d)/2+b)/2,((a+c)/2+a)/2,20);
         //circle(((b+d)/2+d)/2,((a+c)/2+c)/2,20);
     }
@@ -42,7 +38,6 @@ void patrat(int a,int b, int c,int d)
         setfillstyle(1,WHITE);
         fillellipse(((b+d)/2+b)/2,((a+c)/2+a)/2,20,20);
         fillellipse(((b+d)/2+d)/2,((a+c)/2+c)/2,20,20);
-        setcolor(WHITE);
     }
 }
 void form_tabla(int a, int b, int c, int d){
@@ -96,6 +91,43 @@ void initJoc()
     cleardevice();
     setcolor(WHITE);
     rectangle(30,30,570,570);
+    int i,j,k=0,poly[8],l,m=0;
+    double x=68;
+    double y=68;
+    for(i=30,k+=y;m<8;i+=y,m++)
+        for(j=30,l=0;l<8;j+=x,l++)
+        {
+            if((l%2==1 && m%2==0) || (l%2==0 && m%2==1))
+            {
+               setcolor(BLACK);
+               setfillstyle(1,BLACK);
+               poly[0]=j;
+               poly[1]=i;
+               poly[2]=j+x;
+               poly[3]=i;
+               poly[4]=j+x;
+               poly[5]=k+i;
+               poly[6]=j;
+               poly[7]=k+i;
+               fillpoly(4,poly);
+            }
+            else
+            {
+               setcolor(RED);
+               setfillstyle(1,RED);
+               poly[0]=j;
+               poly[1]=i;
+               poly[2]=j+x;
+               poly[3]=i;
+               poly[4]=j+x;
+               poly[5]=k+i;
+               poly[6]=j;
+               poly[7]=k+i;
+               fillpoly(4,poly);
+            }
+        }
+    setcolor(WHITE);
+    rectangle(30,30,574,574);
     patrat(30,30,570,570);
 }
 void mutareDreaptaJOS(joc tabla[][10], int i, int j)
