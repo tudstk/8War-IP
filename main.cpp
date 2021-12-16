@@ -40,19 +40,31 @@ void patrat(int a,int b, int c,int d)
         fillellipse(((b+d)/2+d)/2,((a+c)/2+c)/2,20,20);
     }
 }
-void form_tabla(int a, int b, int c, int d){
-    if(abs(a-c)>70&&abs(b-d)>70)
-    {
-        ///rectangle(a,(b+d)/2,(a+c)/2,d);
-        ///rectangle((a+c)/2,b,c,(b+d)/2);
-        rectangle(a,b,(a+c)/2,(b+d)/2);
-        rectangle((a+c)/2,(b+d)/2,c,d);
-        form_tabla(a,(b+d)/2,(a+c)/2,d);
-        form_tabla((a+c)/2,b,c,(b+d)/2);
-        form_tabla(a,b,(a+c)/2,(b+d)/2);
-        form_tabla((a+c)/2,(b+d)/2,c,d);
-
-    }
+void form_tabla(int a, int b, int c, int d)
+{
+    int i,j,k=0,poly[8],l,m=0;
+    double x=68;
+    double y=68;
+    for(i=30,k+=y;m<8;i+=y,m++)
+        for(j=30,l=0;l<8;j+=x,l++)
+        {
+            if((l%2==1 && m%2==0) || (l%2==0 && m%2==1))
+            {
+               setcolor(BLACK);
+               setfillstyle(1,BLACK);
+               poly[0]=j;
+               poly[1]=i;
+               poly[2]=j+x;
+               poly[3]=i;
+               poly[4]=j+x;
+               poly[5]=k+i;
+               poly[6]=j;
+               poly[7]=k+i;
+               fillpoly(4,poly);
+            }
+        }
+    setcolor(WHITE);
+    rectangle(30,30,574,574);
 }
 struct joc
 {
