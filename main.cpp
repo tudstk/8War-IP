@@ -602,7 +602,7 @@ void initMeniu()
                                     setcolor(WHITE);
                                     setfillstyle(1,WHITE);
                                     fillellipse(tabla[L][C].x,tabla[L][C].y,20,20);
-                                    tabla[L][C].player=player1;
+                                    tabla[L][C].player=player2;
                                     tabla[L1][C1].player=neocupat;
                                 }
 
@@ -615,14 +615,14 @@ void initMeniu()
                                     tabla[I_ai][J_ai].player=neocupat;
                                     I_ai++;
                                     J_ai++;
-                                    tabla[I_ai][J_ai].player=player1;
+                                    tabla[I_ai][J_ai].player=player2;
                                 }
                                 else if(tabla[I_ai+1][J_ai-1].player == neocupat){
                                     mutareStangaJOS(tabla,I_ai, J_ai);
                                     tabla[I_ai][J_ai].player=neocupat;
                                     I_ai++;
                                     J_ai--;
-                                    tabla[I_ai][J_ai].player=player1;
+                                    tabla[I_ai][J_ai].player=player2;
                                 }
                                 else if(tabla[I_ai-1][J_ai-1].player == neocupat)
                                 {
@@ -630,7 +630,7 @@ void initMeniu()
                                     tabla[I_ai][J_ai].player=neocupat;
                                     I_ai--;
                                     J_ai--;
-                                    tabla[I_ai][J_ai].player=player1;
+                                    tabla[I_ai][J_ai].player=player2;
                                 }
                                 else if(tabla[I_ai-1][J_ai+1].player == neocupat)
                                 {
@@ -638,7 +638,7 @@ void initMeniu()
                                     tabla[I_ai][J_ai].player=neocupat;
                                     I_ai--;
                                     J_ai++;
-                                    tabla[I_ai][J_ai].player=player1;
+                                    tabla[I_ai][J_ai].player=player2;
                                 }
 
                                 /*for(int i=1;i<=8;++i)
@@ -648,6 +648,12 @@ void initMeniu()
                                     cout<<'\n';
                                 }
                                 */
+                            }
+                            for(int i=1;i<=8;++i)
+                            {
+                                for(int j=1;j<=8;++j)
+                                    cout<<tabla[i][j].player<<" ";
+                                cout<<'\n';
                             }
                         }
                         time--;
