@@ -45,51 +45,49 @@ void patrat(int a,int b, int c,int d)
         setcolor(WHITE);
     }
 }
+void form_tabla(int a, int b, int c, int d){
+    if(abs(a-c)>70&&abs(b-d)>70)
+    {
+        ///rectangle(a,(b+d)/2,(a+c)/2,d);
+        ///rectangle((a+c)/2,b,c,(b+d)/2);
+        rectangle(a,b,(a+c)/2,(b+d)/2);
+        rectangle((a+c)/2,(b+d)/2,c,d);
+        form_tabla(a,(b+d)/2,(a+c)/2,d);
+        form_tabla((a+c)/2,b,c,(b+d)/2);
+        form_tabla(a,b,(a+c)/2,(b+d)/2);
+        form_tabla((a+c)/2,(b+d)/2,c,d);
+
+    }
+}
 struct joc
 {
+
     int x,y;///coord piesei de pe linia L si coloana C (coresp A[L][C])
     int L,C;///L=i,C=j in parcurgerea lui A[][]
     int player;/// 1-neagra(circle), 2-alba(fillellipse), 3-spatiu inaccesibil
 
-} A[10][10];
+} tabla[10][10];
 
 void initCoordonate()
 {
-    A[1][1].x = 63;
-    A[1][1].y = 63;
+    tabla[1][1].x = 63;
+    tabla[1][1].y = 63;
     for(int j=2; j<=8; j++)
     {
-        A[1][j].x = A[1][j-1].x + 68;
-        A[1][j].y = 63;
+        tabla[1][j].x = tabla[1][j-1].x + 68;
+        tabla[1][j].y = 63;
     }
     int i,j;
     for(i=2; i<=8; i++)
     {
         for(j=1; j<=8; j++)
         {
-            A[i][j].x = A[i-1][j].x;
-            A[i][j].y = A[i-1][j].y + 68;
+            tabla[i][j].x = tabla[i-1][j].x;
+            tabla[i][j].y = tabla[i-1][j].y + 68;
 
         }
 
     }
-
-    /**for(int i=1;i<=7;i+=2)
-        A[1][i].y=63,A[i][1].x=63;
-    for(int i=2;i<=8;i+=2)
-        A[2][i].y=132,A[i][2].x=132;
-    for(int i=1;i<=7;i+=2)
-        A[3][i].y=199,A[i][3].x=199;
-    for(int i=2;i<=8;i+=2)
-        A[4][i].y=266,A[i][4].x=266;
-    for(int i=1;i<=7;i+=2)
-        A[5][i].y=333,A[i][5].x=333;
-    for(int i=2;i<=8;i+=2)
-        A[6][i].y=400,A[i][6].x=400;
-    for(int i=1;i<=7;i+=2)
-        A[7][i].y=467,A[i][7].x=467;
-    for(int i=2;i<=8;i+=2)
-        A[8][i].y=534,A[i][8].x=534;*/
 }
 void initJoc()
 {
@@ -100,51 +98,175 @@ void initJoc()
     rectangle(30,30,570,570);
     patrat(30,30,570,570);
 }
-void mutareDreapta(joc A[][10], int i, int j)
+void mutareDreaptaJOS(joc tabla[][10], int i, int j)
 {
-    int X = A[i][j].x;
-    int Y = A[i][j].y;
+    int X = tabla[i][j].x;
+    int Y = tabla[i][j].y;
 
     //stergere
 
     setcolor(RED);
     setfillstyle(1,RED);
-    fillellipse(X,Y,20,20);
+    fillellipse(X,Y,30,30);
+
+    //semimutare
+
+    setcolor(WHITE);
+    form_tabla(30,30,570,570);
+
+    setcolor(BLACK);
+
+    circle(X+34,Y+34,20);
+    setfillstyle(1,BLACK);
+    fillellipse(X+34,Y+34,20,20);
+
+    delay(400);
+
+    setcolor(RED);
+    setfillstyle(1,RED);
+    fillellipse(X+34,Y+34,30,30);
+
+    setcolor(WHITE);
+    form_tabla(30,30,570,570);
 
     //mutare
 
-    setcolor(YELLOW);
+    setcolor(BLACK);
 
-    A[i][j].x = A[i][j].x + 68;
-    A[i][j].y = A[i][j].y + 68;
-
-    int X2 = A[i][j].x;
-    int Y2 = A[i][j].y;
+    int X2 = tabla[i][j].x + 68;
+    int Y2 = tabla[i][j].y +68;
 
     circle(X2,Y2,20);
+    setfillstyle(1,BLACK);
+    fillellipse(X2,Y2,20,20);
+
 }
-void mutareStanga(joc A[][10], int i, int j)
+void mutareDreaptaSUS(joc tabla[][10], int i, int j)
 {
-    int X = A[i][j].x;
-    int Y = A[i][j].y;
+    int X = tabla[i][j].x;
+    int Y = tabla[i][j].y;
 
     //stergere
 
     setcolor(RED);
     setfillstyle(1,RED);
-    fillellipse(X,Y,20,20);
+    fillellipse(X,Y,30,30);
+
+    //semimutare
+
+    setcolor(WHITE);
+    form_tabla(30,30,570,570);
+
+    setcolor(BLACK);
+
+    circle(X+34,Y-34,20);
+    setfillstyle(1,BLACK);
+    fillellipse(X+34,Y-34,20,20);
+
+    delay(400);
+
+    setcolor(RED);
+    setfillstyle(1,RED);
+    fillellipse(X+34,Y-34,30,30);
+
+    setcolor(WHITE);
+    form_tabla(30,30,570,570);
 
     //mutare
 
-    setcolor(YELLOW);
+    setcolor(BLACK);
 
-    A[i][j].x = A[i][j].x - 68;
-    A[i][j].y = A[i][j].y + 68;
+    int X2 = tabla[i][j].x + 68;
+    int Y2 = tabla[i][j].y - 68;
+    circle(X2,Y2,20);
+    setfillstyle(1,BLACK);
+    fillellipse(X2,Y2,20,20);
 
-    int X2 = A[i][j].x;
-    int Y2 = A[i][j].y;
+}
+void mutareStangaJOS(joc A[][10], int i, int j)
+{
+    int X = tabla[i][j].x;
+    int Y = tabla[i][j].y;
+
+    //stergere
+
+    setcolor(RED);
+    setfillstyle(1,RED);
+    fillellipse(X,Y,30,30);
+
+    //semimutare
+
+    setcolor(WHITE);
+    form_tabla(30,30,570,570);
+
+    setcolor(BLACK);
+
+    circle(X-34,Y+34,20);
+    setfillstyle(1,BLACK);
+    fillellipse(X-34,Y+34,20,20);
+
+    delay(400);
+
+    setcolor(RED);
+    setfillstyle(1,RED);
+    fillellipse(X-34,Y+34,30,30);
+
+    setcolor(WHITE);
+    form_tabla(30,30,570,570);
+
+    //mutare
+
+    setcolor(BLACK);
+
+    int X2 = tabla[i][j].x - 68;
+    int Y2 = tabla[i][j].y +68;
 
     circle(X2,Y2,20);
+    setfillstyle(1,BLACK);
+    fillellipse(X2,Y2,20,20);
+
+}
+void mutareStangaSUS(joc A[][10], int i, int j)
+{
+    int X = tabla[i][j].x;
+    int Y = tabla[i][j].y;
+
+    //stergere
+
+    setcolor(RED);
+    setfillstyle(1,RED);
+    fillellipse(X,Y,30,30);
+
+    //semimutare
+
+    setcolor(WHITE);
+    form_tabla(30,30,570,570);
+
+    setcolor(BLACK);
+
+    circle(X-34,Y-34,20);
+    setfillstyle(1,BLACK);
+    fillellipse(X-34,Y-34,20,20);
+
+    delay(400);
+
+    setcolor(RED);
+    setfillstyle(1,RED);
+    fillellipse(X-34,Y-34,30,30);
+
+    setcolor(WHITE);
+    form_tabla(30,30,570,570);
+
+    //mutare
+
+    setcolor(BLACK);
+
+    int X2 = tabla[i][j].x - 68;
+    int Y2 = tabla[i][j].y - 68;
+
+    circle(X2,Y2,20);
+    setfillstyle(1,BLACK);
+    fillellipse(X2,Y2,20,20);
 }
 void initMeniu()
 {
@@ -178,19 +300,18 @@ void initMeniu()
                             int vminx=100,vminy=100,L=0,C=0;
                             for(int i=1; i<=8; ++i)
                                 for(int j=1; j<=8; ++j)
-                                    if(A[i][j].player!=3)
-                                        if(abs(X-A[i][j].x)<vminx&&abs(Y-A[i][j].y)<vminy)
+                                    if(tabla[i][j].player!=inexistent)
+                                        if(abs(X-tabla[i][j].x) < vminx&&abs(Y-tabla[i][j].y)<vminy)
                                         {
-                                            vminx=abs(X-A[i][j].x);
-                                            vminy=abs(Y-A[i][j].y);
+                                            vminx=abs(X-tabla[i][j].x);
+                                            vminy=abs(Y-tabla[i][j].y);
                                             L=i;
                                             C=j;
                                         }
                             cout<<L<<" "<<C<<"\n";
                             setcolor(RED);
                             setfillstyle(1,RED);
-                            fillellipse(A[L][C].x,A[L][C].y,30,30);
-                            setcolor(YELLOW);
+                            fillellipse(tabla[L][C].x,tabla[L][C].y,30,30);
                             L1=L;C1=C;
 
                         }
@@ -201,46 +322,62 @@ void initMeniu()
                             int vminx=100,vminy=100,L=0,C=0;
                             for(int i=1; i<=8; ++i)
                                 for(int j=1; j<=8; ++j)
-                                    if(A[i][j].player!=3)
-                                        if(abs(X-A[i][j].x)<vminx&&abs(Y-A[i][j].y)<vminy)
+                                    if(tabla[i][j].player!=inexistent)
+                                        if(abs(X-tabla[i][j].x)<vminx&&abs(Y-tabla[i][j].y)<vminy)
                                         {
-                                            vminx=abs(X-A[i][j].x);
-                                            vminy=abs(Y-A[i][j].y);
+                                            vminx=abs(X-tabla[i][j].x);
+                                            vminy=abs(Y-tabla[i][j].y);
                                             L=i;
                                             C=j;
                                         }
                             cout<<L<<" "<<C<<"\n";
                             if(rand==1)
                             {
+                                setcolor(YELLOW);
+                                outtextxy(227,580, "PLAYER 1: YOUR TURN!");
+
                                 if(L>L1)
-                                    L1++;
+                                    L=L1+1;
                                 else
-                                    L1--;
+                                    L=L1-1;
                                 if(C1>C)
-                                    C1--;
+                                    C=C1-1;
                                 else
-                                    C1++;
+                                    C=C1+1;
                                 setcolor(BLACK);
                                 setfillstyle(1,BLACK);
-                                fillellipse(A[L1][C1].x,A[L1][C1].y,20,20);
-                                A[L1][C1].player=player2;
-                                A[L][C].player=neocupat;
+                                fillellipse(tabla[L][C].x,tabla[L][C].y,20,20);
+                                tabla[L][C].player=player2;
+                                tabla[L1][C1].player=neocupat;
                             }
                             if(rand==2)
                             {
+                                setcolor(YELLOW);
+                                outtextxy(227,580, "PLAYER 2: YOUR TURN!");
+
                                 if(L>L1)
-                                    L1++;
+                                    L=L1+1;
                                 else
-                                    L1--;
+                                    L=L1-1;
                                 if(C1>C)
-                                    C1--;
+                                    C=C1-1;
                                 else
-                                    C1++;
-                                setcolor(WHITE);
-                                setfillstyle(1,WHITE);
-                                fillellipse(A[L1][C1].x,A[L1][C1].y,20,20);
-                                A[L1][C1].player=player1;
-                                A[L][C].player=neocupat;
+                                    C=C1+1;
+                                if(tabla[L][C].player==neocupat)
+                                {
+                                    setcolor(WHITE);
+                                    setfillstyle(1,WHITE);
+                                    fillellipse(tabla[L][C].x,tabla[L][C].y,20,20);
+                                    tabla[L][C].player=player1;
+                                    tabla[L1][C1].player=neocupat;
+                                }
+                                /*for(int i=1;i<=8;++i)
+                                {
+                                    for(int j=1;j<=8;++j)
+                                        cout<<tabla[i][j].player<<" ";
+                                    cout<<'\n';
+                                }
+                                */
                             }
                             if(rand==1)
                                 rand=2;
@@ -252,50 +389,316 @@ void initMeniu()
                 }
                 for(int i=1;i<=8;++i)
                     for(int j=1;j<=8;++j)
-                        if(A[i][j].player==player1){
-                            if((A[i-1][j-1].player==player2||A[i-1][j-1].player==inexistent)
-                                &&(A[i+1][j-1].player==player2||A[i+1][j-1].player==inexistent)
-                                    &&(A[i+1][j+1].player==player2||A[i+1][j+1].player==inexistent)
-                                        &&(A[i-1][j+1].player==player2||A[i-1][j+1].player==inexistent))
+                        {if(tabla[i][j].player==player1)
+                        {
+                            if(i!=8)
+                            {
+                                if(((tabla[i-1][j-1].player==player2||tabla[i-1][j-1].player==inexistent)||tabla[i-1][j-1].player==player1)
+                                    &&((tabla[i+1][j-1].player==player2||tabla[i+1][j-1].player==inexistent)||tabla[i+1][j-1].player==player1)
+                                        &&((tabla[i+1][j+1].player==player2||tabla[i+1][j+1].player==inexistent)||tabla[i+1][j+1].player==player1)
+                                            &&((tabla[i-1][j+1].player==player2||tabla[i-1][j+1].player==inexistent)||tabla[i-1][j+1].player==player1))
                                         {
-                                            A[i][j].player=neocupat;
+                                            tabla[i][j].player=neocupat;
                                             setcolor(RED);
                                             setfillstyle(1,RED);
-                                            fillellipse(A[i][j].x,A[i][j].y,30,30);
+                                            fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+
                                         }
+                            }
+                            else if(i==8)
+                                if((tabla[i-1][j+1].player==player2&&tabla[i-1][j-1].player!=neocupat)
+                                   ||(tabla[i-1][j+1].player!=neocupat&&tabla[i-1][j-1].player==player2))
+                                {
+                                    tabla[i][j].player=neocupat;
+                                    setcolor(RED);
+                                    setfillstyle(1,RED);
+                                    fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+                                }
+                        }
+                        if(tabla[i][j].player==player2)
+                            {
+                            if(i!=1)
+                            {
+                                if(((tabla[i-1][j-1].player==player2||tabla[i-1][j-1].player==inexistent)||tabla[i-1][j-1].player==player1)
+                                    &&((tabla[i+1][j-1].player==player2||tabla[i+1][j-1].player==inexistent)||tabla[i+1][j-1].player==player1)
+                                        &&((tabla[i+1][j+1].player==player2||tabla[i+1][j+1].player==inexistent)||tabla[i+1][j+1].player==player1)
+                                            &&((tabla[i-1][j+1].player==player2||tabla[i-1][j+1].player==inexistent)||tabla[i-1][j+1].player==player1))
+                                        {
+                                            tabla[i][j].player = neocupat;
+                                            setcolor(RED);
+                                            setfillstyle(1,RED);
+                                            fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+
+                                        }
+                            }
+                            else if(i==1)
+                                if((tabla[i+1][j+1].player==player1&&tabla[i+1][j-1].player!=neocupat)
+                                   ||(tabla[i+1][j+1].player!=neocupat&&tabla[i+1][j-1].player==player1))
+                                {
+                                    tabla[i][j].player=neocupat;
+                                    setcolor(RED);
+                                    setfillstyle(1,RED);
+                                    fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+                                }
+                        }
+                    }
 
                 time=2;
             }
 
+        }
+
+
+            ///BOT
+
+            else if(x>145  && x<408 && y>250 && y<300)
+            {
+                closegraph(CURRENT_WINDOW);
+                initJoc();
+                initCoordonate();
+                //PLAYER 2 = AI
+
+                    int X,Y,time=2,castigator=0,rand=2;///rand stabileste cine trebuie sa mute piesa
+                    int I_ai=2, J_ai=4, randMutare=1;
+            while(!castigator)
+            {
+                while(time>0)
+                {
+                    if(ismouseclick(WM_LBUTTONDOWN))
+                    {
+                        int L1,C1;
+                        if(time==2)
+                        {
+                            getmouseclick(WM_LBUTTONDOWN, X, Y);
+                            cout<<X<<" "<<Y<<'\n';
+                            int vminx=100,vminy=100,L=0,C=0;
+                            for(int i=1; i<=8; ++i)
+                                for(int j=1; j<=8; ++j)
+                                    if(tabla[i][j].player!=inexistent)
+                                        if(abs(X-tabla[i][j].x) < vminx&&abs(Y-tabla[i][j].y)<vminy)
+                                        {
+                                            vminx=abs(X-tabla[i][j].x);
+                                            vminy=abs(Y-tabla[i][j].y);
+                                            L=i;
+                                            C=j;
+                                        }
+                            cout<<L<<" "<<C<<"\n";
+                            setcolor(RED);
+                            setfillstyle(1,RED);
+                            fillellipse(tabla[L][C].x,tabla[L][C].y,30,30);
+                            L1=L;C1=C;
+                            outtextxy(277,580, "YOUR TURN!");
+
+                        }
+                        if(time==1)
+                        {
+                            getmouseclick(WM_LBUTTONDOWN, X, Y);
+                            cout<<X<<" "<<Y<<'\n';
+                            int vminx=100,vminy=100,L=0,C=0;
+                            for(int i=1; i<=8; ++i)
+                                for(int j=1; j<=8; ++j)
+                                    if(tabla[i][j].player!=inexistent)
+                                        if(abs(X-tabla[i][j].x)<vminx&&abs(Y-tabla[i][j].y)<vminy)
+                                        {
+                                            vminx=abs(X-tabla[i][j].x);
+                                            vminy=abs(Y-tabla[i][j].y);
+                                            L=i;
+                                            C=j;
+                                        }
+                            cout<<L<<" "<<C<<"\n";
+
+                            if(rand==2)
+                            {
+                                ///strategie AI
+
+                                /*for(int i=1;i<=7;i++)
+                                {
+                                    if(tabla[i][C].player == player2)
+                                    {
+                                        if(tabla[i+1][C-1].player == neocupat){
+                                            mutareStangaJOS(tabla,i,C);
+                                            break;
+                                        }
+                                        else if(tabla[i+1][C+1].player == neocupat)
+                                        {
+                                            mutareDreaptaJOS(tabla,i,C);
+                                            break;
+                                        }
+                                    }
+                                    else{
+
+                                        while()
+                                        {
+
+                                        }
+                                    }
+                                }
+                                */
+
+
+                                if(L>L1)
+                                    L=L1+1;
+                                else
+                                    L=L1-1;
+                                if(C1>C)
+                                    C=C1-1;
+                                else
+                                    C=C1+1;
+
+                                if(tabla[L][C].player==neocupat)
+                                {
+                                    setcolor(WHITE);
+                                    setfillstyle(1,WHITE);
+                                    fillellipse(tabla[L][C].x,tabla[L][C].y,20,20);
+                                    tabla[L][C].player=player1;
+                                    tabla[L1][C1].player=neocupat;
+                                }
+
+                                setcolor(YELLOW);
+
+                                delay(800);
+
+                                if(tabla[I_ai+1][J_ai+1].player == neocupat){
+                                    mutareDreaptaJOS(tabla,I_ai,J_ai);
+                                    tabla[I_ai][J_ai].player=neocupat;
+                                    I_ai++;
+                                    J_ai++;
+                                    tabla[I_ai][J_ai].player=player1;
+                                }
+                                else if(tabla[I_ai+1][J_ai-1].player == neocupat){
+                                    mutareStangaJOS(tabla,I_ai, J_ai);
+                                    tabla[I_ai][J_ai].player=neocupat;
+                                    I_ai++;
+                                    J_ai--;
+                                    tabla[I_ai][J_ai].player=player1;
+                                }
+                                else if(tabla[I_ai-1][J_ai-1].player == neocupat)
+                                {
+                                    mutareStangaSUS(tabla,I_ai, J_ai);
+                                    tabla[I_ai][J_ai].player=neocupat;
+                                    I_ai--;
+                                    J_ai--;
+                                    tabla[I_ai][J_ai].player=player1;
+                                }
+                                else if(tabla[I_ai-1][J_ai+1].player == neocupat)
+                                {
+                                    mutareDreaptaSUS(tabla,I_ai,J_ai);
+                                    tabla[I_ai][J_ai].player=neocupat;
+                                    I_ai--;
+                                    J_ai++;
+                                    tabla[I_ai][J_ai].player=player1;
+                                }
+
+                                /*for(int i=1;i<=8;++i)
+                                {
+                                    for(int j=1;j<=8;++j)
+                                        cout<<tabla[i][j].player<<" ";
+                                    cout<<'\n';
+                                }
+                                */
+                            }
+                        }
+                        time--;
+                    }
+
+
+                }
+                time = 2;
+                /*int I = 2, J = 2;
+                delay(800);
+                if(tabla[I+1][J+1].player == neocupat)
+                    mutareDreapta(tabla,I,J);
+                delay(800);
+                int I2 = I+1, J2 = J+1;
+                if(tabla[I2+1][J2-1].player == neocupat)
+                    mutareStanga(tabla,I2,J2);
+                    */
+                for(int i=1;i<=8;++i)
+                    for(int j=1;j<=8;++j)
+                        {if(tabla[i][j].player==player1)
+                        {
+                            if(i!=8)
+                            {
+                                if(((tabla[i-1][j-1].player==player2||tabla[i-1][j-1].player==inexistent)||tabla[i-1][j-1].player==player1)
+                                    &&((tabla[i+1][j-1].player==player2||tabla[i+1][j-1].player==inexistent)||tabla[i+1][j-1].player==player1)
+                                        &&((tabla[i+1][j+1].player==player2||tabla[i+1][j+1].player==inexistent)||tabla[i+1][j+1].player==player1)
+                                            &&((tabla[i-1][j+1].player==player2||tabla[i-1][j+1].player==inexistent)||tabla[i-1][j+1].player==player1))
+                                        {
+                                            tabla[i][j].player=neocupat;
+                                            setcolor(RED);
+                                            setfillstyle(1,RED);
+                                            fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+
+                                        }
+                            }
+                            else if(i==8)
+                                if((tabla[i-1][j+1].player==player2&&tabla[i-1][j-1].player!=neocupat)
+                                   ||(tabla[i-1][j+1].player!=neocupat&&tabla[i-1][j-1].player==player2))
+                                {
+                                    tabla[i][j].player=neocupat;
+                                    setcolor(RED);
+                                    setfillstyle(1,RED);
+                                    fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+                                }
+                        }
+                        if(tabla[i][j].player==player2)
+                            {
+                            if(i!=1)
+                            {
+                                if(((tabla[i-1][j-1].player==player2||tabla[i-1][j-1].player==inexistent)||tabla[i-1][j-1].player==player1)
+                                    &&((tabla[i+1][j-1].player==player2||tabla[i+1][j-1].player==inexistent)||tabla[i+1][j-1].player==player1)
+                                        &&((tabla[i+1][j+1].player==player2||tabla[i+1][j+1].player==inexistent)||tabla[i+1][j+1].player==player1)
+                                            &&((tabla[i-1][j+1].player==player2||tabla[i-1][j+1].player==inexistent)||tabla[i-1][j+1].player==player1))
+                                        {
+                                            tabla[i][j].player=neocupat;
+                                            setcolor(RED);
+                                            setfillstyle(1,RED);
+                                            fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+
+                                        }
+                            }
+                            else if(i==1)
+                                if((tabla[i+1][j+1].player==player1&&tabla[i+1][j-1].player!=neocupat)
+                                    ||(tabla[i+1][j+1].player!=neocupat&&tabla[i+1][j-1].player==player1))
+                                {
+                                    tabla[i][j].player=neocupat;
+                                    setcolor(RED);
+                                    setfillstyle(1,RED);
+                                    fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+                                }
+                        }
+                    }
             }
 
         }
     }
 }
 }
+
 int main()
 {
     for(int i=0; i<=9; ++i)
         for(int j=0; j<=9; ++j)
         {
             if(((i<1||i>8)||(j<1||j>8))||(i+j)%2)
-                A[i][j].player=inexistent;///noteaza cu 3 locatiile in  care nu pot ajunge piesele
-            else A[i][j].player=neocupat;///noteaza cu 0 potentialele locatii in care pot ajunge piesele
+                tabla[i][j].player=inexistent;///noteaza cu 3 locatiile in  care nu pot ajunge piesele
+            else tabla[i][j].player=neocupat;///noteaza cu 0 potentialele locatii in care pot ajunge piesele
         }
 //   A[]
     for(int j=1; j<=8; j+=2)
     {
-        A[1][j].player=A[2][j+1].player=player2;
-        A[7][j].player=A[8][j+1].player=player1;
+        tabla[1][j].player=tabla[2][j+1].player=player2;
+        tabla[7][j].player=tabla[8][j+1].player=player1;
     }
     for(int i=0;i<=9;++i) ///afisarea matricii din spatele jocului
     {
         for(int j=0;j<=9;++j)
-            cout<<A[i][j].player<<" ";
+            cout<<tabla[i][j].player<<" ";
         cout<<'\n';
     }
 
     initMeniu();
+
     initCoordonate();
     cleardevice();
 
