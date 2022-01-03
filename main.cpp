@@ -340,7 +340,7 @@ void initMeniu()
                 closegraph(CURRENT_WINDOW);
                 initJoc();
                 initCoordonate();
-                int X,Y,time=2,castigator=0,rand=2;///rand stabileste cine trebuie sa mute piesa
+                int X,Y,time=2,castigator=0,rand=2, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8;///rand stabileste cine trebuie sa mute piesa
                 while(!castigator)
                 {
                     while(time>0)
@@ -459,7 +459,7 @@ void initMeniu()
                                         setcolor(RED);
                                         setfillstyle(1,RED);
                                         fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
-
+                                        nrPiesePlayer1--;
                                     }
                                 }
                                 else if(i==8)
@@ -470,6 +470,7 @@ void initMeniu()
                                         setcolor(RED);
                                         setfillstyle(1,RED);
                                         fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+                                        nrPiesePlayer1--;
                                     }
                             }
                             if(tabla[i][j].player==player2)
@@ -485,6 +486,7 @@ void initMeniu()
                                         setcolor(RED);
                                         setfillstyle(1,RED);
                                         fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+                                        nrPiesePlayer2--;
 
                                     }
                                 }
@@ -496,16 +498,41 @@ void initMeniu()
                                         setcolor(RED);
                                         setfillstyle(1,RED);
                                         fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+                                        nrPiesePlayer2--;
                                     }
                             }
                         }
-                    for(int i=1; i<=8; ++i)
+                    /*for(int i=1; i<=8; ++i)
                     {
                         for(int j=1; j<=8; ++j)
                             cout<<tabla[i][j].player<<" ";
                         cout<<'\n';
                     }
-
+                    */
+                    cout<<endl;
+                    cout<<nrPiesePlayer1<<" "<<nrPiesePlayer2;
+                    cout<<endl;
+                    if(nrPiesePlayer1 == 7)
+                    {
+                        setcolor(YELLOW);
+                        outtextxy(257,15, "PLAYER 2 WON!");
+                        delay(1800);
+                        closegraph();
+                    }
+                    else if(nrPiesePlayer2 == 7)
+                    {
+                        setcolor(YELLOW);
+                        outtextxy(257,15, "PLAYER 1 WON!");
+                        delay(1800);
+                        closegraph();
+                    }
+                    else if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 1)
+                    {
+                        setcolor(YELLOW);
+                        outtextxy(280,15, "DRAW!");
+                        delay(1800);
+                        closegraph();
+                    }
                     time=2;
                 }
 
@@ -573,33 +600,6 @@ void initMeniu()
 
                                 if(rand==2)
                                 {
-                                    ///strategie AI
-
-                                    /*for(int i=1;i<=7;i++)
-                                    {
-                                        if(tabla[i][C].player == player2)
-                                        {
-                                            if(tabla[i+1][C-1].player == neocupat){
-                                                mutareStangaJOS(tabla,i,C);
-                                                break;
-                                            }
-                                            else if(tabla[i+1][C+1].player == neocupat)
-                                            {
-                                                mutareDreaptaJOS(tabla,i,C);
-                                                break;
-                                            }
-                                        }
-                                        else{
-
-                                            while()
-                                            {
-
-                                            }
-                                        }
-                                    }
-                                    */
-
-
                                     if(L>L1)
                                         L=L1+1;
                                     else
