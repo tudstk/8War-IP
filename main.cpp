@@ -321,6 +321,472 @@ void mutareStangaSUS(joc A[][10], int i, int j)
     setfillstyle(1,BLACK);
     fillellipse(X2,Y2,20,20);
 }
+void afisareScor(int nrPiesePlayer1, int nrPiesePlayer2)
+{
+    if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 8)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:8");
+        outtextxy(30, 580, "P1 SCORE:8");
+    }
+    else if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 7)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:7");
+        outtextxy(30, 580, "P1 SCORE:8");
+    }
+    else if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 6)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:6");
+        outtextxy(30, 580, "P1 SCORE:8");
+    }
+    else if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 5)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:5");
+        outtextxy(30, 580, "P1 SCORE:8");
+    }
+    if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 4)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:4");
+        outtextxy(30, 580, "P1 SCORE:8");
+    }
+    if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 3)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:3");
+        outtextxy(30, 580, "P1 SCORE:8");
+    }
+    if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 2)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:2");
+        outtextxy(30, 580, "P1 SCORE:8");
+    }
+    if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 1)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:1");
+        outtextxy(30, 580, "P1 SCORE:8");
+    }
+    if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 0)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:0");
+        outtextxy(30, 580, "P1 SCORE:8");
+    }
+    if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 8)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:8");
+        outtextxy(30, 580, "P1 SCORE:7");
+    }
+    if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 7)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:7");
+        outtextxy(30, 580, "P1 SCORE:7");
+    }
+    if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 6)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:6");
+        outtextxy(30, 580, "P1 SCORE:7");
+    }
+    if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 5)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:5");
+        outtextxy(30, 580, "P1 SCORE:7");
+    }
+    if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 4)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:4");
+        outtextxy(30, 580, "P1 SCORE:7");
+    }
+    if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 3)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:3");
+        outtextxy(30, 580, "P1 SCORE:7");
+    }
+    if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 2)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:2");
+        outtextxy(30, 580, "P1 SCORE:7");
+    }
+    if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 1)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:1");
+        outtextxy(30, 580, "P1 SCORE:7");
+    }
+    if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 0)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:0");
+        outtextxy(30, 580, "P1 SCORE:7");
+    }
+    if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 8)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:8");
+        outtextxy(30, 580, "P1 SCORE:6");
+    }
+    if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 7)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:7");
+        outtextxy(30, 580, "P1 SCORE:6");
+    }
+    if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 6)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:6");
+        outtextxy(30, 580, "P1 SCORE:6");
+    }
+    if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 5)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:5");
+        outtextxy(30, 580, "P1 SCORE:6");
+    }
+    if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 4)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:4");
+        outtextxy(30, 580, "P1 SCORE:6");
+    }
+    if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 3)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:3");
+        outtextxy(30, 580, "P1 SCORE:6");
+    }
+    if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 2)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:2");
+        outtextxy(30, 580, "P1 SCORE:6");
+    }
+    if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 1)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:1");
+        outtextxy(30, 580, "P1 SCORE:6");
+    }
+    if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 0)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:0");
+        outtextxy(30, 580, "P1 SCORE:6");
+    }
+    if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 8)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:8");
+        outtextxy(30, 580, "P1 SCORE:5");
+    }
+    if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 7)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:7");
+        outtextxy(30, 580, "P1 SCORE:5");
+    }
+    if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 6)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:6");
+        outtextxy(30, 580, "P1 SCORE:5");
+    }
+    if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 5)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:5");
+        outtextxy(30, 580, "P1 SCORE:5");
+    }
+    if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 4)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:4");
+        outtextxy(30, 580, "P1 SCORE:5");
+    }
+    if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 3)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:3");
+        outtextxy(30, 580, "P1 SCORE:5");
+    }
+    if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 2)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:2");
+        outtextxy(30, 580, "P1 SCORE:5");
+    }
+    if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 1)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:1");
+        outtextxy(30, 580, "P1 SCORE:5");
+    }
+    if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 0)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:0");
+        outtextxy(30, 580, "P1 SCORE:5");
+    }
+    if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 8)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:8");
+        outtextxy(30, 580, "P1 SCORE:4");
+    }
+    if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 7)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:7");
+        outtextxy(30, 580, "P1 SCORE:4");
+    }
+    if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 6)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:6");
+        outtextxy(30, 580, "P1 SCORE:4");
+    }
+    if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 5)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:5");
+        outtextxy(30, 580, "P1 SCORE:4");
+    }
+    if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 4)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:4");
+        outtextxy(30, 580, "P1 SCORE:4");
+    }
+    if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 3)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:3");
+        outtextxy(30, 580, "P1 SCORE:4");
+    }
+    if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 2)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:2");
+        outtextxy(30, 580, "P1 SCORE:4");
+    }
+    if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 1)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:1");
+        outtextxy(30, 580, "P1 SCORE:4");
+    }
+    if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 0)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:0");
+        outtextxy(30, 580, "P1 SCORE:4");
+    }
+    if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 8)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:8");
+        outtextxy(30, 580, "P1 SCORE:3");
+    }
+    if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 7)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:7");
+        outtextxy(30, 580, "P1 SCORE:3");
+    }
+    if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 6)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:6");
+        outtextxy(30, 580, "P1 SCORE:3");
+    }
+    if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 5)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:5");
+        outtextxy(30, 580, "P1 SCORE:3");
+    }
+    if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 4)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:4");
+        outtextxy(30, 580, "P1 SCORE:3");
+    }
+    if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 3)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:3");
+        outtextxy(30, 580, "P1 SCORE:3");
+    }
+    if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 2)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:2");
+        outtextxy(30, 580, "P1 SCORE:3");
+    }
+    if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 1)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:1");
+        outtextxy(30, 580, "P1 SCORE:3");
+    }
+    if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 0)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:0");
+        outtextxy(30, 580, "P1 SCORE:3");
+    }
+    if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 8)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:8");
+        outtextxy(30, 580, "P1 SCORE:2");
+    }
+    if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 7)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:7");
+        outtextxy(30, 580, "P1 SCORE:2");
+    }
+    if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 6)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:6");
+        outtextxy(30, 580, "P1 SCORE:2");
+    }
+    if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 5)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:5");
+        outtextxy(30, 580, "P1 SCORE:2");
+    }
+    if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 4)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:4");
+        outtextxy(30, 580, "P1 SCORE:2");
+    }
+    if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 3)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:3");
+        outtextxy(30, 580, "P1 SCORE:2");
+    }
+    if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 2)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:2");
+        outtextxy(30, 580, "P1 SCORE:2");
+    }
+    if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 1)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:1");
+        outtextxy(30, 580, "P1 SCORE:2");
+    }
+    if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 0)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:0");
+        outtextxy(30, 580, "P1 SCORE:2");
+    }
+    if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 8)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:8");
+        outtextxy(30, 580, "P1 SCORE:1");
+    }
+    if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 7)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:7");
+        outtextxy(30, 580, "P1 SCORE:1");
+    }
+    if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 6)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:6");
+        outtextxy(30, 580, "P1 SCORE:1");
+    }
+    if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 5)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:5");
+        outtextxy(30, 580, "P1 SCORE:1");
+    }
+    if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 4)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:4");
+        outtextxy(30, 580, "P1 SCORE:1");
+    }
+    if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 3)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:3");
+        outtextxy(30, 580, "P1 SCORE:1");
+    }
+    if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 2)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:2");
+        outtextxy(30, 580, "P1 SCORE:1");
+    }
+    if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 1)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:1");
+        outtextxy(30, 580, "P1 SCORE:1");
+    }
+    if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 8)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:8");
+        outtextxy(30, 580, "P1 SCORE:0");
+    }
+    if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 7)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:7");
+        outtextxy(30, 580, "P1 SCORE:0");
+    }if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 6)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:6");
+        outtextxy(30, 580, "P1 SCORE:0");
+    }if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 5)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:5");
+        outtextxy(30, 580, "P1 SCORE:0");
+    }if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 4)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:4");
+        outtextxy(30, 580, "P1 SCORE:0");
+    }if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 3)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:3");
+        outtextxy(30, 580, "P1 SCORE:0");
+    }if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 2)
+    {
+        setcolor(YELLOW);
+        outtextxy(495, 10, "P2 SCORE:2");
+        outtextxy(30, 580, "P1 SCORE:0");
+    }
+}
 void initMeniu()
 {
     initwindow(595,380);
@@ -340,6 +806,12 @@ void initMeniu()
                 closegraph(CURRENT_WINDOW);
                 initJoc();
                 initCoordonate();
+
+                setcolor(YELLOW);
+                outtextxy(227,580, "PLAYER 1: YOUR TURN!");
+                outtextxy(495, 10, "P2 SCORE:8");
+                outtextxy(30, 580, "P1 SCORE:8");
+
                 int X,Y,time=2,castigator=0,rand=2, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8;///rand stabileste cine trebuie sa mute piesa
                 while(!castigator)
                 {
@@ -509,29 +981,32 @@ void initMeniu()
                         cout<<'\n';
                     }
                     */
-                    cout<<endl;
-                    cout<<nrPiesePlayer1<<" "<<nrPiesePlayer2;
-                    cout<<endl;
+
+                    afisareScor(nrPiesePlayer1, nrPiesePlayer2);
+
                     if(nrPiesePlayer1 == 0)
                     {
                         setcolor(YELLOW);
-                        outtextxy(257,15, "PLAYER 2 WON!");
-                        delay(1800);
+                        outtextxy(257,10, "PLAYER 2 WON!");
+                        delay(2200);
                         closegraph();
+                        initMeniu();
                     }
                     else if(nrPiesePlayer2 == 0)
                     {
                         setcolor(YELLOW);
-                        outtextxy(257,15, "PLAYER 1 WON!");
-                        delay(1800);
+                        outtextxy(257,10, "PLAYER 1 WON!");
+                        delay(2200);
                         closegraph();
+                        initMeniu();
                     }
                     else if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 1)
                     {
                         setcolor(YELLOW);
-                        outtextxy(280,15, "DRAW!");
-                        delay(1800);
+                        outtextxy(280,10, "DRAW!");
+                        delay(2200);
                         closegraph();
+                        initMeniu();
                     }
                     time=2;
                 }
@@ -547,9 +1022,12 @@ void initMeniu()
                 initJoc();
                 initCoordonate();
                 //PLAYER 2 = AI
+                setcolor(YELLOW);
+                outtextxy(495, 10, "P2 SCORE:8");
+                outtextxy(30, 580, "P1 SCORE:8");
 
                 int X,Y,time=2,castigator=0,rand=2, coloanaBot = 2;///rand stabileste cine trebuie sa mute piesa
-                int I_ai=2, J_ai = coloanaBot, jCount=1, liniaCurenta = 2,randMutare=1;
+                int I_ai=2, J_ai = coloanaBot, jCount=1, liniaCurenta = 2,randMutare=1, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8;
                 while(!castigator)
                 {
                     while(time>0)
@@ -739,6 +1217,7 @@ void initMeniu()
                                         setcolor(RED);
                                         setfillstyle(1,RED);
                                         fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+                                        nrPiesePlayer1--;
 
                                     }
                                 }
@@ -750,6 +1229,7 @@ void initMeniu()
                                         setcolor(RED);
                                         setfillstyle(1,RED);
                                         fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+                                        nrPiesePlayer1--;
                                     }
                             }
                             if(tabla[i][j].player==player2)
@@ -765,6 +1245,7 @@ void initMeniu()
                                         setcolor(RED);
                                         setfillstyle(1,RED);
                                         fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+                                        nrPiesePlayer2--;
 
                                     }
                                 }
@@ -776,9 +1257,36 @@ void initMeniu()
                                         setcolor(RED);
                                         setfillstyle(1,RED);
                                         fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+                                        nrPiesePlayer2--;
                                     }
                             }
                         }
+                        afisareScor(nrPiesePlayer1, nrPiesePlayer2);
+
+                    if(nrPiesePlayer1 == 0)
+                    {
+                        setcolor(YELLOW);
+                        outtextxy(257,10, "PLAYER 2 WON!");
+                        delay(2200);
+                        closegraph();
+                        initMeniu();
+                    }
+                    else if(nrPiesePlayer2 == 0)
+                    {
+                        setcolor(YELLOW);
+                        outtextxy(257,10, "PLAYER 1 WON!");
+                        delay(2200);
+                        closegraph();
+                        initMeniu();
+                    }
+                    else if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 1)
+                    {
+                        setcolor(YELLOW);
+                        outtextxy(280,10, "DRAW!");
+                        delay(2200);
+                        closegraph();
+                        initMeniu();
+                    }
                 }
 
             }
