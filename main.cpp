@@ -11,7 +11,6 @@
 
 using namespace std;
 
-
 void patrat(int a,int b, int c,int d)
 {
     ///a left, b top, c right, d bottom
@@ -66,6 +65,7 @@ void form_tabla()
         }
     setcolor(WHITE);
     rectangle(30,30,574,574);
+
 }
 struct joc
 {
@@ -760,27 +760,32 @@ void afisareScor(int nrPiesePlayer1, int nrPiesePlayer2)
         setcolor(YELLOW);
         outtextxy(495, 10, "P2 SCORE:7");
         outtextxy(30, 580, "P1 SCORE:0");
-    }if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 6)
+    }
+    if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 6)
     {
         setcolor(YELLOW);
         outtextxy(495, 10, "P2 SCORE:6");
         outtextxy(30, 580, "P1 SCORE:0");
-    }if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 5)
+    }
+    if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 5)
     {
         setcolor(YELLOW);
         outtextxy(495, 10, "P2 SCORE:5");
         outtextxy(30, 580, "P1 SCORE:0");
-    }if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 4)
+    }
+    if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 4)
     {
         setcolor(YELLOW);
         outtextxy(495, 10, "P2 SCORE:4");
         outtextxy(30, 580, "P1 SCORE:0");
-    }if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 3)
+    }
+    if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 3)
     {
         setcolor(YELLOW);
         outtextxy(495, 10, "P2 SCORE:3");
         outtextxy(30, 580, "P1 SCORE:0");
-    }if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 2)
+    }
+    if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 2)
     {
         setcolor(YELLOW);
         outtextxy(495, 10, "P2 SCORE:2");
@@ -1027,7 +1032,8 @@ void initMeniu()
                 outtextxy(30, 580, "P1 SCORE:8");
 
                 int X,Y,time=2,castigator=0,rand=2, coloanaBot = 2;///rand stabileste cine trebuie sa mute piesa
-                int I_ai=2, J_ai = coloanaBot, jCount=1, liniaCurenta = 2,randMutare=1, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8;
+                int I_ai=2, J_ai = coloanaBot, jCount=1, countMutariInitiale=1, piesaMutata[9]= {0};
+                int liniaCurenta = 2,randMutare=1, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8;
                 while(!castigator)
                 {
                     while(time>0)
@@ -1086,7 +1092,7 @@ void initMeniu()
                                         C=C1-1;
                                     else
                                         C=C1+1;
-
+                                    cout<<L<<" "<<C;
                                     if(tabla[L][C].player==neocupat)
                                     {
                                         setcolor(WHITE);
@@ -1099,8 +1105,171 @@ void initMeniu()
                                     setcolor(YELLOW);
 
                                     delay(800);
+                                    if(countMutariInitiale==1)
+                                    {
+                                        mutareStangaJOS(tabla, 2, C);
+                                        countMutariInitiale++;
+                                        piesaMutata[C]=1;
+                                        tabla[2][C].player=neocupat;
+                                        tabla[3][C-1].player=player2;
+                                    }
+                                    else if(countMutariInitiale==2 || countMutariInitiale==3)
+                                    {
+                                        if(tabla[2][C-1].player==player2)
+                                        {
+                                            mutareStangaJOS(tabla, 2, C-1);
+                                            countMutariInitiale++;
+                                            piesaMutata[C-1]=1;
+                                            tabla[2][C-1].player=neocupat;
+                                            tabla[3][C-2].player=player2;
 
-                                    if(tabla[I_ai+1][J_ai+1].player == neocupat)
+                                        }
+                                        else if(tabla[2][C+1].player==player2)
+                                        {
+                                            mutareStangaJOS(tabla,2,C+1);
+                                            countMutariInitiale++;
+                                            piesaMutata[C+1]=1;
+                                            tabla[2][C+1].player=neocupat;
+                                            tabla[3][C].player=player2;
+                                        }
+
+                                        else if(C>4)
+                                        {
+
+                                            if(tabla[2][6].player == player2)
+                                            {
+                                                mutareStangaJOS(tabla, 2, 6);
+                                                countMutariInitiale++;
+                                                piesaMutata[6]=1;
+                                                tabla[2][6].player = neocupat;
+                                                tabla[3][5].player = player2;
+
+                                            }
+                                            else if(tabla[2][8].player == player2)
+                                            {
+                                                mutareStangaJOS(tabla, 2, 8);
+                                                countMutariInitiale++;
+                                                piesaMutata[8]=1;
+                                                tabla[2][8].player = neocupat;
+                                                tabla[3][7].player = player2;
+                                            }
+                                            else if(tabla[2][4].player == player2)
+                                            {
+                                                mutareStangaJOS(tabla, 2, 4);
+                                                countMutariInitiale++;
+                                                piesaMutata[4]=1;
+                                                tabla[2][4].player = neocupat;
+                                                tabla[3][3].player = player2;
+                                            }
+                                            else if(tabla[2][2].player == player2)
+                                            {
+                                                mutareStangaJOS(tabla,2,2);
+                                                countMutariInitiale++;
+                                                piesaMutata[2]=1;
+                                                tabla[2][2].player = neocupat;
+                                                tabla[3][1].player = player2;
+                                            }
+
+                                        }
+                                        else if(C<=4)
+                                        {
+                                            if(tabla[2][2].player == player2)
+                                            {
+                                                mutareStangaJOS(tabla,2,2);
+                                                countMutariInitiale++;
+                                                piesaMutata[2]=1;
+                                                tabla[2][2].player = neocupat;
+                                                tabla[3][1].player = player2;
+                                            }
+                                            else if(tabla[2][4].player == player2)
+                                            {
+                                                mutareStangaJOS(tabla,2,4);
+                                                countMutariInitiale++;
+                                                piesaMutata[4]=1;
+                                                tabla[2][4].player = neocupat;
+                                                tabla[3][3].player = player2;
+                                            }
+                                            else if(tabla[2][6].player == player2)
+                                            {
+                                                mutareStangaJOS(tabla, 2, 6);
+                                                countMutariInitiale++;
+                                                piesaMutata[6]=1;
+                                                tabla[2][6].player = neocupat;
+                                                tabla[3][5].player = player2;
+
+                                            }
+                                            else if(tabla[2][8].player == player2)
+                                            {
+                                                mutareStangaJOS(tabla, 2, 8);
+                                                countMutariInitiale++;
+                                                piesaMutata[8]=1;
+                                                tabla[2][8].player = neocupat;
+                                                tabla[3][7].player = player2;
+                                            }
+                                        }
+
+
+
+                                    }
+                                    else if(countMutariInitiale==4)
+                                    {
+                                        for(int j=2; j<=8; j+=2)
+                                            if(piesaMutata[j]==0)
+                                            {
+                                                mutareStangaJOS(tabla,2,j);
+                                                tabla[2][j].player=neocupat;
+                                                tabla[3][j-1].player=player2;
+                                            }
+                                        countMutariInitiale++;
+
+                                    }
+                                    else if(countMutariInitiale==5)
+                                    {
+                                        if(tabla[4][2].player!=player1)
+                                        {
+                                            mutareDreaptaJOS(tabla, 1, 1);
+                                            tabla[1][1].player=neocupat;
+                                            tabla[2][2].player=player2;
+                                            countMutariInitiale++;
+                                        }
+                                        else
+                                        {
+                                            mutareDreaptaJOS(tabla,3,3);
+                                            tabla[3][3].player=neocupat;
+                                            tabla[4][4].player=player2;
+                                            countMutariInitiale++;
+                                        }
+                                    }
+                                    else if(countMutariInitiale==6)
+                                    {
+                                        if(tabla[1][1].player==player2)
+                                        {
+                                            mutareDreaptaJOS(tabla, 1, 1);
+                                            tabla[1][1].player=neocupat;
+                                            tabla[2][2].player=player2;
+                                            countMutariInitiale++;
+                                        }
+                                        else if(tabla[3][3].player == player2)
+                                        {
+                                            if(tabla[4][4].player == neocupat)
+                                            {
+                                                mutareDreaptaJOS(tabla,3,3);
+                                                tabla[3][3].player=neocupat;
+                                                tabla[4][4].player=player2;
+                                                countMutariInitiale++;
+                                            }
+                                            else if(tabla[4][2].player == neocupat)
+                                            {
+                                                mutareStangaJOS(tabla,3,3);
+                                                tabla[3][3].player=neocupat;
+                                                tabla[4][2].player=player2;
+                                                countMutariInitiale++;
+                                            }
+                                        }
+                                    }
+
+
+                                    /*if(tabla[I_ai+1][J_ai+1].player == neocupat)
                                     {
                                         mutareDreaptaJOS(tabla,I_ai,J_ai);
                                         tabla[I_ai][J_ai].player=neocupat;
@@ -1171,6 +1340,8 @@ void initMeniu()
                                         cout<<endl;
                                         cout<<jCount<<'\n';
                                     }
+                                    */
+
                                     /*for(int i=1;i<=8;++i)
                                     {
                                         for(int j=1;j<=8;++j)
@@ -1261,7 +1432,7 @@ void initMeniu()
                                     }
                             }
                         }
-                        afisareScor(nrPiesePlayer1, nrPiesePlayer2);
+                    afisareScor(nrPiesePlayer1, nrPiesePlayer2);
 
                     if(nrPiesePlayer1 == 0)
                     {
@@ -1274,7 +1445,7 @@ void initMeniu()
                     else if(nrPiesePlayer2 == 0)
                     {
                         setcolor(YELLOW);
-                        outtextxy(257,10, "PLAYER 1 WON!");
+                        outtextxy(257,580, "PLAYER 1 WON!");
                         delay(2200);
                         closegraph();
                         initMeniu();
