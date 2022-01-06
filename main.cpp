@@ -11,6 +11,26 @@
 
 using namespace std;
 
+
+struct joc
+{
+
+    int x,y;///coord piesei de pe linia L si coloana C (coresp A[L][C])
+    int L,C;///L=i,C=j in parcurgerea lui A[][]
+    int player;/// 1-neagra(circle), 2-alba(fillellipse), 3-spatiu inaccesibil
+
+} tabla[10][10];
+
+/*struct game{
+    
+    int player;
+    
+    struct board{
+        int x,y;
+        int L,C;
+    }tabla[10][10];
+}joc;
+*/
 void patrat(int a,int b, int c,int d)
 {
     ///a left, b top, c right, d bottom
@@ -67,14 +87,7 @@ void form_tabla()
     rectangle(30,30,574,574);
 
 }
-struct plasare
-{
 
-    int x,y;///coord piesei de pe linia L si coloana C (coresp A[L][C])
-    int L,C;///L=i,C=j in parcurgerea lui A[][]
-    int player;/// 1-neagra(circle), 2-alba(fillellipse), 3-spatiu inaccesibil
-
-} tabla[10][10];
 
 void initCoordonate()
 {
@@ -149,7 +162,7 @@ void initJoc()
     rectangle(30,30,574,574);
     patrat(30,30,570,570);
 }
-void mutareDreaptaJOS(plasare tabla[][10], int i, int j)
+void mutareDreaptaJOS(joc tabla[][10], int i, int j)
 {
     int X = tabla[i][j].x;
     int Y = tabla[i][j].y;
@@ -194,7 +207,7 @@ void mutareDreaptaJOS(plasare tabla[][10], int i, int j)
     fillellipse(X2,Y2,20,20);
 
 }
-void mutareDreaptaSUS(plasare tabla[][10], int i, int j)
+void mutareDreaptaSUS(joc tabla[][10], int i, int j)
 {
     int X = tabla[i][j].x;
     int Y = tabla[i][j].y;
@@ -238,7 +251,7 @@ void mutareDreaptaSUS(plasare tabla[][10], int i, int j)
     fillellipse(X2,Y2,20,20);
 
 }
-void mutareStangaJOS(plasare A[][10], int i, int j)
+void mutareStangaJOS(joc A[][10], int i, int j)
 {
     int X = tabla[i][j].x;
     int Y = tabla[i][j].y;
@@ -283,7 +296,7 @@ void mutareStangaJOS(plasare A[][10], int i, int j)
     fillellipse(X2,Y2,20,20);
 
 }
-void mutareStangaSUS(plasare A[][10], int i, int j)
+void mutareStangaSUS(joc A[][10], int i, int j)
 {
     int X = tabla[i][j].x;
     int Y = tabla[i][j].y;
@@ -819,8 +832,8 @@ void initMeniu()
                 initCoordonate();
 
                 setcolor(YELLOW);
-                outtextxy(227,580, "PLAYER 1");
-                outtextxy(227,10,"PLAYER 2");
+                outtextxy(270,580, "PLAYER 1");
+                outtextxy(270,10,"PLAYER 2");
                 outtextxy(610, 80, "P2 SCORE:8");
                 outtextxy(610, 560, "P1 SCORE:8");
 
@@ -896,6 +909,7 @@ void initMeniu()
                                     setcolor(YELLOW);
                                     outtextxy(610,50, "<- PLAYER 2: YOUR TURN!");
                                     outtextxy(610,530,"                                                ");
+
                                     if(L>L1)
                                         L=L1+1;
                                     else
@@ -1000,24 +1014,24 @@ void initMeniu()
                     if(nrPiesePlayer1 == 0)
                     {
                         setcolor(YELLOW);
-                        outtextxy(257,10, "PLAYER 2 WON!");
-                        delay(2200);
+                        outtextxy(610,290, "PLAYER 2 WON!");
+                        delay(2500);
                         closegraph();
                         initMeniu();
                     }
                     else if(nrPiesePlayer2 == 0)
                     {
                         setcolor(YELLOW);
-                        outtextxy(257,10, "PLAYER 1 WON!");
-                        delay(2200);
+                        outtextxy(610,290, "PLAYER 1 WON!");
+                        delay(2500);
                         closegraph();
                         initMeniu();
                     }
                     else if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 1)
                     {
                         setcolor(YELLOW);
-                        outtextxy(280,10, "DRAW!");
-                        delay(2200);
+                        outtextxy(610,290, "DRAW!");
+                        delay(2500);
                         closegraph();
                         initMeniu();
                     }
@@ -1036,12 +1050,17 @@ void initMeniu()
                 initCoordonate();
                 //PLAYER 2 = AI
                 setcolor(YELLOW);
-                outtextxy(495, 10, "P2 SCORE:8");
-                outtextxy(30, 580, "P1 SCORE:8");
+                outtextxy(280,580, "P1");
+                outtextxy(255,10,"HITLER BOT");
+                outtextxy(610,30,"DIFFICULTY LEVEL:");
+                outtextxy(610,55,"HITLER");
+                outtextxy(610, 530, "                                                             ");
+                //outtextxy(495, 10, "P2 SCORE:8");
+                //outtextxy(30, 580, "P1 SCORE:8");
 
                 int X,Y,time=2,castigator=0,rand=2, coloanaBot = 2;///rand stabileste cine trebuie sa mute piesa
                 int I_ai=2, J_ai = coloanaBot, jCount=1, countMutariInitiale=1, piesaMutata[9]= {0};
-                int liniaCurenta = 2,randMutare=1, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8;
+                int liniaCurenta = 2,randMutare=1, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8, I_intermediar = 3;
                 while(!castigator)
                 {
                     while(time>0)
@@ -1100,7 +1119,7 @@ void initMeniu()
                                         C=C1-1;
                                     else
                                         C=C1+1;
-                                    cout<<L<<" "<<C;
+                                    cout<<L<<" "<<C<<"\n";
                                     if(tabla[L][C].player==neocupat)
                                     {
                                         setcolor(WHITE);
@@ -1275,6 +1294,66 @@ void initMeniu()
                                             }
                                         }
                                     }
+                                    else
+                                    {
+                                        int Col;
+                                        int oki = 0;
+                                        while(oki == 0)
+                                        {
+                                            for(int j = 1; j<=8; j++)
+                                                if(tabla[I_intermediar][j].player == player2)
+                                                {
+                                                    Col=j;
+                                                    oki = 1;
+                                                    break;
+                                                }
+                                            if(oki == 0)
+                                            {
+                                                if(I_intermediar == 3 || I_intermediar == 2)
+                                                    I_intermediar--;
+                                                else if(I_intermediar == 1)
+                                                    I_intermediar = 4;
+                                                else if(I_intermediar == 4)
+                                                    I_intermediar++;
+                                                else if(I_intermediar == 8)
+                                                    I_intermediar--;
+                                                else I_intermediar--;
+                                            }
+
+                                        }
+
+
+                                        if(tabla[I_intermediar+1][Col+1].player == neocupat)
+                                        {
+                                            mutareDreaptaJOS(tabla,I_intermediar,Col);
+                                            tabla[I_intermediar][Col].player=neocupat;
+                                            tabla[I_intermediar+1][Col+1].player=player2;
+                                        }
+                                        else if(tabla[I_intermediar+1][Col-1].player == neocupat)
+                                        {
+                                            mutareStangaJOS(tabla,I_intermediar,Col);
+                                            tabla[I_intermediar][Col].player=neocupat;
+                                            tabla[I_intermediar+1][Col-1].player=player2;
+                                        }
+                                        else if(tabla[I_intermediar-1][Col+1].player == neocupat)
+                                        {
+                                            mutareDreaptaSUS(tabla,I_intermediar,Col);
+                                            tabla[I_intermediar][Col].player=neocupat;
+                                            tabla[I_intermediar-1][Col+1].player=player2;
+                                        }
+                                        else if(tabla[I_intermediar-1][Col-1].player == neocupat)
+                                        {
+                                            mutareStangaJOS(tabla,I_intermediar,Col);
+                                            tabla[I_intermediar][Col].player=neocupat;
+                                            tabla[I_intermediar-1][Col-1].player=player2;
+                                        }
+
+                                        cout<<endl;
+                                        cout<<"I INTERMEDIAR: "<<I_intermediar<<"\n";
+
+                                    }
+
+
 
 
                                     /*if(tabla[I_ai+1][J_ai+1].player == neocupat)
@@ -1445,7 +1524,7 @@ void initMeniu()
                     if(nrPiesePlayer1 == 0)
                     {
                         setcolor(YELLOW);
-                        outtextxy(257,10, "PLAYER 2 WON!");
+                        outtextxy(257,10, "PLAYER 2 WINS!");
                         delay(2200);
                         closegraph();
                         initMeniu();
@@ -1453,7 +1532,7 @@ void initMeniu()
                     else if(nrPiesePlayer2 == 0)
                     {
                         setcolor(YELLOW);
-                        outtextxy(257,580, "PLAYER 1 WON!");
+                        outtextxy(257,580, "PLAYER 1 WINS!");
                         delay(2200);
                         closegraph();
                         initMeniu();
