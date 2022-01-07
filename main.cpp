@@ -275,7 +275,7 @@ void mutareDreaptaSUS(joc tabla[][10], int i, int j)
     fillellipse(X2,Y2,20,20);
 
 }
-void mutareStangaJOS(joc A[][10], int i, int j)
+void mutareStangaJOS(joc tabla[][10], int i, int j)
 {
     int X = tabla[i][j].x;
     int Y = tabla[i][j].y;
@@ -320,7 +320,7 @@ void mutareStangaJOS(joc A[][10], int i, int j)
     fillellipse(X2,Y2,20,20);
 
 }
-void mutareStangaSUS(joc A[][10], int i, int j)
+void mutareStangaSUS(joc tabla[][10], int i, int j)
 {
     int X = tabla[i][j].x;
     int Y = tabla[i][j].y;
@@ -937,14 +937,14 @@ void playPVP()
     closegraph(CURRENT_WINDOW);
     initJoc();
     initCoordonate();
-
     setcolor(YELLOW);
+    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\pvp.jpg",600,200,800,300 );
     outtextxy(270,580, "PLAYER 1");
     outtextxy(270,10,"PLAYER 2");
     outtextxy(610, 80, "P2 SCORE:8");
     outtextxy(610, 560, "P1 SCORE:8");
 
-    int X,Y,time=2,castigator=0,rand=2, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8;///rand stabileste cine trebuie sa mute piesa
+    int X,Y,time=2,castigator=0,rand=2, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8,clickedPlayer=1;///rand stabileste cine trebuie sa mute piesa
     while(!castigator)
     {
         while(time>0)
@@ -958,10 +958,12 @@ void playPVP()
                     cout<<X<<" "<<Y<<'\n';
                     int L=0,C=0;
                     cautaPiesaApasata(tabla, X,Y,L,C);
+                    clickedPlayer = tabla[L][C].player;
                     cout<<L<<" "<<C<<"\n";
                     setcolor(LIGHTRED);
                     setfillstyle(1,LIGHTRED);
                     fillellipse(tabla[L][C].x,tabla[L][C].y,30,30);
+
                     L1=L;
                     C1=C;
 
@@ -973,8 +975,9 @@ void playPVP()
                     int vminx=100,vminy=100, L=0,C=0;
                     cautaPiesaApasata(tabla,X,Y,L,C);
                     cout<<L<<" "<<C<<"\n";
-                    if(rand==1)
+                    if(rand == 1 && clickedPlayer == 2)
                     {
+
                         setcolor(YELLOW);
                         outtextxy(610,530, "<- PLAYER 1: YOUR TURN!");
                         outtextxy(610,50,"                                                 ");
@@ -993,7 +996,7 @@ void playPVP()
                         tabla[L][C].player=player2;
                         tabla[L1][C1].player=neocupat;
                     }
-                    if(rand==2)
+                    if(rand==2 && clickedPlayer == 1)
                     {
                         setcolor(YELLOW);
                         outtextxy(610,50, "<- PLAYER 2: YOUR TURN!");
@@ -1038,8 +1041,25 @@ void playPVP()
 
 }
 
-void playVersusBOT()
+void playAgainstSoldierBOT()
 {
+
+    closegraph(CURRENT_WINDOW);
+    initJoc();
+    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
+    initCoordonate();
+    //cleardevice();
+
+    //PLAYER 2 = AI
+    setcolor(YELLOW);
+    outtextxy(280,580, "P1");
+    outtextxy(255,10,"SOLDIER BOT");
+    outtextxy(610,30,"DIFFICULTY LEVEL:");
+    outtextxy(610,55,"EASY");
+    outtextxy(610, 530, "                                                             ");
+    //outtextxy(495, 10, "P2 SCORE:8");
+    //outtextxy(30, 580, "P1 SCORE:8");
+
 
     int X,Y,time=2,castigator=0,rand=2, coloanaBot = 2;///rand stabileste cine trebuie sa mute piesa
     int I_ai=2, J_ai = coloanaBot, jCount=1, countMutariInitiale=1, piesaMutata[9]= {0};
@@ -1437,7 +1457,200 @@ void playVersusBOT()
 
 }
 
+void playAgainstHitlerBOT()
+{
+    closegraph(CURRENT_WINDOW);
+    initJoc();
+    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
+    initCoordonate();
+    //cleardevice();
 
+    //PLAYER 2 = AI
+    setcolor(YELLOW);
+    outtextxy(280,580, "P1");
+    outtextxy(255,10,"HITLER BOT");
+    outtextxy(610,30,"DIFFICULTY LEVEL:");
+    outtextxy(610,55,"HARD");
+    outtextxy(610, 530, "                                                             ");
+    int X,Y,time=2,castigator=0,rand=2, coloanaBot = 2;///rand stabileste cine trebuie sa mute piesa
+    int I_ai=2, J_ai = coloanaBot, jCount=1, countMutariInitiale=1, piesaMutata[9]= {0};
+    int liniaCurenta = 2,randMutare=1, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8, I_intermediar = 3;
+    while(!castigator)
+    {
+        while(time>0)
+        {
+            if(ismouseclick(WM_LBUTTONDOWN))
+            {
+                int L1,C1;
+                if(time==2)
+                {
+                    getmouseclick(WM_LBUTTONDOWN, X, Y);
+                    cout<<X<<" "<<Y<<'\n';
+                    int L=0,C=0;
+                    cautaPiesaApasata(tabla, X,Y,L,C);
+                    setcolor(LIGHTRED);
+                    setfillstyle(1,LIGHTRED);
+                    fillellipse(tabla[L][C].x,tabla[L][C].y,30,30);
+                    L1=L;
+                    C1=C;
+                    outtextxy(277,580, "YOUR TURN!");
+
+                }
+                if(time==1)
+                {
+                    getmouseclick(WM_LBUTTONDOWN, X, Y);
+                    cout<<X<<" "<<Y<<'\n';
+                    int L=0,C=0;
+                    cautaPiesaApasata(tabla, X,Y,L,C);
+                    cout<<L<<" "<<C<<"\n";
+
+                    if(rand==2)
+                    {
+                        if(L>L1)
+                            L=L1+1;
+                        else
+                            L=L1-1;
+                        if(C1>C)
+                            C=C1-1;
+                        else
+                            C=C1+1;
+                        cout<<L<<" "<<C<<"\n";
+                        if(tabla[L][C].player==neocupat)
+                        {
+                            setcolor(WHITE);
+                            setfillstyle(1,WHITE);
+                            fillellipse(tabla[L][C].x,tabla[L][C].y,20,20);
+                            tabla[L][C].player=player1;
+                            tabla[L1][C1].player=neocupat;
+                        }
+                        if(tabla[I_ai+1][J_ai+1].player == neocupat)
+                        {
+                            delay(300);
+                            mutareDreaptaJOS(tabla,I_ai,J_ai);
+                            tabla[I_ai][J_ai].player=neocupat;
+                            I_ai++;
+                            J_ai++;
+                            tabla[I_ai][J_ai].player=player2;
+                            jCount++;
+                        }
+                        else if(tabla[I_ai+1][J_ai-1].player == neocupat)
+                        {
+                            delay(300);
+                            mutareStangaJOS(tabla,I_ai, J_ai);
+                            tabla[I_ai][J_ai].player=neocupat;
+                            I_ai++;
+                            J_ai--;
+                            tabla[I_ai][J_ai].player=player2;
+                            jCount++;
+                        }
+                        else if(tabla[I_ai-1][J_ai-1].player == neocupat)
+                        {
+                            delay(300);
+                            mutareStangaSUS(tabla,I_ai, J_ai);
+                            tabla[I_ai][J_ai].player=neocupat;
+                            I_ai--;
+                            J_ai--;
+                            tabla[I_ai][J_ai].player=player2;
+                            jCount++;
+                        }
+                        else if(tabla[I_ai-1][J_ai+1].player == neocupat)
+                        {
+                            delay(300);
+                            mutareDreaptaSUS(tabla,I_ai,J_ai);
+                            tabla[I_ai][J_ai].player=neocupat;
+                            I_ai--;
+                            J_ai++;
+                            tabla[I_ai][J_ai].player=player2;
+                            jCount++;
+                        }
+                        if(liniaCurenta == 2)
+                        {
+                            if(J_ai != 8)
+                            {
+                                if(jCount == 3)
+                                {
+                                    I_ai = 2;
+                                    coloanaBot += 2;
+                                    J_ai = coloanaBot;
+                                    jCount = 1;
+
+                                }
+                            }
+                            if(J_ai == 8)
+                            {
+                                liniaCurenta = 1;
+                                coloanaBot = 1;
+                                J_ai = 1;
+                                I_ai = 1;
+                            }
+                        }
+                        else
+                        {
+
+                            if(jCount == 3 && J_ai != 7)
+                            {
+                                I_ai = 1;
+                                coloanaBot+=2;
+                                J_ai = coloanaBot;
+                                jCount = 1;
+
+                            }
+                            cout<<endl;
+                            cout<<jCount<<'\n';
+                        }
+                    }
+
+                }
+                time--;
+
+            }
+
+
+        }
+        time=2;
+        for(int i=1; i<=8; ++i)
+            for(int j=1; j<=8; ++j)
+            {
+                if(tabla[i][j].player==player1)
+                    verificaStergereALB(i,j,tabla,nrPiesePlayer1);
+                if(tabla[i][j].player==player2)
+                    verificaStergereNEGRU(i,j,tabla,nrPiesePlayer2);
+            }
+        afisareScor(nrPiesePlayer1, nrPiesePlayer2);
+        verificaCastigator(nrPiesePlayer1, nrPiesePlayer2);
+
+    }
+}
+void initMeniuBOT()
+{
+    initwindow(595,380);
+    cleardevice();
+    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\difficulty.jpg",-40,-40,630,420);
+    int x,y;
+    int temp=1;
+    while(temp>0)
+    {
+        if(ismouseclick(WM_LBUTTONDOWN))
+        {
+            clearmouseclick(WM_LBUTTONDOWN);
+            x=mousex();
+            y=mousey();
+            cout<<x<<" "<<y;
+            if ((x>30  && x<290 && y>270 && y<300)||(x>115  && x<180 && y>325 && y<345))
+            {
+                closegraph(CURRENT_WINDOW);
+                playAgainstSoldierBOT();
+            }
+            else if ((x>340  && x<565 && y>270 && y<305)||(x>405  && x<480 && y>325 && y<345))
+            {
+                closegraph(CURRENT_WINDOW);
+                playAgainstHitlerBOT();
+            }
+
+        }
+    }
+
+}
 void initMeniu()
 {
     initwindow(595,380);
@@ -1454,35 +1667,14 @@ void initMeniu()
             y=mousey();
             if (x>175  && x<400 && y>150 && y<200)
                 playPVP();
-
-            ///BOT
-
             else if(x>145  && x<408 && y>250 && y<300)
             {
-                closegraph(CURRENT_WINDOW);
-
-                initJoc();
-                readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
-                initCoordonate();
-                //cleardevice();
-
-                //PLAYER 2 = AI
-                setcolor(YELLOW);
-                outtextxy(280,580, "P1");
-                outtextxy(255,10,"HITLER BOT");
-                outtextxy(610,30,"DIFFICULTY LEVEL:");
-                outtextxy(610,55,"HITLER");
-                outtextxy(610, 530, "                                                             ");
-                //outtextxy(495, 10, "P2 SCORE:8");
-                //outtextxy(30, 580, "P1 SCORE:8");
-                playVersusBOT();
+                closegraph();
+                initMeniuBOT();
             }
         }
     }
 }
-
-
-
 int main()
 {
     initMatrice();
