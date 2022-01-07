@@ -27,7 +27,7 @@ struct joc
 
     int x,y;///coord piesei de pe linia L si coloana C (coresp A[L][C])
     int L,C;///L=i,C=j in parcurgerea lui A[][]
-    int player;/// 1-neagra(circle), 2-alba(fillellipse), 3-spatiu inaccesibil
+    int player;/// 1-neagra(circle), 2-alba(fillellipse), 3-spatiu inaccesibil 0-neocupat
 
 } tabla[10][10];
 
@@ -849,6 +849,12 @@ void cautaPiesaApasata(joc tabla[][10], int X, int Y,int &L,int &C)
                     C=j;
                 }
 }
+void elimina_piesa(int lin,int col,joc tabla[][10])
+{
+    setcolor(LIGHTRED);
+    setfillstyle(1,LIGHTRED);
+    fillellipse(tabla[lin][col].x,tabla[lin][col].y,30,30);
+}
 void verificaStergereALB(int i, int j, joc tabla[][10], int &nrPiesePlayer1)
 {
 
@@ -895,15 +901,16 @@ void verificaStergereNEGRU(int i, int j, joc tabla[][10], int &nrPiesePlayer2)
         }
     }
     else if(i==1)
-        if((tabla[i+1][j+1].player==player1&&tabla[i+1][j-1].player!=neocupat)
+        if(j!=1)
+            if((tabla[i+1][j+1].player==player1&&tabla[i+1][j-1].player!=neocupat)
                 ||(tabla[i+1][j+1].player!=neocupat&&tabla[i+1][j-1].player==player1))
-        {
-            tabla[i][j].player=neocupat;
-            setcolor(LIGHTRED);
-            setfillstyle(1,LIGHTRED);
-            fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
-            nrPiesePlayer2--;
-        }
+            {
+                tabla[i][j].player=neocupat;
+                setcolor(LIGHTRED);
+                setfillstyle(1,LIGHTRED);
+                fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+                nrPiesePlayer2--;
+            }
 }
 void verificaCastigator(int nrPiesePlayer1, int nrPiesePlayer2)
 {
@@ -944,7 +951,7 @@ void playPVP()
     outtextxy(610, 80, "P2 SCORE:8");
     outtextxy(610, 560, "P1 SCORE:8");
 
-    int X,Y,time=2,castigator=0,rand=2, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8,clickedPlayer=1;///rand stabileste cine trebuie sa mute piesa
+    int X,Y,time = 2,castigator = 0,rand = 1, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8,clickedPlayer = player1;///rand stabileste cine trebuie sa mute piesa
     while(!castigator)
     {
         while(time>0)
@@ -954,18 +961,26 @@ void playPVP()
                 int L1,C1;
                 if(time==2)
                 {
-                    getmouseclick(WM_LBUTTONDOWN, X, Y);
-                    cout<<X<<" "<<Y<<'\n';
-                    int L=0,C=0;
-                    cautaPiesaApasata(tabla, X,Y,L,C);
-                    clickedPlayer = tabla[L][C].player;
-                    cout<<L<<" "<<C<<"\n";
-                    setcolor(LIGHTRED);
-                    setfillstyle(1,LIGHTRED);
-                    fillellipse(tabla[L][C].x,tabla[L][C].y,30,30);
+                    clickedPlayer=neocupat;
+                    while(clickedPlayer!=rand)
+                    {
+                        getmouseclick(WM_LBUTTONDOWN, X, Y);
+                        cout<<X<<" "<<Y<<'\n';
+                        int L=0,C=0;
+                        cautaPiesaApasata(tabla, X,Y,L,C);
+                        clickedPlayer = tabla[L][C].player;
+                        cout<<L<<" "<<C<<"\n";
 
-                    L1=L;
-                    C1=C;
+                        if(clickedPlayer==rand)
+                            if((tabla[L+1][C+1].player==neocupat||tabla[L+1][C-1].player==neocupat)||(tabla[L-1][C+1].player==neocupat||tabla[L-1][C-1].player==neocupat))///verifica piesa apasata ca sa nu fie blocata
+                            {
+                                tabla[L][C].player=neocupat;
+                                elimina_piesa(L,C,tabla);
+                            }
+                            else clickedPlayer=neocupat;
+                        L1=L;
+                        C1=C;
+                    }
 
                 }
                 if(time==1)
@@ -975,7 +990,7 @@ void playPVP()
                     int vminx=100,vminy=100, L=0,C=0;
                     cautaPiesaApasata(tabla,X,Y,L,C);
                     cout<<L<<" "<<C<<"\n";
-                    if(rand == 1 && clickedPlayer == 2)
+                    if(rand == 2 && clickedPlayer == player2)
                     {
 
                         setcolor(YELLOW);
@@ -996,7 +1011,7 @@ void playPVP()
                         tabla[L][C].player=player2;
                         tabla[L1][C1].player=neocupat;
                     }
-                    if(rand==2 && clickedPlayer == 1)
+                    else if(rand==1 && clickedPlayer == player1)
                     {
                         setcolor(YELLOW);
                         outtextxy(610,50, "<- PLAYER 2: YOUR TURN!");
@@ -1677,9 +1692,9 @@ void initMeniu()
 }
 int main()
 {
+    initCoordonate();
     initMatrice();
     initMeniu();
-    initCoordonate();
     cleardevice();
     getch();
     return 0;
