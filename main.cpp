@@ -8,6 +8,7 @@
 #define player2 2
 #define neocupat 0
 #define inexistent 3
+#define nu 4
 
 using namespace std;
 
@@ -901,9 +902,8 @@ void verificaStergereNEGRU(int i, int j, joc tabla[][10], int &nrPiesePlayer2)
         }
     }
     else if(i==1)
-        if(j!=1)
-            if((tabla[i+1][j+1].player==player1&&tabla[i+1][j-1].player!=neocupat)
-                ||(tabla[i+1][j+1].player!=neocupat&&tabla[i+1][j-1].player==player1))
+        if((tabla[i+1][j+1].player==player1&&tabla[i+1][j-1].player!=neocupat)
+            ||(tabla[i+1][j+1].player!=neocupat&&tabla[i+1][j-1].player==player1))
             {
                 tabla[i][j].player=neocupat;
                 setcolor(LIGHTRED);
@@ -1102,6 +1102,7 @@ void playAgainstSoldierBOT()
                 }
                 if(time==1)
                 {
+
                     getmouseclick(WM_LBUTTONDOWN, X, Y);
                     cout<<X<<" "<<Y<<'\n';
                     int L=0,C=0;
