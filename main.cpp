@@ -3,15 +3,20 @@
 #include <winbgim.h>
 #include <cmath>
 #include <cstdlib>
+#include <stdio.h>
+#include <windows.h>
+#include <mmsystem.h>
 
 #define player1 1
 #define player2 2
 #define neocupat 0
 #define inexistent 3
-#define nu 4
+#define nerecomandat 4
 
 using namespace std;
 
+///FILE *progres=fopen("progres.txt","w+");
+//ofstream fout("progres.txt");
 /*struct game{
 
     int player;
@@ -22,74 +27,14 @@ using namespace std;
     }tabla[10][10];
 }joc;
 */
-
 struct joc
 {
 
     int x,y;///coord piesei de pe linia L si coloana C (coresp A[L][C])
     int L,C;///L=i,C=j in parcurgerea lui A[][]
     int player;/// 1-neagra(circle), 2-alba(fillellipse), 3-spatiu inaccesibil 0-neocupat
-
+    int mutare_ai;/// nerecomandat ptr miscarile cu care AI isi poate bloca singur piesele
 } tabla[10][10];
-
-void patrat(int a,int b, int c,int d)
-{
-    ///a left, b top, c right, d bottom
-    if(abs(a-c)>70&&abs(b-d)>70)
-    {
-        //rectangle(a,(b+d)/2,(a+c)/2,d);
-        //rectangle((a+c)/2,b,c,(b+d)/2);
-        patrat(a,(b+d)/2,(a+c)/2,d);
-        patrat((a+c)/2,b,c,(b+d)/2);
-        patrat(a,b,(a+c)/2,(b+d)/2);
-        patrat((a+c)/2,(b+d)/2,c,d);
-    }
-    if(a==30&&c==165)
-    {
-        setcolor(BLACK);
-        setfillstyle(1,BLACK);
-        fillellipse(((b+d)/2+b)/2,((a+c)/2+a)/2,20,20);
-        fillellipse(((b+d)/2+d)/2,((a+c)/2+c)/2,20,20);
-        //circle(((b+d)/2+b)/2,((a+c)/2+a)/2,20);
-        //circle(((b+d)/2+d)/2,((a+c)/2+c)/2,20);
-    }
-    if(a==435&&c==570)
-    {
-        setcolor(WHITE);
-        setfillstyle(1,WHITE);
-        fillellipse(((b+d)/2+b)/2,((a+c)/2+a)/2,20,20);
-        fillellipse(((b+d)/2+d)/2,((a+c)/2+c)/2,20,20);
-    }
-}
-void form_tabla()
-{
-    int i,j,k=0,poly[8],l,m=0;
-    double x=68;
-    double y=68;
-    for(i=30,k+=y; m<8; i+=y,m++)
-        for(j=30,l=0; l<8; j+=x,l++)
-        {
-            if((l%2==1 && m%2==0) || (l%2==0 && m%2==1))
-            {
-                setcolor(BLACK);
-                setfillstyle(1,BLACK);
-                poly[0]=j;
-                poly[1]=i;
-                poly[2]=j+x;
-                poly[3]=i;
-                poly[4]=j+x;
-                poly[5]=k+i;
-                poly[6]=j;
-                poly[7]=k+i;
-                fillpoly(4,poly);
-            }
-        }
-    setcolor(WHITE);
-    rectangle(30,30,574,574);
-
-}
-
-
 void initMatrice()
 {
     for(int i=0; i<=9; ++i)
@@ -114,12 +59,14 @@ void initMatrice()
 }
 void initCoordonate()
 {
-    tabla[1][1].x = 63;
-    tabla[1][1].y = 63;
+    int width=GetSystemMetrics(SM_CXSCREEN);
+    int height=GetSystemMetrics(SM_CYSCREEN);
+    tabla[1][1].x = (width-544)/2;     //544 e lungimea si latimea tablei
+    tabla[1][1].y = (height-544)/2;
     for(int j=2; j<=8; j++)
     {
         tabla[1][j].x = tabla[1][j-1].x + 68;
-        tabla[1][j].y = 63;
+        tabla[1][j].y = (height-544)/2;
     }
     int i,j;
     for(i=2; i<=8; i++)
@@ -133,26 +80,102 @@ void initCoordonate()
 
     }
 }
+void exitbutton()
+{
+    int width=GetSystemMetrics(SM_CXSCREEN);
+    int height=GetSystemMetrics(SM_CYSCREEN);
+    setcolor(RED);
+    int poly[8];
+    setfillstyle(1,RED);
+    poly[0]=width*19/20;
+    poly[1]=0;
+    poly[2]=width;
+    poly[3]=0;
+    poly[4]=width;
+    poly[5]=height/20;
+    poly[6]=width*19/20;
+    poly[7]=height/20;
+    fillpoly(4,poly);
+    setcolor(WHITE);
+    line((width*19/20)+20,10,width-20,(height/20-10));
+    line((width-20),10,(width*19/20+20),(height/20-10));
+
+    /*
+    exitbutton();
+    if(x>width*19/20&&y<height/20)
+                exit(0);
+                */
+}
+void patrat(joc tabla[][10])
+{
+    for(int i=1;i<=8;++i)
+        for(int j=1;j<=8;++j)
+            if(tabla[i][j].player==player1)
+            {
+                setcolor(WHITE);
+                setfillstyle(1,WHITE);
+                fillellipse(tabla[i][j].x,tabla[i][j].y,20,20);
+            }
+            else if(tabla[i][j].player==player2)
+            {
+                setcolor(BLACK);
+                setfillstyle(1,BLACK);
+                fillellipse(tabla[i][j].x,tabla[i][j].y,20,20);
+            }
+}
+void form_tabla()
+{
+    int width=GetSystemMetrics(SM_CXSCREEN);
+    int height=GetSystemMetrics(SM_CYSCREEN);
+    int i,j,k=0,poly[8],l,m=0;
+    double x=68;
+    double y=68;
+    //width/2   (height-544)/2
+    for(i=width/2,k+=y; m<8; i+=y,m++)
+        for(j,l=0; l<8; j+=x,l++)
+        {
+            if((l%2==1 && m%2==0) || (l%2==0 && m%2==1))
+            {
+                setcolor(BLACK);
+                setfillstyle(1,BLACK);
+                poly[0]=j;
+                poly[1]=i;
+                poly[2]=j+x;
+                poly[3]=i;
+                poly[4]=j+x;
+                poly[5]=k+i;
+                poly[6]=j;
+                poly[7]=k+i;
+                fillpoly(4,poly);
+            }
+        }
+    /*setcolor(WHITE);
+    rectangle(30,30,574,574);*/
+
+}
 void initJoc()
 {
-    initwindow(900,600);
-    setbkcolor(RED);
-    cleardevice();
-
+    int width=GetSystemMetrics(SM_CXSCREEN);
+    int height=GetSystemMetrics(SM_CYSCREEN);
+    initwindow(width,height,"",-3,-3);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\bk.jpg",-40,-40,width+40,height+40);
     //cleardevice();
+
+    exitbutton();
+
+    setbkcolor(RED);
+    settextstyle(3,HORIZ_DIR,5);
     setcolor(YELLOW);
-    outtextxy(610,530,"<- PLAYER 1: YOUR TURN!");
+    outtextxy(width/3-50,height-100,"PLAYER 1: YOUR TURN!");
     //outtextxy(610,530,"Player 2's TURN");
     /* delay(500);
      outtextxy(610,50,"                                      ");
      delay(0);*/
-    setcolor(WHITE);
-    rectangle(30,30,570,570);
     int i,j,k=0,poly[8],l,m=0;
     double x=68;
     double y=68;
-    for(i=30,k+=y; m<8; i+=y,m++)
-        for(j=30,l=0; l<8; j+=x,l++)
+    for(i=(height-544)/2-34,k+=y; m<8; i+=y,m++)
+        for(j=(width-544)/2-34,l=0; l<8; j+=x,l++)
         {
             if((l%2==1 && m%2==0) || (l%2==0 && m%2==1))
             {
@@ -183,9 +206,7 @@ void initJoc()
                 fillpoly(4,poly);
             }
         }
-    setcolor(WHITE);
-    rectangle(30,30,574,574);
-    patrat(30,30,570,570);
+    patrat(tabla);
 }
 void mutareDreaptaJOS(joc tabla[][10], int i, int j)
 {
@@ -914,7 +935,7 @@ void verificaStergereNEGRU(int i, int j, joc tabla[][10], int &nrPiesePlayer2)
 }
 void verificaCastigator(int nrPiesePlayer1, int nrPiesePlayer2)
 {
-    if(nrPiesePlayer1 == 0)
+    if(nrPiesePlayer1 == 0||(nrPiesePlayer1+2<=nrPiesePlayer2))///3 piese asigura eliminarea unei piese in cazul 3<=3,nrPiesePlayer1=1 si nrPiesePlayer2=3
     {
         setcolor(YELLOW);
         outtextxy(610,290, "PLAYER 2 WON!");
@@ -922,7 +943,7 @@ void verificaCastigator(int nrPiesePlayer1, int nrPiesePlayer2)
         closegraph();
         //initMeniu();
     }
-    else if(nrPiesePlayer2 == 0)
+    else if(nrPiesePlayer2 == 0||(nrPiesePlayer2+2<=nrPiesePlayer1))
     {
         setcolor(YELLOW);
         outtextxy(610,290, "PLAYER 1 WON!");
@@ -939,17 +960,25 @@ void verificaCastigator(int nrPiesePlayer1, int nrPiesePlayer2)
         //initMeniu();
     }
 }
+void initMeniu();
 void playPVP()
 {
+
+    int width=GetSystemMetrics(SM_CXSCREEN);
+    int height=GetSystemMetrics(SM_CYSCREEN);
     closegraph(CURRENT_WINDOW);
     initJoc();
     initCoordonate();
     setcolor(YELLOW);
-    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\pvp.jpg",600,200,800,300 );
-    outtextxy(270,580, "PLAYER 1");
-    outtextxy(270,10,"PLAYER 2");
-    outtextxy(610, 80, "P2 SCORE:8");
-    outtextxy(610, 560, "P1 SCORE:8");
+    setbkcolor(RED);
+    ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\pvp.jpg",600,200,800,300 );
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\back.png",0,height-150,150,height );
+    ///left top right bottom
+    settextstyle(3,HORIZ_DIR,5);
+    outtextxy(width/2-150,height-180, "PLAYER 1");
+    outtextxy(width/2-150,70,"PLAYER 2");
+    outtextxy(100, height/4, "P2 SCORE:8");
+    outtextxy(width-400, height*3/4, "P1 SCORE:8");
 
     int X,Y,time = 2,castigator = 0,rand = 1, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8,clickedPlayer = player1;///rand stabileste cine trebuie sa mute piesa
     while(!castigator)
@@ -967,6 +996,31 @@ void playPVP()
                         getmouseclick(WM_LBUTTONDOWN, X, Y);
                         cout<<X<<" "<<Y<<'\n';
                         int L=0,C=0;
+                        int width=GetSystemMetrics(SM_CXSCREEN);
+                        int height=GetSystemMetrics(SM_CYSCREEN);
+                        if(X>width*19/20&&Y<height/20)
+                            exit(0);
+
+                        if(X<900&&X>800&&Y<600&&Y>500)
+                        {
+
+                            FILE *progres;
+                            progres=fopen("D:\\proiectcopy\\fisier.txt","w");
+                            int poz[101]={0},nr=0;
+                            for(int i=0;i<=9;++i)
+                                for(int j=0;j<=9;++j)
+                                    {
+                                        int coord=tabla[i][j].player;
+                                        cout<<coord<<" ";
+                                        //poz[++nr]=tabla[i][j].player;
+                                        fprintf(progres,"%d ",coord);
+                                        //fout<<coord<<" ";
+                                    }
+                            fclose(progres);
+                            //fwrite(&poz,sizeof(int),nr,progres);
+                            closegraph(CURRENT_WINDOW);
+                            initMeniu();
+                        }
                         cautaPiesaApasata(tabla, X,Y,L,C);
                         clickedPlayer = tabla[L][C].player;
                         cout<<L<<" "<<C<<"\n";
@@ -987,6 +1041,10 @@ void playPVP()
                 {
                     getmouseclick(WM_LBUTTONDOWN, X, Y);
                     cout<<X<<" "<<Y<<'\n';
+                    int width=GetSystemMetrics(SM_CXSCREEN);
+                    int height=GetSystemMetrics(SM_CYSCREEN);
+                    if(X>width*19/20&&Y<height/20)
+                            exit(0);
                     int vminx=100,vminy=100, L=0,C=0;
                     cautaPiesaApasata(tabla,X,Y,L,C);
                     cout<<L<<" "<<C<<"\n";
@@ -994,8 +1052,8 @@ void playPVP()
                     {
 
                         setcolor(YELLOW);
-                        outtextxy(610,530, "<- PLAYER 1: YOUR TURN!");
-                        outtextxy(610,50,"                                                 ");
+                        outtextxy(width/3-50,height-100,"PLAYER 1: YOUR TURN!");
+                        outtextxy(width/3-50,20,"                                                 ");
 
                         if(L>L1)
                             L=L1+1;
@@ -1014,8 +1072,8 @@ void playPVP()
                     else if(rand==1 && clickedPlayer == player1)
                     {
                         setcolor(YELLOW);
-                        outtextxy(610,50, "<- PLAYER 2: YOUR TURN!");
-                        outtextxy(610,530,"                                                ");
+                        outtextxy(width/3-50,20, "PLAYER 2: YOUR TURN!");
+                        outtextxy(width/3-50,height-100,"                                                ");
                         if(L>L1)
                             L=L1+1;
                         else
@@ -1063,6 +1121,7 @@ void playAgainstSoldierBOT()
     initJoc();
     readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
     initCoordonate();
+    exitbutton();
     //cleardevice();
 
     //PLAYER 2 = AI
@@ -1090,6 +1149,11 @@ void playAgainstSoldierBOT()
                 {
                     getmouseclick(WM_LBUTTONDOWN, X, Y);
                     cout<<X<<" "<<Y<<'\n';
+                    int width=GetSystemMetrics(SM_CXSCREEN);
+                    int height=GetSystemMetrics(SM_CYSCREEN);
+                    if(X>width*19/20&&Y<height/20)
+                        exit(0);
+
                     int L=0,C=0;
                     cautaPiesaApasata(tabla, X,Y,L,C);
                     setcolor(LIGHTRED);
@@ -1106,6 +1170,11 @@ void playAgainstSoldierBOT()
                     getmouseclick(WM_LBUTTONDOWN, X, Y);
                     cout<<X<<" "<<Y<<'\n';
                     int L=0,C=0;
+                    int width=GetSystemMetrics(SM_CXSCREEN);
+                    int height=GetSystemMetrics(SM_CYSCREEN);
+                    if(X>width*19/20&&Y<height/20)
+                        exit(0);
+
                     cautaPiesaApasata(tabla, X,Y,L,C);
                     cout<<L<<" "<<C<<"\n";
 
@@ -1639,9 +1708,13 @@ void playAgainstHitlerBOT()
 }
 void initMeniuBOT()
 {
-    initwindow(595,380);
+    int width=GetSystemMetrics(SM_CXSCREEN);
+    int height=GetSystemMetrics(SM_CYSCREEN);
+    initwindow(width,height,"",-3,-3);
     cleardevice();
-    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\difficulty.jpg",-40,-40,630,420);
+    ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\difficulty.jpg",-40,-40,630,420);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\ai.jpg",-40,-40,width+40,height+40);
+    exitbutton();
     int x,y;
     int temp=1;
     while(temp>0)
@@ -1651,13 +1724,18 @@ void initMeniuBOT()
             clearmouseclick(WM_LBUTTONDOWN);
             x=mousex();
             y=mousey();
+            if(x>width*19/20&&y<height/20)
+                exit(0);
+
             cout<<x<<" "<<y;
-            if ((x>30  && x<290 && y>270 && y<300)||(x>115  && x<180 && y>325 && y<345))
+            //if ((x>30  && x<290 && y>270 && y<300)||(x>115  && x<180 && y>325 && y<345))
+            if(x<width/2&&y>height*2/3)
             {
                 closegraph(CURRENT_WINDOW);
                 playAgainstSoldierBOT();
             }
-            else if ((x>340  && x<565 && y>270 && y<305)||(x>405  && x<480 && y>325 && y<345))
+            //else if ((x>340  && x<565 && y>270 && y<305)||(x>405  && x<480 && y>325 && y<345))
+            else if(x>width/2&&y>height*2/3)
             {
                 closegraph(CURRENT_WINDOW);
                 playAgainstHitlerBOT();
@@ -1667,11 +1745,15 @@ void initMeniuBOT()
     }
 
 }
-void initMeniu()
+void initpvpmeniu()
 {
-    initwindow(595,380);
+    int width=GetSystemMetrics(SM_CXSCREEN);
+    int height=GetSystemMetrics(SM_CYSCREEN);
+    initwindow(width,height,"",-3,-3);
     cleardevice();
-    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\razboi2.jpg",-40,-40,630,420 );
+    ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\difficulty.jpg",-40,-40,630,420);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\load game.jpg",-40,-40,width+40,height+40);
+    exitbutton();
     int x,y;
     int temp=1;
     while(temp>0)
@@ -1681,9 +1763,64 @@ void initMeniu()
             clearmouseclick(WM_LBUTTONDOWN);
             x=mousex();
             y=mousey();
-            if (x>175  && x<400 && y>150 && y<200)
+            if(x>width*19/20&&y<height/20)
+                exit(0);
+
+            if (x>width/4  && x<width*3/4 && y>height/4 && y<height/2)
+            {
+                closegraph();
+                initMatrice();
                 playPVP();
-            else if(x>145  && x<408 && y>250 && y<300)
+            }
+            else if(x>width/4  && x<width*3/4 && y>height/2 && y<height*3/4)
+            {
+                initMatrice();
+                FILE *progres=fopen("D:\\proiectcopy\\fisier.txt","r");
+                int poz[101],nr=0;
+                closegraph();
+                while(!feof(progres))
+                {
+                    int coord;
+                    fscanf(progres,"%d",&coord);
+                    cout<<coord<<" ";
+                    poz[++nr]=coord;
+                }
+                int k=1;
+                for(int i=0;i<=9;++i)
+                    for(int j=0;j<=9;++j)
+                        tabla[i][j].player=poz[k],k++;
+                fclose(progres);
+                playPVP();
+            }
+        }
+    }
+}
+void initMeniu()
+{
+    int width=GetSystemMetrics(SM_CXSCREEN);
+    int height=GetSystemMetrics(SM_CYSCREEN);
+    initwindow(width,height,"",-3,-3);
+    cleardevice();
+    ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\razboi2.jpg",-40,-40,630,420 );
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\pvp.jpg",-40,-40,width+40,height+40);
+    exitbutton();
+    int x,y;
+    int temp=1;
+    while(temp>0)
+    {
+        if(ismouseclick(WM_LBUTTONDOWN))
+        {
+            clearmouseclick(WM_LBUTTONDOWN);
+            x=mousex();
+            y=mousey();
+            if(x>width*19/20&&y<height/20)
+                exit(0);
+            else if (x>width/4  && x<width*3/4 && y>height/4 && y<height/2+200)
+            {
+                closegraph();
+                initpvpmeniu();
+            }
+            else if(x>width/4  && x<width*3/4 && y>height/2 && y<height*3/4)
             {
                 closegraph();
                 initMeniuBOT();
