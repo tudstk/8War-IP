@@ -125,11 +125,13 @@ void patrat(joc tabla[][10])
 }
 void form_tabla()
 {
+    int width=GetSystemMetrics(SM_CXSCREEN);
+    int height=GetSystemMetrics(SM_CYSCREEN);
     int i,j,k=0,poly[8],l,m=0;
     double x=68;
     double y=68;
-    for(i=30,k+=y; m<8; i+=y,m++)
-        for(j=30,l=0; l<8; j+=x,l++)
+    for(i=(height-544)/2-34,k+=y; m<8; i+=y,m++)
+        for((width-544)/2-34,l=0; l<8; j+=x,l++)
         {
             if((l%2==1 && m%2==0) || (l%2==0 && m%2==1))
             {
@@ -149,6 +151,7 @@ void form_tabla()
     setcolor(WHITE);
     rectangle(30,30,574,574);
 }
+void initMeniu();
 void initJoc()
 {
     int width=GetSystemMetrics(SM_CXSCREEN);
@@ -156,6 +159,8 @@ void initJoc()
 
     initwindow(width,height,"",-3,-3);
     readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\theme.jpg",-40,-40,width+40,height+40);
+    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
+
     exitbutton();
 
     int X,Y;
@@ -169,6 +174,12 @@ void initJoc()
             Y=mousey();
             if(X>width*19/20&&Y<height/20)
                 exit(0);
+            if(X<150&&X>0&&Y<height&&Y>height-150)
+            {
+
+                closegraph(CURRENT_WINDOW);
+                initMeniu();
+            }
             else if (X>686  && X<876 && Y>348 && Y<430)
             {
                 temp=0;
@@ -194,6 +205,7 @@ void initJoc()
     setbkcolor(color);
     if(color==RED)readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\bk.jpg",-40,-40,width+40,height+40);
     else if(color==BLUE)readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\bk2.jpg",-40,-40,width+40,height+40);
+    else if(color==GREEN)readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\bkgreen.jpg",-40,-40,width+40,height+40);
     exitbutton();
 
     setbkcolor(color);
@@ -994,7 +1006,6 @@ void verificaCastigator(int nrPiesePlayer1, int nrPiesePlayer2)
         //initMeniu();
     }
 }
-void initMeniu();
 void playPVP()
 {
 
@@ -1078,6 +1089,26 @@ void playPVP()
                     int height=GetSystemMetrics(SM_CYSCREEN);
                     if(X>width*19/20&&Y<height/20)
                             exit(0);
+                    if(X<150&&X>0&&Y<height&&Y>height-150)
+                        {
+
+                            FILE *progres;
+                            progres=fopen("D:\\proiectcopy\\fisier.txt","w");
+                            int poz[101]={0},nr=0;
+                            for(int i=0;i<=9;++i)
+                                for(int j=0;j<=9;++j)
+                                    {
+                                        int coord=tabla[i][j].player;
+                                        cout<<coord<<" ";
+                                        //poz[++nr]=tabla[i][j].player;
+                                        fprintf(progres,"%d ",coord);
+                                        //fout<<coord<<" ";
+                                    }
+                            fclose(progres);
+                            //fwrite(&poz,sizeof(int),nr,progres);
+                            closegraph(CURRENT_WINDOW);
+                            initMeniu();
+                        }
                     int vminx=100,vminy=100, L=0,C=0;
                     cautaPiesaApasata(tabla,X,Y,L,C);
                     cout<<L<<" "<<C<<"\n";
@@ -1149,10 +1180,12 @@ void playPVP()
 
 void playAgainstSoldierBOT()
 {
-
     closegraph(CURRENT_WINDOW);
     initJoc();
+    int width=GetSystemMetrics(SM_CXSCREEN);
+    int height=GetSystemMetrics(SM_CYSCREEN);
     readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
     initCoordonate();
     exitbutton();
     //cleardevice();
@@ -1182,11 +1215,13 @@ void playAgainstSoldierBOT()
                 {
                     getmouseclick(WM_LBUTTONDOWN, X, Y);
                     cout<<X<<" "<<Y<<'\n';
-                    int width=GetSystemMetrics(SM_CXSCREEN);
-                    int height=GetSystemMetrics(SM_CYSCREEN);
                     if(X>width*19/20&&Y<height/20)
                         exit(0);
-
+                    if(X<150&&X>0&&Y<height&&Y>height-150)
+                        {
+                            closegraph(CURRENT_WINDOW);
+                            initMeniu();
+                        }
                     int L=0,C=0;
                     cautaPiesaApasata(tabla, X,Y,L,C);
                     setcolor(LIGHTRED);
@@ -1207,7 +1242,11 @@ void playAgainstSoldierBOT()
                     int height=GetSystemMetrics(SM_CYSCREEN);
                     if(X>width*19/20&&Y<height/20)
                         exit(0);
-
+                    if(X<150&&X>0&&Y<height&&Y>height-150)
+                        {
+                            closegraph(CURRENT_WINDOW);
+                            initMeniu();
+                        }
                     cautaPiesaApasata(tabla, X,Y,L,C);
                     cout<<L<<" "<<C<<"\n";
 
@@ -1577,9 +1616,13 @@ void playAgainstSoldierBOT()
 
 void playAgainstHitlerBOT()
 {
+    int width=GetSystemMetrics(SM_CXSCREEN);
+    int height=GetSystemMetrics(SM_CYSCREEN);
+
     closegraph(CURRENT_WINDOW);
     initJoc();
     readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
     initCoordonate();
     //cleardevice();
 
@@ -1593,6 +1636,9 @@ void playAgainstHitlerBOT()
     int X,Y,time=2,castigator=0,rand=2, coloanaBot = 2;///rand stabileste cine trebuie sa mute piesa
     int I_ai=2, J_ai = coloanaBot, jCount=1, countMutariInitiale=1, piesaMutata[9]= {0};
     int liniaCurenta = 2,randMutare=1, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8, I_intermediar = 3;
+
+    exitbutton();
+
     while(!castigator)
     {
         while(time>0)
@@ -1602,12 +1648,19 @@ void playAgainstHitlerBOT()
                 int L1,C1;
                 if(time==2)
                 {
-                    getmouseclick(WM_LBUTTONDOWN, X, Y);
                     cout<<X<<" "<<Y<<'\n';
+                    getmouseclick(WM_LBUTTONDOWN, X, Y);
+                    if(X>width*19/20&&Y<height/20)
+                        exit(0);
+                    if(X<150&&X>0&&Y<height&&Y>height-150)
+                        {
+                            closegraph(CURRENT_WINDOW);
+                            initMeniu();
+                        }
                     int L=0,C=0;
                     cautaPiesaApasata(tabla, X,Y,L,C);
-                    setcolor(LIGHTRED);
-                    setfillstyle(1,LIGHTRED);
+                    setcolor(tabla[1][1].colour+8);
+                    setfillstyle(1,tabla[1][1].colour);
                     fillellipse(tabla[L][C].x,tabla[L][C].y,30,30);
                     L1=L;
                     C1=C;
@@ -1616,7 +1669,17 @@ void playAgainstHitlerBOT()
                 }
                 if(time==1)
                 {
+                    int width=GetSystemMetrics(SM_CXSCREEN);
+                    int height=GetSystemMetrics(SM_CYSCREEN);
+                    cout<<X<<" "<<Y<<'\n';
                     getmouseclick(WM_LBUTTONDOWN, X, Y);
+                    if(X>width*19/20&&Y<height/20)
+                        exit(0);
+                    if(X<150&&X>0&&Y<height&&Y>height-150)
+                        {
+                            closegraph(CURRENT_WINDOW);
+                            initMeniu();
+                        }
                     cout<<X<<" "<<Y<<'\n';
                     int L=0,C=0;
                     cautaPiesaApasata(tabla, X,Y,L,C);
@@ -1747,16 +1810,27 @@ void initMeniuBOT()
     cleardevice();
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\difficulty.jpg",-40,-40,630,420);
     readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\ai.jpg",-40,-40,width+40,height+40);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
+
     exitbutton();
+
     int x,y;
     int temp=1;
     while(temp>0)
     {
         if(ismouseclick(WM_LBUTTONDOWN))
         {
-            clearmouseclick(WM_LBUTTONDOWN);
+            int width=GetSystemMetrics(SM_CXSCREEN);
+            int height=GetSystemMetrics(SM_CYSCREEN);
             x=mousex();
             y=mousey();
+            if(x>width*19/20&&y<height/20)
+                exit(0);
+            if(x<150&&x>0&&y<height&&y>height-150)
+            {
+                closegraph(CURRENT_WINDOW);
+                initMeniu();
+            }
             if(x>width*19/20&&y<height/20)
                 exit(0);
 
@@ -1786,6 +1860,7 @@ void initpvpmeniu()
     cleardevice();
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\difficulty.jpg",-40,-40,630,420);
     readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\load game.jpg",-40,-40,width+40,height+40);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
     exitbutton();
     int x,y;
     int temp=1;
@@ -1798,7 +1873,11 @@ void initpvpmeniu()
             y=mousey();
             if(x>width*19/20&&y<height/20)
                 exit(0);
-
+            if(x<150&&y>height-150)
+            {
+                closegraph();
+                initMeniu();
+            }
             if (x>width/4  && x<width*3/4 && y>height/4 && y<height/2)
             {
                 closegraph();
@@ -1848,7 +1927,7 @@ void initMeniu()
             y=mousey();
             if(x>width*19/20&&y<height/20)
                 exit(0);
-            else if (x>width/4  && x<width*3/4 && y>height/4 && y<height/2+200)
+            else if (x>width/4  && x<width*3/4 && y>height/4 && y<height/2+100)
             {
                 closegraph();
                 initpvpmeniu();
@@ -1856,6 +1935,7 @@ void initMeniu()
             else if(x>width/4  && x<width*3/4 && y>height/2 && y<height*3/4)
             {
                 closegraph();
+                initMatrice();
                 initMeniuBOT();
             }
         }
