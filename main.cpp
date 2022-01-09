@@ -1001,7 +1001,7 @@ void playPVP()
                         if(X>width*19/20&&Y<height/20)
                             exit(0);
 
-                        if(X<900&&X>800&&Y<600&&Y>500)
+                        if(X<150&&X>0&&Y<height&&Y>height-150)//0,height-150,150,height
                         {
 
                             FILE *progres;
