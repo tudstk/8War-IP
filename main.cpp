@@ -29,7 +29,7 @@ using namespace std;
 */
 struct joc
 {
-
+    int colour;
     int x,y;///coord piesei de pe linia L si coloana C (coresp A[L][C])
     int L,C;///L=i,C=j in parcurgerea lui A[][]
     int player;/// 1-neagra(circle), 2-alba(fillellipse), 3-spatiu inaccesibil 0-neocupat
@@ -125,14 +125,11 @@ void patrat(joc tabla[][10])
 }
 void form_tabla()
 {
-    int width=GetSystemMetrics(SM_CXSCREEN);
-    int height=GetSystemMetrics(SM_CYSCREEN);
     int i,j,k=0,poly[8],l,m=0;
     double x=68;
     double y=68;
-    //width/2   (height-544)/2
-    for(i=width/2,k+=y; m<8; i+=y,m++)
-        for(j,l=0; l<8; j+=x,l++)
+    for(i=30,k+=y; m<8; i+=y,m++)
+        for(j=30,l=0; l<8; j+=x,l++)
         {
             if((l%2==1 && m%2==0) || (l%2==0 && m%2==1))
             {
@@ -149,21 +146,57 @@ void form_tabla()
                 fillpoly(4,poly);
             }
         }
-    /*setcolor(WHITE);
-    rectangle(30,30,574,574);*/
-
+    setcolor(WHITE);
+    rectangle(30,30,574,574);
 }
 void initJoc()
 {
     int width=GetSystemMetrics(SM_CXSCREEN);
     int height=GetSystemMetrics(SM_CYSCREEN);
-    initwindow(width,height,"",-3,-3);
-    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\bk.jpg",-40,-40,width+40,height+40);
-    //cleardevice();
 
+    initwindow(width,height,"",-3,-3);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\theme.jpg",-40,-40,width+40,height+40);
     exitbutton();
 
-    setbkcolor(RED);
+    int X,Y;
+    int temp=1,color=1;
+    while(temp>0)
+    {
+        if(ismouseclick(WM_LBUTTONDOWN))
+        {
+            clearmouseclick(WM_LBUTTONDOWN);
+            X=mousex();
+            Y=mousey();
+            if(X>width*19/20&&Y<height/20)
+                exit(0);
+            else if (X>686  && X<876 && Y>348 && Y<430)
+            {
+                temp=0;
+                color=RED;
+                closegraph();
+            }
+            else if(X>656  && X<916 && Y>490 && Y<566)
+            {
+                temp=0;
+                color=BLUE;
+                closegraph();
+            }
+            else if(X>607  && X<954 && Y>627 && Y<702)
+            {
+                temp=0;
+                color=GREEN;
+                closegraph();
+            }
+        }
+    }
+    tabla[1][1].colour=color;
+    initwindow(width,height,"",-3,-3);
+    setbkcolor(color);
+    if(color==RED)readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\bk.jpg",-40,-40,width+40,height+40);
+    else if(color==BLUE)readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\bk2.jpg",-40,-40,width+40,height+40);
+    exitbutton();
+
+    setbkcolor(color);
     settextstyle(3,HORIZ_DIR,5);
     setcolor(YELLOW);
     outtextxy(width/3-50,height-100,"PLAYER 1: YOUR TURN!");
@@ -193,8 +226,8 @@ void initJoc()
             }
             else
             {
-                setcolor(LIGHTRED);
-                setfillstyle(1,LIGHTRED);
+                setcolor(color+8);
+                setfillstyle(1,color+8);
                 poly[0]=j;
                 poly[1]=i;
                 poly[2]=j+x;
@@ -206,6 +239,7 @@ void initJoc()
                 fillpoly(4,poly);
             }
         }
+
     patrat(tabla);
 }
 void mutareDreaptaJOS(joc tabla[][10], int i, int j)
@@ -873,8 +907,8 @@ void cautaPiesaApasata(joc tabla[][10], int X, int Y,int &L,int &C)
 }
 void elimina_piesa(int lin,int col,joc tabla[][10])
 {
-    setcolor(LIGHTRED);
-    setfillstyle(1,LIGHTRED);
+    setcolor(tabla[1][1].colour+8);
+    setfillstyle(1,tabla[1][1].colour+8);
     fillellipse(tabla[lin][col].x,tabla[lin][col].y,30,30);
 }
 void verificaStergereALB(int i, int j, joc tabla[][10], int &nrPiesePlayer1)
@@ -888,8 +922,8 @@ void verificaStergereALB(int i, int j, joc tabla[][10], int &nrPiesePlayer1)
                 &&((tabla[i-1][j+1].player==player2||tabla[i-1][j+1].player==inexistent)||tabla[i-1][j+1].player==player1))
         {
             tabla[i][j].player=neocupat;
-            setcolor(LIGHTRED);
-            setfillstyle(1,LIGHTRED);
+            setcolor(tabla[1][1].colour+8);
+            setfillstyle(1,tabla[1][1].colour+8);
             fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
             nrPiesePlayer1--;
         }
@@ -899,8 +933,8 @@ void verificaStergereALB(int i, int j, joc tabla[][10], int &nrPiesePlayer1)
                 ||(tabla[i-1][j+1].player!=neocupat&&tabla[i-1][j-1].player==player2))
         {
             tabla[i][j].player=neocupat;
-            setcolor(LIGHTRED);
-            setfillstyle(1,LIGHTRED);
+            setcolor(tabla[1][1].colour+8);
+            setfillstyle(1,tabla[1][1].colour+8);
             fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
             nrPiesePlayer1--;
         }
@@ -915,8 +949,8 @@ void verificaStergereNEGRU(int i, int j, joc tabla[][10], int &nrPiesePlayer2)
                 &&((tabla[i-1][j+1].player==player2||tabla[i-1][j+1].player==inexistent)||tabla[i-1][j+1].player==player1))
         {
             tabla[i][j].player = neocupat;
-            setcolor(LIGHTRED);
-            setfillstyle(1,LIGHTRED);
+            setcolor(tabla[1][1].colour+8);
+            setfillstyle(1,tabla[1][1].colour+8);
             fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
             nrPiesePlayer2--;
 
@@ -927,8 +961,8 @@ void verificaStergereNEGRU(int i, int j, joc tabla[][10], int &nrPiesePlayer2)
             ||(tabla[i+1][j+1].player!=neocupat&&tabla[i+1][j-1].player==player1))
             {
                 tabla[i][j].player=neocupat;
-                setcolor(LIGHTRED);
-                setfillstyle(1,LIGHTRED);
+                setcolor(tabla[1][1].colour+8);
+                setfillstyle(1,tabla[1][1].colour+8);
                 fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
                 nrPiesePlayer2--;
             }
@@ -970,9 +1004,8 @@ void playPVP()
     initJoc();
     initCoordonate();
     setcolor(YELLOW);
-    setbkcolor(RED);
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\pvp.jpg",600,200,800,300 );
-    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\back.png",0,height-150,150,height );
+    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\back.png",0,height-150,150,height );
     ///left top right bottom
     settextstyle(3,HORIZ_DIR,5);
     outtextxy(width/2-150,height-180, "PLAYER 1");
@@ -1001,7 +1034,7 @@ void playPVP()
                         if(X>width*19/20&&Y<height/20)
                             exit(0);
 
-                        if(X<150&&X>0&&Y<height&&Y>height-150)//0,height-150,150,height
+                        if(X<150&&X>0&&Y<height&&Y>height-150)
                         {
 
                             FILE *progres;
