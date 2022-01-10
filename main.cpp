@@ -57,29 +57,6 @@ void initMatrice()
         cout<<'\n';
     }
 }
-void initCoordonate()
-{
-    int width=GetSystemMetrics(SM_CXSCREEN);
-    int height=GetSystemMetrics(SM_CYSCREEN);
-    tabla[1][1].x = (width-544)/2;     //544 e lungimea si latimea tablei
-    tabla[1][1].y = (height-544)/2;
-    for(int j=2; j<=8; j++)
-    {
-        tabla[1][j].x = tabla[1][j-1].x + 68;
-        tabla[1][j].y = (height-544)/2;
-    }
-    int i,j;
-    for(i=2; i<=8; i++)
-    {
-        for(j=1; j<=8; j++)
-        {
-            tabla[i][j].x = tabla[i-1][j].x;
-            tabla[i][j].y = tabla[i-1][j].y + 68;
-
-        }
-
-    }
-}
 void exitbutton()
 {
     int width=GetSystemMetrics(SM_CXSCREEN);
@@ -106,6 +83,30 @@ void exitbutton()
                 exit(0);
                 */
 }
+void initCoordonate()
+{
+    int width=GetSystemMetrics(SM_CXSCREEN);
+    int height=GetSystemMetrics(SM_CYSCREEN);
+    tabla[1][1].x = (width-544)/2;     //544 e lungimea si latimea tablei
+    tabla[1][1].y = (height-544)/2;
+    for(int j=2; j<=8; j++)
+    {
+        tabla[1][j].x = tabla[1][j-1].x + 68;
+        tabla[1][j].y = (height-544)/2;
+    }
+    int i,j;
+    for(i=2; i<=8; i++)
+    {
+        for(j=1; j<=8; j++)
+        {
+            tabla[i][j].x = tabla[i-1][j].x;
+            tabla[i][j].y = tabla[i-1][j].y + 68;
+
+        }
+
+    }
+}
+
 void patrat(joc tabla[][10])
 {
     for(int i=1;i<=8;++i)
@@ -2072,10 +2073,11 @@ void playAgainstSoldierBOT()
 
     closegraph(CURRENT_WINDOW);
     initJoc();
+    initCoordonate();
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
     readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
     readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
-    initCoordonate();
+
     //cleardevice();
 
     //PLAYER 2 = AI
