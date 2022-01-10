@@ -152,14 +152,16 @@ void form_tabla()
     rectangle(30,30,574,574);
 }
 void initMeniu();
+
 void initJoc()
 {
     int width=GetSystemMetrics(SM_CXSCREEN);
     int height=GetSystemMetrics(SM_CYSCREEN);
 
     initwindow(width,height,"",-3,-3);
-    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\theme.jpg",-40,-40,width+40,height+40);
-    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
+    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\theme.jpg",-40,-40,width+40,height+40);
+    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\theme.jpg",-40,-40,width+40,height+40);
+    ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
 
     exitbutton();
 
@@ -203,11 +205,13 @@ void initJoc()
     tabla[1][1].colour=color;
     initwindow(width,height,"",-3,-3);
     setbkcolor(color);
-    if(color==RED)readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\bk.jpg",-40,-40,width+40,height+40);
-    else if(color==BLUE)readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\bk2.jpg",-40,-40,width+40,height+40);
-    else if(color==GREEN)readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\bkgreen.jpg",-40,-40,width+40,height+40);
+    if(color==RED)readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bk.jpg",-40,-40,width+40,height+40);
+    else if(color==BLUE)readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bk2.jpg",-40,-40,width+40,height+40);
+    else if(color==GREEN)readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bkgreen.jpg",-40,-40,width+40,height+40);
     exitbutton();
 
+    ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bk.jpg",-40,-40,width+40,height+40);
+    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\bk.jpg",-40,-40,width+40,height+40);
     setbkcolor(color);
     settextstyle(3,HORIZ_DIR,5);
     setcolor(YELLOW);
@@ -980,6 +984,34 @@ void verificaStergereNEGRU(int i, int j, joc tabla[][10], int &nrPiesePlayer2)
                 nrPiesePlayer2--;
             }
 }
+bool verificaPericol(joc tabla[][10], int i, int j)
+{
+    if(tabla[i][j].player==neocupat)
+    {
+        if(tabla[i+1][j-1].player==player2 && tabla[i-1][j+1].player==player2
+                &&(tabla[i-2][j].player==player2 || tabla[i-2][j].player==player1) &&
+                (tabla[i][j+2].player==player2 || tabla[i][j+2].player==player1) &&
+                (tabla[i-2][j+2].player==player2 || tabla[i-2][j+2].player==player1))
+            return true;///colt stanga jos
+        else if(tabla[i-1][j-1].player==player2 && tabla[i+1][j+1].player==player2
+                && (tabla[i][j+2].player==player2 ||tabla[i][j+2].player==player1)
+                && (tabla[i+2][j].player==player2 || tabla[i+2][j].player==player1) &&
+                (tabla[i+2][j+2].player==player2 || tabla[i+2][j+2].player==player1))
+            return true;///colt stanga sus
+        else if(tabla[i+1][j+1].player==player2 && tabla[i-1][j-1].player==player2
+                &&(tabla[i][j-2].player==player2 || tabla[i][j-2].player==player1)
+                && (tabla[i-2][j].player==player2 || tabla[i-2][j].player==player1) &&
+                (tabla[i-2][j-2].player==player2||tabla[i-2][j-2].player==player1))
+            return true;///colt dreapta jos
+        else if(tabla[i-1][j+1].player==player2 && tabla[i+1][j-1].player==player2
+                &&(tabla[i][j-2].player==player1 || tabla[i][j-2].player==player2)
+                && (tabla[i+2][j].player==player1 || tabla[i+2][j].player==player2) &&
+                (tabla[i+2][j-2].player==player1 || tabla[i+2][j-2].player==player2))
+            return true;///colt dreapta sus
+    }
+    return false;
+
+}
 void verificaCastigator(int nrPiesePlayer1, int nrPiesePlayer2)
 {
     if(nrPiesePlayer1 == 0||(nrPiesePlayer1+2<=nrPiesePlayer2))///3 piese asigura eliminarea unei piese in cazul 3<=3,nrPiesePlayer1=1 si nrPiesePlayer2=3
@@ -1209,15 +1241,423 @@ void playPVP()
     }
 
 }
+void inchiderePiesa(int &mutat)
+{
+    mutat=0;
+    for(int i = 1; i <= 8; i++)
+        for(int j = 1; j <= 8; j++)
+        {
+            ///caz I - colt STANGA JOS
+            if(tabla[i][j].player==player1 && (tabla[i-1][j-1].player==player2 || tabla[i-1][j-1].player==player1) && (tabla[i-1][j+1].player==player2 || tabla[i-1][j+1].player==player1) && (tabla[i+1][j+1].player==player2 || tabla[i+1][j+1].player==player1) && tabla[i+1][j-1].player==neocupat)
+            {
+                if(tabla[i][j-2].player==player2)
+                {
+                    mutat = 1;
+                    mutareDreaptaJOS(tabla,i,j-2);
+                    tabla[i][j-2].player=neocupat;
+                    tabla[i+1][j-1].player=player2;
+                    break;
+                }
+                else if(tabla[i+2][j-2].player == player2)
+                {
+                    mutat=1;
+                    mutareDreaptaSUS(tabla,i+2,j-2);
+                    tabla[i+2][j-2].player=neocupat;
+                    tabla[i+1][j-1].player=player2;
+                    break;
+                }
+                else if(tabla[i+2][j].player ==player2)
+                {
+                    mutat = 1;
+                    mutareStangaSUS(tabla,i+2,j);
+                    tabla[i+2][j].player=neocupat;
+                    tabla[i+1][j-1].player=player2;
+                    break;
+                }
+            }
+            ///caz 2 - colt DREAPTA JOS
+            else if(tabla[i][j].player==player1 && (tabla[i+1][j-1].player==player2 || tabla[i+1][j-1].player==player1) && (tabla[i-1][j-1].player==player2 || tabla[i-1][j-1].player==player1) && (tabla[i-1][j+1].player==player2 || tabla[i-1][j+1].player==player1) && tabla[i+1][j+1].player==neocupat)
+            {
+                if(tabla[i][j+2].player==player2)
+                {
+                    mutat=1;
+                    mutareStangaJOS(tabla,i,j+2);
+                    tabla[i][j+2].player=neocupat;
+                    tabla[i+1][j+1].player=player2;
+                    break;
+                }
+                else if(tabla[i+2][j+2].player == player2)
+                {
+                    mutat=1;
+                    mutareStangaSUS(tabla,i+2,j+2);
+                    tabla[i+2][j+2].player=neocupat;
+                    tabla[i+1][j+1].player=player2;
+                    break;
+                }
+                else if(tabla[i+2][j].player == player2)
+                {
+                    mutat=1;
+                    mutareDreaptaSUS(tabla,i+2,j);
+                    tabla[i+2][j].player=neocupat;
+                    tabla[i+1][j+1].player=player2;
+                    break;
+                }
+            }
+            ///caz 3 - colt DREAPTA SUS
+            else if(tabla[i][j].player==player1 && (tabla[i+1][j-1].player==player2 || tabla[i+1][j-1].player==player1) && (tabla[i-1][j-1].player==player2 || tabla[i-1][j-1].player==player1) && (tabla[i+1][j+1].player==player2 || tabla[i+1][j+1].player==player1) && tabla[i-1][j+1].player==neocupat)
+            {
+                if(tabla[i-2][j+2].player == player2)
+                {
+                    mutat=1;
+                    mutareStangaJOS(tabla,i-2,j+2);
+                    tabla[i-2][j+2].player=neocupat;
+                    tabla[i-1][j+1].player=player2;
+                    break;
+                }
+                else if(tabla[i-2][j].player == player2)
+                {
+                    mutat=1;
+                    mutareDreaptaJOS(tabla,i-2,j);
+                    tabla[i-2][j].player=neocupat;
+                    tabla[i-1][j+1].player=player2;
+                    break;
+                }
+                else if(tabla[i][j+2].player ==player2)
+                {
+                    mutat=1;
+                    mutareStangaSUS(tabla,i,j+2);
+                    tabla[i][j+2].player=neocupat;
+                    tabla[i-1][j+1].player=player2;
+                    break;
+                }
+            }
+            ///caz 4 - colt STANGA SUS
+            else if(tabla[i][j].player==player1 && (tabla[i+1][j-1].player==player2 || tabla[i+1][j-1].player==player1) && (tabla[i-1][j+1].player==player2 || tabla[i-1][j+1].player==player1) && (tabla[i+1][j+1].player==player2 || tabla[i+1][j+1].player==player1) && tabla[i-1][j-1].player==neocupat)
+            {
+                if(tabla[i-2][j-2].player == player2)
+                {
+                    mutat=1;
+                    mutareDreaptaJOS(tabla,i-2,j-2);
+                    tabla[i-2][j-2].player=neocupat;
+                    tabla[i-1][j-1].player=player2;
+                    break;
+                }
+                else if(tabla[i-2][j].player == player2)
+                {
+                    mutat=1;
+                    mutareStangaJOS(tabla,i-2,j);
+                    tabla[i-2][j].player=neocupat;
+                    tabla[i-1][j-1].player=player2;
+                    break;
+                }
+                else if(tabla[i][j-2].player ==player2)
+                {
+                    mutat=1;
+                    mutareDreaptaSUS(tabla,i,j-2);
+                    tabla[i][j-2].player=neocupat;
+                    tabla[i-1][j-1].player=player2;
+                    break;
+                }
+            }
+            ///caz 5 - margine STANGA - SUS
+            else if(tabla[i][j].player==player1 && tabla[i][j-1].player==inexistent && tabla[i+1][j-1].player==inexistent && (tabla[i+1][j+1].player==player1||tabla[i+1][j+1].player==player2)&&tabla[i-1][j+1].player==neocupat)
+            {
+                if(tabla[i-2][j].player==player2)
+                {
+                    mutat=1;
+                    mutareDreaptaJOS(tabla,i-2,j);
+                    tabla[i-2][j].player=neocupat;
+                    tabla[i-1][j+1].player=player2;
+                    break;
+                }
+                else if(tabla[i-2][j+2].player==player2)
+                {
+                    mutat=1;
+                    mutareStangaJOS(tabla,i-2,j+2);
+                    tabla[i-2][j+2].player=neocupat;
+                    tabla[i-1][j+1].player=player2;
+                    break;
+                }
+                else if(tabla[i][j+2].player==player2)
+                {
+                    mutat=1;
+                    mutareStangaSUS(tabla,i,j+2);
+                    tabla[i][j+2].player=neocupat;
+                    tabla[i-1][j+1].player=player2;
+                    break;
+                }
+            }
+            ///caz 6 - margine STANGA - JOS
+            else if(tabla[i][j].player==player1 && tabla[i][j-1].player==inexistent && tabla[i+1][j-1].player==inexistent && (tabla[i-1][j+1].player==player1||tabla[i-1][j+1].player==player2)&&tabla[i+1][j+1].player==neocupat)
+            {
+                if(tabla[i+2][j].player==player2)
+                {
+                    mutat=1;
+                    mutareDreaptaSUS(tabla,i+2,j);
+                    tabla[i+2][j].player=neocupat;
+                    tabla[i+1][j+1].player=player2;
+                    break;
+                }
+                else if(tabla[i+2][j+2].player==player2)
+                {
+                    mutat=1;
+                    mutareStangaSUS(tabla,i+2,j+2);
+                    tabla[i+2][j+2].player=neocupat;
+                    tabla[i+1][j+1].player=player2;
+                    break;
+                }
+                else if(tabla[i][j+2].player==player2)
+                {
+                    mutat=1;
+                    mutareStangaJOS(tabla,i,j+2);
+                    tabla[i][j+2].player=neocupat;
+                    tabla[i+1][j+1].player=player2;
+                    break;
+                }
+            }
+            ///caz 7 - margine SUS - STANGA
+            else if(tabla[i][j].player==player1 && tabla[i-1][j].player==inexistent && tabla[i-1][j-1].player==inexistent && (tabla[i+1][j+1].player==player2||tabla[i+1][j+1].player==player1) && tabla[i+1][j-1].player==neocupat)
+            {
+                if(tabla[i+2][j-2].player==player2)
+                {
+                    mutat=1;
+                    mutareDreaptaSUS(tabla, i+2, j-2);
+                    tabla[i+2][j-2].player=neocupat;
+                    tabla[i+1][j-1].player=player2;
+                    break;
+                }
+                else if(tabla[i][j-2].player==player2)
+                {
+                    mutat=1;
+                    mutareDreaptaJOS(tabla, i, j-2);
+                    tabla[i][j-2].player=neocupat;
+                    tabla[i+1][j-1].player=player2;
+                    break;
+                }
+                else if(tabla[i+2][j].player==player2)
+                {
+                    mutat=1;
+                    mutareDreaptaSUS(tabla, i+2, j);
+                    tabla[i+2][j].player=neocupat;
+                    tabla[i+1][j-1].player=player2;
+                    break;
+                }
+            }
+            ///caz 8 - margine sus - DREAPTA
+            else if(tabla[i][j].player==player1 && tabla[i-1][j].player==inexistent && tabla[i-1][j-1].player==inexistent &&(tabla[i+1][j-1].player==player2||tabla[i+1][j-1].player==player1) && tabla[i+1][j+1].player==neocupat)
+            {
+                if(tabla[i+2][j+2].player==player2)
+                {
+                    mutat=1;
+                    mutareStangaSUS(tabla,i+2,j+2);
+                    tabla[i+2][j+2].player=neocupat;
+                    tabla[i+1][j+1].player=player2;
+                    break;
+                }
+                else if(tabla[i][j+2].player==player2)
+                {
+                    mutat=1;
+                    mutareStangaJOS(tabla,i,j+2);
+                    tabla[i][j+2].player=neocupat;
+                    tabla[i+1][j+1].player=player2;
+                    break;
+                }
+                else if(tabla[i+2][j].player==player2)
+                {
+                    mutat=1;
+                    mutareDreaptaSUS(tabla,i+2,j);
+                    tabla[i+2][j].player=neocupat;
+                    tabla[i+1][j+1].player=player2;
+                    break;
+                }
+            }
+            ///caz 9 - margine DREAPTA - JOS
+            else if(tabla[i][j].player==player1 && tabla[i][j+1].player==inexistent && tabla[i-1][j+1].player==inexistent &&(tabla[i-1][j-1].player==player2 || tabla[i-1][j-1].player==player1)&&tabla[i+1][j-1].player==neocupat)
+            {
 
-void playAgainstSoldierBOT()
+                if(tabla[i+2][j-2].player==player2)
+                {
+                    mutat=1;
+                    mutareDreaptaSUS(tabla, i+2,j-2);
+                    tabla[i+2][j-2].player=neocupat;
+                    tabla[i+1][j-1].player=player2;
+                    break;
+                }
+                else if(tabla[i][j-2].player==player2)
+                {
+                    mutat=1;
+                    mutareDreaptaJOS(tabla,i,j-2);
+                    tabla[i][j-2].player=neocupat;
+                    tabla[i+1][j-1].player=player2;
+                    break;
+                }
+                else if(tabla[i+2][j].player==player2)
+                {
+                    mutat=1;
+                    mutareStangaSUS(tabla,i+2,j);
+                    tabla[i+2][j].player=neocupat;
+                    tabla[i+1][j-1].player=player2;
+                    break;
+                }
+            }
+            ///cazul 10 -  margine DREAPTA - SUS
+            else if(tabla[i][j].player==player1 && tabla[i][j+1].player==inexistent && tabla[i-1][j+1].player==inexistent && (tabla[i+1][j-1].player==player2 || tabla[i+1][j-1].player==player1) && tabla[i-1][j-1].player==neocupat)
+            {
+                if(tabla[i-2][j-2].player==player2)
+                {
+                    mutat=1;
+                    mutareDreaptaJOS(tabla,i-2,j-2);
+                    tabla[i-2][j-2].player=neocupat;
+                    tabla[i-1][j-1].player=player2;
+                    break;
+                }
+                else if(tabla[i-2][j].player==player2)
+                {
+                    mutat=1;
+                    mutareStangaJOS(tabla,i-2,j);
+                    tabla[i-2][j].player=neocupat;
+                    tabla[i-1][j-1].player=player2;
+                    break;
+                }
+                else if(tabla[i][j-2].player==player2)
+                {
+                    mutat=1;
+                    mutareDreaptaSUS(tabla,i,j-2);
+                    tabla[i][j-2].player=neocupat;
+                    tabla[i-1][j-1].player=player2;
+                    break;
+                }
+            }
+            ///cazul 11 - margine JOS -  DREAPTA
+            else if(tabla[i][j].player==player1 && tabla[i-1][j].player == inexistent && tabla[i-1][j-1].player==inexistent && (tabla[i-1][j-1].player==player2 && tabla[i-1][j-1].player==player1 ) && tabla[i-1][j+1].player==neocupat)
+            {
+                if(tabla[i-2][j+2].player==player2)
+                {
+                    mutat=1;
+                    mutareStangaJOS(tabla,i-2,j+2);
+                    tabla[i-2][j+2].player=neocupat;
+                    tabla[i-1][j+1].player=player2;
+                    break;
+                }
+                else if(tabla[i-2][j].player==player2)
+                {
+                    mutat=1;
+                    mutareStangaJOS(tabla,i-2,j+2);
+                    tabla[i-2][j+2].player=neocupat;
+                    tabla[i-1][j+1].player=player2;
+                    break;
+                }
+                else if(tabla[i][j+2].player==player2)
+                {
+                    mutat=1;
+                    mutareStangaSUS(tabla,i,j+2);
+                    tabla[i][j+2].player=neocupat;
+                    tabla[i-1][j+1].player=player2;
+                    break;
+                }
+            }
+            ///cazul 12 - margine JOS - STANGA
+            else if(tabla[i][j].player==player1 && tabla[i-1][j].player==inexistent && tabla[i-1][j-1].player==inexistent && (tabla[i-1][j+1].player==player2 || tabla[i-1][j+1].player==player1) && tabla[i-1][j-1].player==neocupat)
+            {
+                if(tabla[i-2][j-2].player==player2)
+                {
+                    mutat=1;
+                    mutareDreaptaJOS(tabla,i-2,j-2);
+                    tabla[i-2][j-2].player=neocupat;
+                    tabla[i-1][j-1].player=player2;
+                    break;
+                }
+                else if(tabla[i][j-2].player==player2)
+                {
+                    mutat=1;
+                    mutareDreaptaSUS(tabla,i,j-2);
+                    tabla[i][j-2].player=neocupat;
+                    tabla[i-1][j-1].player=player2;
+                    break;
+                }
+                else if(tabla[i-2][j].player==player2)
+                {
+                    mutat=1;
+                    mutareStangaJOS(tabla,i-2,j);
+                    tabla[i-2][j].player=neocupat;
+                    tabla[i-1][j-1].player=player2;
+                    break;
+                }
+            }
+            ///cazul 13 - colt STANGA SUS
+            else if(tabla[i][j].player==player1 && tabla[i-1][j-1].player==inexistent &&  tabla[i+1][j+1].player==neocupat)
+            {
+                if(tabla[i+2][j+2].player==player2)
+                {
+
+                    mutat=1;
+                    mutareStangaSUS(tabla,i+2,j+2);
+                    tabla[i+2][j+2].player=neocupat;
+                    tabla[i+1][j+1].player=player2;
+                    break;
+                }
+                else if(tabla[i][j+2].player==player2)
+                {
+
+                    mutat=1;
+                    mutareStangaJOS(tabla,i,j+2);
+                    tabla[i][j+2].player=neocupat;
+                    tabla[i+1][j+1].player=player2;
+                    break;
+                }
+                else if(tabla[i+2][j].player==player2)
+                {
+
+                    mutat=1;
+                    mutareDreaptaSUS(tabla,i+2,j);
+                    tabla[i+2][j].player=neocupat;
+                    tabla[i+1][j+1].player=player2;
+                    break;
+                }
+            }
+            else if(tabla[i][j].player==player1 && tabla[i+1][j+1].player==inexistent &&  tabla[i-1][j-1].player==neocupat)
+            {
+                if(tabla[i-2][j-2].player==player2)
+                {
+
+                    mutat=1;
+                    mutareDreaptaJOS(tabla,i-2,j-2);
+                    tabla[i-2][j-2].player=neocupat;
+                    tabla[i-1][j-1].player=player2;
+                    break;
+                }
+                else if(tabla[i-2][j].player==player2)
+                {
+
+                    mutat=1;
+                    mutareStangaJOS(tabla,i-2,j);
+                    tabla[i-2][j].player=neocupat;
+                    tabla[i-1][j-1].player=player2;
+                    break;
+                }
+                else if(tabla[i][j-2].player==player2)
+                {
+
+                    mutat=1;
+                    mutareDreaptaSUS(tabla,i,j-2);
+                    tabla[i][j-2].player=neocupat;
+                    tabla[i-1][j-1].player=player2;
+                    break;
+                }
+
+
+            }
+        }
+}
+void playAgainstHitlerBOT()
 {
     closegraph(CURRENT_WINDOW);
     initJoc();
     int width=GetSystemMetrics(SM_CXSCREEN);
     int height=GetSystemMetrics(SM_CYSCREEN);
-    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
-    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
+    ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
+    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
+    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
     initCoordonate();
     exitbutton();
     //cleardevice();
@@ -1440,87 +1880,66 @@ void playAgainstSoldierBOT()
                                 countMutariInitiale++;
                             }
                         }
-                        else if(countMutariInitiale==6)
-                        {
-                            if(tabla[1][1].player==player2)
-                            {
-                                mutareDreaptaJOS(tabla, 1, 1);
-                                tabla[1][1].player=neocupat;
-                                tabla[2][2].player=player2;
-                                countMutariInitiale++;
-                            }
-                            else if(tabla[3][3].player == player2)
-                            {
-                                if(tabla[4][4].player == neocupat)
-                                {
-                                    mutareDreaptaJOS(tabla,3,3);
-                                    tabla[3][3].player=neocupat;
-                                    tabla[4][4].player=player2;
-                                    countMutariInitiale++;
-                                }
-                                else if(tabla[4][2].player == neocupat)
-                                {
-                                    mutareStangaJOS(tabla,3,3);
-                                    tabla[3][3].player=neocupat;
-                                    tabla[4][2].player=player2;
-                                    countMutariInitiale++;
-                                }
-                            }
-                        }
                         else
                         {
-                            int Col;
-                            int oki = 0;
-                            while(oki == 0)
+                            int mutat;
+                            inchiderePiesa(mutat);
+                            if(mutat==0)
                             {
-                                for(int j = 1; j<=8; j++)
-                                    if(tabla[I_intermediar][j].player == player2)
-                                    {
-                                        Col=j;
-                                        oki = 1;
-                                        break;
-                                    }
-                                if(oki == 0)
+
+                                int Col;
+                                int oki = 0;
+                                while(oki == 0)
                                 {
-                                    if(I_intermediar == 3 || I_intermediar == 2)
-                                        I_intermediar--;
-                                    else if(I_intermediar == 1)
-                                        I_intermediar = 4;
-                                    else if(I_intermediar == 8)
-                                        I_intermediar = 3;
-                                    else I_intermediar++;
+                                    for(int j = 1; j<=8; j++)
+                                        if(tabla[I_intermediar][j].player == player2)
+                                        {
+                                            Col=j;
+                                            oki = 1;
+                                            break;
+                                        }
+                                    if(oki == 0)
+                                    {
+                                        if(I_intermediar == 3 || I_intermediar == 2)
+                                            I_intermediar--;
+                                        else if(I_intermediar == 1)
+                                            I_intermediar = 4;
+                                        else if(I_intermediar == 8)
+                                            I_intermediar = 3;
+                                        else I_intermediar++;
+                                    }
+
                                 }
 
-                            }
 
+                                if(tabla[I_intermediar+1][Col+1].player == neocupat && tabla[I_intermediar][Col].player==player2 && verificaPericol(tabla, I_intermediar+1,Col+1)==false)
+                                {
+                                    mutareDreaptaJOS(tabla,I_intermediar,Col);
+                                    tabla[I_intermediar][Col].player=neocupat;
+                                    tabla[I_intermediar+1][Col+1].player=player2;
+                                }
+                                else if(tabla[I_intermediar+1][Col-1].player == neocupat && tabla[I_intermediar][Col].player==player2 && verificaPericol(tabla, I_intermediar+1, Col-1)==false)
+                                {
+                                    mutareStangaJOS(tabla,I_intermediar,Col);
+                                    tabla[I_intermediar][Col].player=neocupat;
+                                    tabla[I_intermediar+1][Col-1].player=player2;
+                                }
+                                else if(tabla[I_intermediar-1][Col+1].player == neocupat && tabla[I_intermediar][Col].player==player2 && verificaPericol(tabla, I_intermediar-1, Col+1)==false)
+                                {
+                                    mutareDreaptaSUS(tabla,I_intermediar,Col);
+                                    tabla[I_intermediar][Col].player=neocupat;
+                                    tabla[I_intermediar-1][Col+1].player=player2;
+                                }
+                                else if(tabla[I_intermediar-1][Col-1].player == neocupat && tabla[I_intermediar][Col].player==player2 || verificaPericol(tabla, I_intermediar-1, Col-1)==false)
+                                {
+                                    mutareStangaSUS(tabla,I_intermediar,Col);
+                                    tabla[I_intermediar][Col].player=neocupat;
+                                    tabla[I_intermediar-1][Col-1].player=player2;
+                                }
 
-                            if(tabla[I_intermediar+1][Col+1].player == neocupat && tabla[I_intermediar][Col].player==player2)
-                            {
-                                mutareDreaptaJOS(tabla,I_intermediar,Col);
-                                tabla[I_intermediar][Col].player=neocupat;
-                                tabla[I_intermediar+1][Col+1].player=player2;
+                                cout<<endl;
+                                cout<<"I INTERMEDIAR: "<<I_intermediar<<"\n";
                             }
-                            else if(tabla[I_intermediar+1][Col-1].player == neocupat && tabla[I_intermediar][Col].player==player2)
-                            {
-                                mutareStangaJOS(tabla,I_intermediar,Col);
-                                tabla[I_intermediar][Col].player=neocupat;
-                                tabla[I_intermediar+1][Col-1].player=player2;
-                            }
-                            else if(tabla[I_intermediar-1][Col+1].player == neocupat && tabla[I_intermediar][Col].player==player2)
-                            {
-                                mutareDreaptaSUS(tabla,I_intermediar,Col);
-                                tabla[I_intermediar][Col].player=neocupat;
-                                tabla[I_intermediar-1][Col+1].player=player2;
-                            }
-                            else if(tabla[I_intermediar-1][Col-1].player == neocupat && tabla[I_intermediar][Col].player==player2)
-                            {
-                                mutareStangaSUS(tabla,I_intermediar,Col);
-                                tabla[I_intermediar][Col].player=neocupat;
-                                tabla[I_intermediar-1][Col-1].player=player2;
-                            }
-
-                            cout<<endl;
-                            cout<<"I INTERMEDIAR: "<<I_intermediar<<"\n";
 
                         }
 
@@ -1646,14 +2065,15 @@ void playAgainstSoldierBOT()
 
 }
 
-void playAgainstHitlerBOT()
+void playAgainstSoldierBOT()
 {
     int width=GetSystemMetrics(SM_CXSCREEN);
     int height=GetSystemMetrics(SM_CYSCREEN);
 
     closegraph(CURRENT_WINDOW);
     initJoc();
-    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
+    ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
+    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
     readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
     initCoordonate();
     //cleardevice();
@@ -1840,9 +2260,12 @@ void initMeniuBOT()
     int height=GetSystemMetrics(SM_CYSCREEN);
     initwindow(width,height,"",-3,-3);
     cleardevice();
-    ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\difficulty.jpg",-40,-40,630,420);
-    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\ai.jpg",-40,-40,width+40,height+40);
-    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
+
+    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\difficulty.jpg",-40,-40,width+40,height+40);
+    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
+
+    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\difficulty.jpg",-40,-40,width+40,height+40);
+    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
 
     exitbutton();
 
@@ -1891,8 +2314,12 @@ void initpvpmeniu()
     initwindow(width,height,"",-3,-3);
     cleardevice();
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\difficulty.jpg",-40,-40,630,420);
-    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\load game.jpg",-40,-40,width+40,height+40);
-    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
+
+    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\load game.jpg",-40,-40,width+40,height+40);
+    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
+
+    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\load game.jpg",-40,-40,width+40,height+40);
+    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
     exitbutton();
     int x,y;
     int temp=1;
@@ -1945,8 +2372,8 @@ void initMeniu()
     int height=GetSystemMetrics(SM_CYSCREEN);
     initwindow(width,height,"",-3,-3);
     cleardevice();
-    ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\razboi2.jpg",-40,-40,630,420 );
-    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\pvp.jpg",-40,-40,width+40,height+40);
+    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\razboi2.jpg",-40,-40,width+40,height+40 );
+    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\pvp.jpg",-40,-40,width+40,height+40);
     exitbutton();
     int x,y;
     int temp=1;
