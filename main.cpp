@@ -22,6 +22,7 @@ using namespace std;
     int player;
 
     struct board{
+        int ocupat;
         int x,y;
         int L,C;
     }tabla[10][10];
@@ -57,6 +58,29 @@ void initMatrice()
         cout<<'\n';
     }
 }
+void initCoordonate()
+{
+    int width=GetSystemMetrics(SM_CXSCREEN);
+    int height=GetSystemMetrics(SM_CYSCREEN);
+    tabla[1][1].x = (width-544)/2;     //544 e lungimea si latimea tablei
+    tabla[1][1].y = (height-544)/2;
+    for(int j=2; j<=8; j++)
+    {
+        tabla[1][j].x = tabla[1][j-1].x + 68;
+        tabla[1][j].y = (height-544)/2;
+    }
+    int i,j;
+    for(i=2; i<=8; i++)
+    {
+        for(j=1; j<=8; j++)
+        {
+            tabla[i][j].x = tabla[i-1][j].x;
+            tabla[i][j].y = tabla[i-1][j].y + 68;
+
+        }
+
+    }
+}
 void exitbutton()
 {
     int width=GetSystemMetrics(SM_CXSCREEN);
@@ -83,30 +107,6 @@ void exitbutton()
                 exit(0);
                 */
 }
-void initCoordonate()
-{
-    int width=GetSystemMetrics(SM_CXSCREEN);
-    int height=GetSystemMetrics(SM_CYSCREEN);
-    tabla[1][1].x = (width-544)/2;     //544 e lungimea si latimea tablei
-    tabla[1][1].y = (height-544)/2;
-    for(int j=2; j<=8; j++)
-    {
-        tabla[1][j].x = tabla[1][j-1].x + 68;
-        tabla[1][j].y = (height-544)/2;
-    }
-    int i,j;
-    for(i=2; i<=8; i++)
-    {
-        for(j=1; j<=8; j++)
-        {
-            tabla[i][j].x = tabla[i-1][j].x;
-            tabla[i][j].y = tabla[i-1][j].y + 68;
-
-        }
-
-    }
-}
-
 void patrat(joc tabla[][10])
 {
     for(int i=1;i<=8;++i)
@@ -132,7 +132,7 @@ void form_tabla()
     double x=68;
     double y=68;
     for(i=(height-544)/2-34,k+=y; m<8; i+=y,m++)
-        for((width-544)/2-34,l=0; l<8; j+=x,l++)
+        for(j=(width-544)/2-34,l=0; l<8; j+=x,l++)
         {
             if((l%2==1 && m%2==0) || (l%2==0 && m%2==1))
             {
@@ -149,8 +149,8 @@ void form_tabla()
                 fillpoly(4,poly);
             }
         }
-    setcolor(WHITE);
-    rectangle(30,30,574,574);
+    //setcolor(WHITE);
+    //rectangle(30,30,574,574);
 }
 void initMeniu();
 
@@ -160,7 +160,7 @@ void initJoc()
     int height=GetSystemMetrics(SM_CYSCREEN);
 
     initwindow(width,height,"",-3,-3);
-    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\theme.jpg",-40,-40,width+40,height+40);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\theme.jpg",-40,-40,width+40,height+40);
     readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\theme.jpg",-40,-40,width+40,height+40);
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
 
@@ -206,9 +206,22 @@ void initJoc()
     tabla[1][1].colour=color;
     initwindow(width,height,"",-3,-3);
     setbkcolor(color);
-    if(color==RED)readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bk.jpg",-40,-40,width+40,height+40);
-    else if(color==BLUE)readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bk2.jpg",-40,-40,width+40,height+40);
-    else if(color==GREEN)readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bkgreen.jpg",-40,-40,width+40,height+40);
+    if(color==RED)
+    {
+        readimagefile("C:\\Users\\Munteanu\\Desktop\\copieproiect\\bk.jpg",-40,-40,width+40,height+40);
+        //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bk.jpg",-40,-40,width+40,height+40);
+
+    }
+    else if(color==BLUE)
+    {
+        readimagefile("C:\\Users\\Munteanu\\Desktop\\copieproiect\\bk2.jpg",-40,-40,width+40,height+40);
+        //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bk2.jpg",-40,-40,width+40,height+40);
+    }
+    else if(color==GREEN)
+    {
+        readimagefile("C:\\Users\\Munteanu\\Desktop\\copieproiect\\bkgreen.jpg",-40,-40,width+40,height+40);
+        //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bkgreen.jpg",-40,-40,width+40,height+40);
+    }
     exitbutton();
 
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bk.jpg",-40,-40,width+40,height+40);
@@ -267,7 +280,7 @@ void mutareDreaptaJOS(joc tabla[][10], int i, int j)
     //stergere
 
     setcolor(tabla[1][1].colour+8);
-    setfillstyle(1,LIGHTRED);
+    setfillstyle(1,tabla[1][1].colour+8);
     fillellipse(X,Y,30,30);
 
     //semimutare
@@ -283,8 +296,8 @@ void mutareDreaptaJOS(joc tabla[][10], int i, int j)
 
     delay(400);
 
-    setcolor(LIGHTRED);
-    setfillstyle(1,LIGHTRED);
+    setcolor(tabla[1][1].colour+8);
+    setfillstyle(1,tabla[1][1].colour+8);
     fillellipse(X+34,Y+34,30,30);
 
     delay(0);
@@ -311,8 +324,8 @@ void mutareDreaptaSUS(joc tabla[][10], int i, int j)
 
     //stergere
 
-    setcolor(LIGHTRED);
-    setfillstyle(1,LIGHTRED);
+    setcolor(tabla[1][1].colour+8);
+    setfillstyle(1,tabla[1][1].colour+8);
     fillellipse(X,Y,30,30);
 
     //semimutare
@@ -328,8 +341,8 @@ void mutareDreaptaSUS(joc tabla[][10], int i, int j)
 
     delay(400);
 
-    setcolor(LIGHTRED);
-    setfillstyle(1,LIGHTRED);
+    setcolor(tabla[1][1].colour+8);
+    setfillstyle(1,tabla[1][1].colour+8);
     fillellipse(X+34,Y-34,30,30);
 
     delay(0);
@@ -355,8 +368,8 @@ void mutareStangaJOS(joc tabla[][10], int i, int j)
 
     //stergere
 
-    setcolor(LIGHTRED);
-    setfillstyle(1,LIGHTRED);
+    setcolor(tabla[1][1].colour+8);
+    setfillstyle(1,tabla[1][1].colour+8);
     fillellipse(X,Y,30,30);
 
     //semimutare
@@ -372,8 +385,8 @@ void mutareStangaJOS(joc tabla[][10], int i, int j)
 
     delay(400);
 
-    setcolor(LIGHTRED);
-    setfillstyle(1,LIGHTRED);
+    setcolor(tabla[1][1].colour+8);
+    setfillstyle(1,tabla[1][1].colour+8);
     fillellipse(X-34,Y+34,30,30);
 
     delay(0);
@@ -400,8 +413,8 @@ void mutareStangaSUS(joc tabla[][10], int i, int j)
 
     //stergere
 
-    setcolor(LIGHTRED);
-    setfillstyle(1,LIGHTRED);
+    setcolor(tabla[1][1].colour+8);
+    setfillstyle(1,tabla[1][1].colour+8);
     fillellipse(X,Y,30,30);
 
     //semimutare
@@ -417,8 +430,8 @@ void mutareStangaSUS(joc tabla[][10], int i, int j)
 
     delay(400);
 
-    setcolor(LIGHTRED);
-    setfillstyle(1,LIGHTRED);
+    setcolor(tabla[1][1].colour+8);
+    setfillstyle(1,tabla[1][1].colour+8);
     fillellipse(X-34,Y-34,30,30);
 
     delay(0);
@@ -915,6 +928,7 @@ void cautaPiesaApasata(joc tabla[][10], int X, int Y,int &L,int &C)
     int vminx=100,vminy=100;
     for(int i=1; i<=8; ++i)
         for(int j=1; j<=8; ++j)
+            if(tabla[i][j].player!=inexistent)
                 if(abs(X-tabla[i][j].x) < vminx&&abs(Y-tabla[i][j].y)<vminy)
                 {
                     vminx=abs(X-tabla[i][j].x);
@@ -928,6 +942,7 @@ void elimina_piesa(int lin,int col,joc tabla[][10])
     setcolor(tabla[1][1].colour+8);
     setfillstyle(1,tabla[1][1].colour+8);
     fillellipse(tabla[lin][col].x,tabla[lin][col].y,30,30);
+    tabla[lin][col].player=neocupat;
 }
 void verificaStergereALB(int i, int j, joc tabla[][10], int &nrPiesePlayer1)
 {
@@ -1015,7 +1030,7 @@ bool verificaPericol(joc tabla[][10], int i, int j)
 }
 void verificaCastigator(int nrPiesePlayer1, int nrPiesePlayer2)
 {
-    if(nrPiesePlayer1 == 0||(nrPiesePlayer1+2<=nrPiesePlayer2))///3 piese asigura eliminarea unei piese in cazul 3<=3,nrPiesePlayer1=1 si nrPiesePlayer2=3
+    if(nrPiesePlayer1 == 0||(nrPiesePlayer1+2<=nrPiesePlayer2&&nrPiesePlayer1==1))///3 piese asigura eliminarea unei piese in cazul 3<=3,nrPiesePlayer1=1 si nrPiesePlayer2=3
     {
         setcolor(YELLOW);
         outtextxy(610,290, "PLAYER 2 WON!");
@@ -1023,7 +1038,7 @@ void verificaCastigator(int nrPiesePlayer1, int nrPiesePlayer2)
         closegraph();
         initMeniu();
     }
-    else if(nrPiesePlayer2 == 0||(nrPiesePlayer2+2<=nrPiesePlayer1))
+    else if(nrPiesePlayer2 == 0||(nrPiesePlayer2+2<=nrPiesePlayer1&&nrPiesePlayer2==1))
     {
         setcolor(YELLOW);
         outtextxy(610,290, "PLAYER 1 WON!");
@@ -1055,8 +1070,14 @@ void playPVP()
     settextstyle(3,HORIZ_DIR,5);
     outtextxy(100, height/4, "P2 SCORE:8");
     outtextxy(width-400, height*3/4, "P1 SCORE:8");
-
-    int X,Y,time = 2,castigator = 0,rand = 1, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8,clickedPlayer = player1;///rand stabileste cine trebuie sa mute piesa
+    for(int i=0;i<=9;++i)
+    {
+        cout<<'\n';
+        for(int j=0;j<=9;++j)
+            cout<<tabla[i][j].player<<" ";
+        cout<<'\n';
+    }
+    int X,Y,time = 2,castigator = 0,rand = 1, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8,clickedPlayer = neocupat;///rand stabileste cine trebuie sa mute piesa
     while(!castigator)
     {
         while(time>0)
@@ -1070,7 +1091,7 @@ void playPVP()
                     while(clickedPlayer!=rand)
                     {
                         getmouseclick(WM_LBUTTONDOWN, X, Y);
-                        cout<<X<<" "<<Y<<'\n';
+                        cout<<X<<" "<<Y<<" "<<clickedPlayer<<'\n';
                         int L=0,C=0;
                         int width=GetSystemMetrics(SM_CXSCREEN);
                         int height=GetSystemMetrics(SM_CYSCREEN);
@@ -1108,7 +1129,7 @@ void playPVP()
                                 tabla[L][C].player=neocupat;
                                 elimina_piesa(L,C,tabla);
                             }
-                            else clickedPlayer=neocupat;
+                            //else clickedPlayer=neocupat;
                         }
                         /*else
                         {
@@ -1174,7 +1195,7 @@ void playPVP()
                             setfillstyle(1,BLACK);
                             fillellipse(tabla[L][C].x,tabla[L][C].y,20,20);
                             tabla[L][C].player=player2;
-                            tabla[L1][C1].player=neocupat;
+                            //tabla[L1][C1].player=neocupat;
                             rand=1;
                         }
                         else
@@ -1657,8 +1678,8 @@ void playAgainstHitlerBOT()
     int width=GetSystemMetrics(SM_CXSCREEN);
     int height=GetSystemMetrics(SM_CYSCREEN);
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
-    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
-    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
+    ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
     initCoordonate();
     exitbutton();
     //cleardevice();
@@ -1667,16 +1688,14 @@ void playAgainstHitlerBOT()
     setcolor(YELLOW);
     outtextxy(280,580, "P1");
     outtextxy(255,10,"SOLDIER BOT");
-    outtextxy(610,30,"DIFFICULTY LEVEL:");
-    outtextxy(610,55,"EASY");
-    outtextxy(610, 530, "                                                             ");
-    //outtextxy(495, 10, "P2 SCORE:8");
-    //outtextxy(30, 580, "P1 SCORE:8");
-
+    outtextxy(width-500,50,"DIFFICULTY LEVEL:");
+    outtextxy(width-500,100,"EASY");
+    //outtextxy(width-100, 530, "                                                             ");
 
     int X,Y,time=2,castigator=0,rand=2, coloanaBot = 2;///rand stabileste cine trebuie sa mute piesa
     int I_ai=2, J_ai = coloanaBot, jCount=1, countMutariInitiale=1, piesaMutata[9]= {0};
     int liniaCurenta = 2,randMutare=1, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8, I_intermediar = 3;
+    afisareScor(nrPiesePlayer1,nrPiesePlayer2);
     while(!castigator)
     {
         while(time>0)
@@ -1684,6 +1703,14 @@ void playAgainstHitlerBOT()
             if(ismouseclick(WM_LBUTTONDOWN))
             {
                 int L1,C1;
+                for(int i=1; i<=8; ++i)
+                    for(int j=1; j<=8; ++j)
+                    {
+                        if(tabla[i][j].player==player1)
+                            verificaStergereALB(i,j,tabla,nrPiesePlayer1);
+                        if(tabla[i][j].player==player2)
+                            verificaStergereNEGRU(i,j,tabla,nrPiesePlayer2);
+                    }
                 if(time==2)
                 {
                     getmouseclick(WM_LBUTTONDOWN, X, Y);
@@ -1697,12 +1724,11 @@ void playAgainstHitlerBOT()
                         }
                     int L=0,C=0;
                     cautaPiesaApasata(tabla, X,Y,L,C);
-                    setcolor(LIGHTRED);
-                    setfillstyle(1,LIGHTRED);
+                    setcolor(tabla[1][1].colour+8);
+                    setfillstyle(1,tabla[1][1].colour+8);
                     fillellipse(tabla[L][C].x,tabla[L][C].y,30,30);
                     L1=L;
                     C1=C;
-                    outtextxy(277,580, "YOUR TURN!");
 
                 }
                 if(time==1)
@@ -2044,7 +2070,7 @@ void playAgainstHitlerBOT()
         /*int I = 2, J = 2;
         delay(800);
         if(tabla[I+1][J+1].player == neocupat)
-            mutaLIGHTREDreapta(tabla,I,J);
+            mutatabla[1][1].colour+8 reapta(tabla,I,J);
         delay(800);
         int I2 = I+1, J2 = J+1;
         if(tabla[I2+1][J2-1].player == neocupat)
@@ -2066,6 +2092,7 @@ void playAgainstHitlerBOT()
 
 }
 
+
 void playAgainstSoldierBOT()
 {
     int width=GetSystemMetrics(SM_CXSCREEN);
@@ -2073,23 +2100,22 @@ void playAgainstSoldierBOT()
 
     closegraph(CURRENT_WINDOW);
     initJoc();
-    initCoordonate();
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
     readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
     readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
-
+    initCoordonate();
     //cleardevice();
 
     //PLAYER 2 = AI
     setcolor(YELLOW);
     outtextxy(280,580, "P1");
-    outtextxy(255,10,"HITLER BOT");
-    outtextxy(610,30,"DIFFICULTY LEVEL:");
-    outtextxy(610,55,"HARD");
-    outtextxy(610, 530, "                                                             ");
+    outtextxy(width/3+60,height/11,"HITLER BOT");
+    outtextxy(width-500,height/11,"DIFFICULTY LEVEL:");
+    outtextxy(width-500,height/11+50,"HARD");
     int X,Y,time=2,castigator=0,rand=2, coloanaBot = 2;///rand stabileste cine trebuie sa mute piesa
     int I_ai=2, J_ai = coloanaBot, jCount=1, countMutariInitiale=1, piesaMutata[9]= {0};
     int liniaCurenta = 2,randMutare=1, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8, I_intermediar = 3;
+    afisareScor(nrPiesePlayer1,nrPiesePlayer2);
 
     exitbutton();
 
@@ -2100,6 +2126,14 @@ void playAgainstSoldierBOT()
             if(ismouseclick(WM_LBUTTONDOWN))
             {
                 int L1,C1;
+                for(int i=1; i<=8; ++i)
+                    for(int j=1; j<=8; ++j)
+                    {
+                        if(tabla[i][j].player==player1)
+                            verificaStergereALB(i,j,tabla,nrPiesePlayer1);
+                        if(tabla[i][j].player==player2)
+                            verificaStergereNEGRU(i,j,tabla,nrPiesePlayer2);
+                    }
                 if(time==2)
                 {
                     cout<<X<<" "<<Y<<'\n';
@@ -2114,11 +2148,10 @@ void playAgainstSoldierBOT()
                     int L=0,C=0;
                     cautaPiesaApasata(tabla, X,Y,L,C);
                     setcolor(tabla[1][1].colour+8);
-                    setfillstyle(1,tabla[1][1].colour);
+                    setfillstyle(1,tabla[1][1].colour+8);
                     fillellipse(tabla[L][C].x,tabla[L][C].y,30,30);
                     L1=L;
                     C1=C;
-                    outtextxy(277,580, "YOUR TURN!");
 
                 }
                 if(time==1)
@@ -2263,11 +2296,11 @@ void initMeniuBOT()
     initwindow(width,height,"",-3,-3);
     cleardevice();
 
-    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\difficulty.jpg",-40,-40,width+40,height+40);
-    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
+    //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\difficulty.jpg",-40,-40,width+40,height+40);
+    //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
 
-    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\difficulty.jpg",-40,-40,width+40,height+40);
-    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\difficulty.jpg",-40,-40,width+40,height+40);
+    readimagefile("‪C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.png",0,height-150,150,height);
 
     exitbutton();
 
@@ -2320,8 +2353,8 @@ void initpvpmeniu()
     readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\load game.jpg",-40,-40,width+40,height+40);
     readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
 
-    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\load game.jpg",-40,-40,width+40,height+40);
-    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\load game.jpg",-40,-40,width+40,height+40);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
     exitbutton();
     int x,y;
     int temp=1;
@@ -2375,7 +2408,7 @@ void initMeniu()
     initwindow(width,height,"",-3,-3);
     cleardevice();
     readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\razboi2.jpg",-40,-40,width+40,height+40 );
-    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\pvp.jpg",-40,-40,width+40,height+40);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\pvp.jpg",-40,-40,width+40,height+40);
     exitbutton();
     int x,y;
     int temp=1;
