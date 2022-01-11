@@ -164,7 +164,7 @@ void initJoc()
     ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\theme.jpg",-40,-40,width+40,height+40);
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\theme.jpg",-40,-40,width+40,height+40);
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
-
+    readimagefile("backbut.jpg",0,height-150,150,height);
     exitbutton();
 
     int X,Y;
@@ -1734,7 +1734,7 @@ void playAgainstSoldierBOT()
     initJoc();
     int width=GetSystemMetrics(SM_CXSCREEN);
     int height=GetSystemMetrics(SM_CYSCREEN);
-    readimagefile("backbut.jpg",-40,-40,width+40,height+40);
+    readimagefile("backbut.jpg",0,height-150,150,height);
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
     ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
@@ -2406,7 +2406,7 @@ void initMeniuBOT()
     //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\difficulty.jpg",-40,-40,width+40,height+40);
     //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
     readimagefile("ai.jpg",-40,-40,width+40,height+40);
-    readimagefile("backbut.jpg",-40,-40,width+40,height+40);
+    readimagefile("backbut.jpg",0,height-150,150,height);
     //readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\ai.jpg",-40,-40,width+40,height+40);
     //readimagefile("‪C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.png",0,height-150,150,height);
 
@@ -2465,7 +2465,7 @@ void initpvpmeniu()
     //readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
 
     readimagefile("load game.jpg",-40,-40,width+40,height+40);
-    readimagefile("backbut.jpg",-40,-40,width+40,height+40);
+    readimagefile("backbut.jpg",0,height-150,150,height);
     exitbutton();
     int x,y;
     int temp=1;
