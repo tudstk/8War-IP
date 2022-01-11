@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <windows.h>
-#include <mmsystem.h>
 #include <time.h>
 
 #define player1 1
@@ -185,19 +184,19 @@ void initJoc()
                 closegraph(CURRENT_WINDOW);
                 initMeniu();
             }
-            else if (X>686  && X<876 && Y>348 && Y<430)
+            else if (X>width/2-100  && X<width/2+90 && Y>height/2-80 && Y<height/2)
             {
                 temp=0;
                 color=RED;
                 closegraph();
             }
-            else if(X>656  && X<916 && Y>490 && Y<566)
+            else if(X>width/2-130 && X<width/2+150 && Y>height/2+50 && Y<height/2+130)
             {
                 temp=0;
                 color=BLUE;
                 closegraph();
             }
-            else if(X>607  && X<954 && Y>627 && Y<702)
+            else if(X>width/2-170  && X<width/2+200 && Y>height/2+180 && Y<height/2+260)
             {
                 temp=0;
                 color=GREEN;
@@ -232,7 +231,7 @@ void initJoc()
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bk.jpg",-40,-40,width+40,height+40);
     ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\bk.jpg",-40,-40,width+40,height+40);
     setbkcolor(color);
-    settextstyle(3,HORIZ_DIR,5);
+    settextstyle(3,HORIZ_DIR,4);
     setcolor(YELLOW);
     outtextxy(width/3-50,height-100,"PLAYER 1: YOUR TURN!");
     //outtextxy(610,530,"Player 2's TURN");
@@ -1072,7 +1071,7 @@ void playPVP()
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\pvp.jpg",600,200,800,300 );
     ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\back.png",0,height-150,150,height );
     ///left top right bottom
-    settextstyle(3,HORIZ_DIR,5);
+    settextstyle(3,HORIZ_DIR,4);
     outtextxy(100, height/4, "P2 SCORE:8");
     outtextxy(width-400, height*3/4, "P1 SCORE:8");
     for(int i=0;i<=9;++i)
@@ -1086,8 +1085,8 @@ void playPVP()
 
     afisareScor(nrPiesePlayer1, nrPiesePlayer2);
     long i = 0;
-    clock_t now = 0;                 /* Holds initial clock time  */
-    int interval = 1;                /* Seconds interval for o/p  */
+    clock_t now = 0;
+    int interval = 1;
     int elapsed = 0;
     int sec=0;
     int d=0,f=0;
@@ -1096,14 +1095,12 @@ void playPVP()
     {
         while(time>0)
         {
-            //for(i=0;;++i)
-            //{
             elapsed = (clock()-now)/CLOCKS_PER_SEC;
 
             if(elapsed>=interval)
             {
                 interval += 1;
-                sec=20-(elapsed-d);
+                sec=120-(elapsed-d);
                 if(sec<100)
                     outtextxy(50,100,"        ");
                 char buffer [50];
@@ -1111,7 +1108,7 @@ void playPVP()
                 outtextxy(50,50,"TIME");
                 outtextxy(50,100,buffer);
 
-            if(20-(elapsed-d)==0)
+            if(120-(elapsed-d)==0)
             {
                 if(nrPiesePlayer1>nrPiesePlayer2)
                 {
@@ -2495,7 +2492,7 @@ void initpvpmeniu()
             else if(x>width/4  && x<width*3/4 && y>height/2 && y<height*3/4)
             {
                 initMatrice();
-                FILE *progres=fopen("D:\\proiectcopy\\fisier.txt","r");
+                FILE *progres=fopen("fisier.txt","r");
                 int poz[101],nr=0;
                 closegraph();
                 while(!feof(progres))
