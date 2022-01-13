@@ -11,7 +11,6 @@
 #define player2 2
 #define neocupat 0
 #define inexistent 3
-#define nerecomandat 4
 
 using namespace std;
 
@@ -32,7 +31,6 @@ struct joc
 {
     int colour;
     int x,y;///coord piesei de pe linia L si coloana C (coresp A[L][C])
-    int L,C;///L=i,C=j in parcurgerea lui A[][]
     int player;/// 1-neagra(circle), 2-alba(fillellipse), 3-spatiu inaccesibil 0-neocupat
     int mutare_ai;/// nerecomandat ptr miscarile cu care AI isi poate bloca singur piesele
 } tabla[10][10];
@@ -161,7 +159,7 @@ void initJoc()
 
     initwindow(width,height,"",-3,-3);
     readimagefile("theme.jpg",-40,-40,width+40,height+40);
-    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\theme.jpg",-40,-40,width+40,height+40);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\theme.jpg",-40,-40,width+40,height+40);
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\theme.jpg",-40,-40,width+40,height+40);
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
     readimagefile("backbut.jpg",0,height-150,150,height);
@@ -210,14 +208,14 @@ void initJoc()
     if(color==RED)
     {
         readimagefile("bk.jpg",-40,-40,width+40,height+40);
-        //readimagefile("C:\\Users\\Munteanu\\Desktop\\copieproiect\\bk.jpg",-40,-40,width+40,height+40);
+        readimagefile("bk.jpg",-40,-40,width+40,height+40);
         //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bk.jpg",-40,-40,width+40,height+40);
 
     }
     else if(color==BLUE)
     {
         readimagefile("bk2.jpg",-40,-40,width+40,height+40);
-        //readimagefile("C:\\Users\\Munteanu\\Desktop\\copieproiect\\bk2.jpg",-40,-40,width+40,height+40);
+        readimagefile("bk2.jpg",-40,-40,width+40,height+40);
         //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bk2.jpg",-40,-40,width+40,height+40);
     }
     else if(color==GREEN)
@@ -1050,27 +1048,38 @@ bool verificaPericol(joc tabla[][10], int i, int j)
 }
 void verificaCastigator(int nrPiesePlayer1, int nrPiesePlayer2)
 {
+    int width=GetSystemMetrics(SM_CXSCREEN);
+    int height=GetSystemMetrics(SM_CYSCREEN);
     if(nrPiesePlayer1 == 0||(nrPiesePlayer1+2<=nrPiesePlayer2&&nrPiesePlayer1==1))///3 piese asigura eliminarea unei piese in cazul 3<=3,nrPiesePlayer1=1 si nrPiesePlayer2=3
     {
-        setcolor(YELLOW);
-        outtextxy(610,290, "PLAYER 2 WON!");
-        delay(2500);
+        closegraph();
+        initwindow(500,300,"WINNER",width/3,height/3);
+        settextstyle(3,HORIZ_DIR,5);
+        setcolor(tabla[1][1].colour+8);
+        outtextxy(30,50,"PLAYER 2 WON!");
+        delay(5000);
         closegraph();
         initMeniu();
     }
     else if(nrPiesePlayer2 == 0||(nrPiesePlayer2+2<=nrPiesePlayer1&&nrPiesePlayer2==1))
     {
-        setcolor(YELLOW);
-        outtextxy(610,290, "PLAYER 1 WON!");
-        delay(2500);
+        closegraph();
+        initwindow(500,300,"WINNER",width/3,height/3);
+        settextstyle(3,HORIZ_DIR,5);
+        setcolor(tabla[1][1].colour+8);
+        outtextxy(30,50,"PLAYER 1 WON!");
+        delay(5000);
         closegraph();
         initMeniu();
     }
     else if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 1)
     {
-        setcolor(YELLOW);
-        outtextxy(610,290, "DRAW!");
-        delay(2500);
+        closegraph();
+        initwindow(500,300,"WINNER",width/3,height/3);
+        settextstyle(3,HORIZ_DIR,5);
+        setcolor(tabla[1][1].colour+8);
+        outtextxy(30,50,"DRAW!");
+        delay(5000);
         closegraph();
         initMeniu();
     }
@@ -1793,8 +1802,8 @@ void playAgainstSoldierBOT()
     closegraph(CURRENT_WINDOW);
     initJoc();
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
-    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
-    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
+    //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
+    readimagefile("Cbackbut.jpg",0,height-150,150,height);
     initCoordonate();
     //cleardevice();
 
