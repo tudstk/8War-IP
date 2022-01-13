@@ -1803,7 +1803,7 @@ void playAgainstSoldierBOT()
     initJoc();
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
     //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
-    readimagefile("Cbackbut.jpg",0,height-150,150,height);
+    readimagefile("backbut.jpg",0,height-150,150,height);
     initCoordonate();
     //cleardevice();
 
