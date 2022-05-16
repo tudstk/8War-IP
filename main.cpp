@@ -14,26 +14,13 @@
 
 using namespace std;
 
-///FILE *progres=fopen("progres.txt","w+");
-//ofstream fout("progres.txt");
-/*struct game{
 
-    int player;
-
-    struct board{
-        int ocupat;
-        int x,y;
-        int L,C;
-    }tabla[10][10];
-}joc;
-*/
 struct joc
 {
     int colour;
     int timer;
-    int x,y;///coord piesei de pe linia L si coloana C (coresp A[L][C])
-    int player;/// 1-neagra(circle), 2-alba(fillellipse), 3-spatiu inaccesibil 0-neocupat
-    int mutare_ai;/// nerecomandat ptr miscarile cu care AI isi poate bloca singur piesele
+    int x,y;///coord piesei de pe linia L si coloana C
+    int player;/// 1,2,3,0
 } tabla[10][10];
 void initMatrice()
 {
@@ -106,10 +93,10 @@ void exitbutton()
                 exit(0);
                 */
 }
-void patrat(joc tabla[][10])
+void crearePiese(joc tabla[][10])
 {
-    for(int i=1;i<=8;++i)
-        for(int j=1;j<=8;++j)
+    for(int i=1; i<=8; ++i)
+        for(int j=1; j<=8; ++j)
             if(tabla[i][j].player==player1)
             {
                 setcolor(WHITE);
@@ -123,7 +110,7 @@ void patrat(joc tabla[][10])
                 fillellipse(tabla[i][j].x,tabla[i][j].y,20,20);
             }
 }
-void form_tabla()
+void creareTabla()
 {
     int width=GetSystemMetrics(SM_CXSCREEN);
     int height=GetSystemMetrics(SM_CYSCREEN);
@@ -159,11 +146,12 @@ void initJoc()
     int height=GetSystemMetrics(SM_CYSCREEN);
 
     initwindow(width,height,"",-3,-3);
-    readimagefile("theme.jpg",-40,-40,width+40,height+40);
-    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\theme.jpg",-40,-40,width+40,height+40);
+    readimagefile("img\\theme.jpg",-87,-80,width+83,height+80);
+    ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\theme.jpg",-40,-40,width+40,height+40);
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\theme.jpg",-40,-40,width+40,height+40);
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
-    readimagefile("backbut.jpg",0,height-150,150,height);
+    readimagefile("img\\backbut.jpg",0,height-150,150,height);
+    setcolor(YELLOW);
     exitbutton();
 
     int X,Y;
@@ -208,20 +196,20 @@ void initJoc()
     setbkcolor(color);
     if(color==RED)
     {
-        readimagefile("bk.jpg",-40,-40,width+40,height+40);
-        readimagefile("bk.jpg",-40,-40,width+40,height+40);
+        readimagefile("img\\red.jpg",-40,-40,width+40,height+40);
+        //readimagefile("C:\\Users\\Munteanu\\Desktop\\copieproiect\\bk.jpg",-40,-40,width+40,height+40);
         //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bk.jpg",-40,-40,width+40,height+40);
 
     }
     else if(color==BLUE)
     {
-        readimagefile("bk2.jpg",-40,-40,width+40,height+40);
-        readimagefile("bk2.jpg",-40,-40,width+40,height+40);
+        readimagefile("img\\blue.jpg",-40,-40,width+40,height+40);
+        //readimagefile("C:\\Users\\Munteanu\\Desktop\\copieproiect\\bk2.jpg",-40,-40,width+40,height+40);
         //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bk2.jpg",-40,-40,width+40,height+40);
     }
     else if(color==GREEN)
     {
-        readimagefile("bkgreen.jpg",-40,-40,width+40,height+40);
+        readimagefile("img\\green.jpg",-40,-40,width+40,height+40);
         //readimagefile("C:\\Users\\Munteanu\\Desktop\\copieproiect\\bkgreen.jpg",-40,-40,width+40,height+40);
         //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\bkgreen.jpg",-40,-40,width+40,height+40);
     }
@@ -232,7 +220,7 @@ void initJoc()
     setbkcolor(color);
     settextstyle(3,HORIZ_DIR,4);
     setcolor(YELLOW);
-    outtextxy(width/3-50,height-100,"PLAYER 1: YOUR TURN!");
+
     //outtextxy(610,530,"Player 2's TURN");
     /* delay(500);
      outtextxy(610,50,"                                      ");
@@ -273,7 +261,7 @@ void initJoc()
             }
         }
 
-    patrat(tabla);
+    crearePiese(tabla);
 }
 void mutareDreaptaJOS(joc tabla[][10], int i, int j)
 {
@@ -289,7 +277,7 @@ void mutareDreaptaJOS(joc tabla[][10], int i, int j)
     //semimutare
 
     setcolor(WHITE);
-    form_tabla();
+    creareTabla();
 
     setcolor(BLACK);
 
@@ -306,7 +294,7 @@ void mutareDreaptaJOS(joc tabla[][10], int i, int j)
     delay(0);
 
     setcolor(WHITE);
-    form_tabla();
+    creareTabla();
 
     //mutare
 
@@ -334,7 +322,7 @@ void mutareDreaptaSUS(joc tabla[][10], int i, int j)
     //semimutare
 
     setcolor(WHITE);
-    form_tabla();
+    creareTabla();
 
     setcolor(BLACK);
 
@@ -351,7 +339,7 @@ void mutareDreaptaSUS(joc tabla[][10], int i, int j)
     delay(0);
 
     setcolor(WHITE);
-    form_tabla();
+    creareTabla();
 
     //mutare
 
@@ -378,7 +366,7 @@ void mutareStangaJOS(joc tabla[][10], int i, int j)
     //semimutare
 
     setcolor(WHITE);
-    form_tabla();
+    creareTabla();
 
     setcolor(BLACK);
 
@@ -395,7 +383,7 @@ void mutareStangaJOS(joc tabla[][10], int i, int j)
     delay(0);
 
     setcolor(WHITE);
-    form_tabla();
+    creareTabla();
 
     //mutare
 
@@ -423,7 +411,7 @@ void mutareStangaSUS(joc tabla[][10], int i, int j)
     //semimutare
 
     setcolor(WHITE);
-    form_tabla();
+    creareTabla();
 
     setcolor(BLACK);
 
@@ -440,7 +428,7 @@ void mutareStangaSUS(joc tabla[][10], int i, int j)
     delay(0);
 
     setcolor(WHITE);
-    form_tabla();
+    creareTabla();
 
     //mutare
 
@@ -460,470 +448,470 @@ void afisareScor(int nrPiesePlayer1, int nrPiesePlayer2)
     if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 8)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:8");
-        outtextxy(width-400, height*3/4, "P1 SCORE:8");
+        outtextxy(100, height/2-30, "P2 SCORE:8");
+        outtextxy(width-400, height/2-30, "P1 SCORE:8");
     }
     else if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 7)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:7");
-        outtextxy(width-400, height*3/4, "P1 SCORE:8");
+        outtextxy(100, height/2-30, "P2 SCORE:7");
+        outtextxy(width-400, height/2-30, "P1 SCORE:8");
     }
     else if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 6)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:6");
-        outtextxy(width-400, height*3/4, "P1 SCORE:8");
+        outtextxy(100, height/2-30, "P2 SCORE:6");
+        outtextxy(width-400, height/2-30, "P1 SCORE:8");
     }
     else if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 5)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:5");
-        outtextxy(width-400, height*3/4, "P1 SCORE:8");
+        outtextxy(100, height/2-30, "P2 SCORE:5");
+        outtextxy(width-400, height/2-30, "P1 SCORE:8");
     }
     if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 4)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:4");
-        outtextxy(width-400, height*3/4, "P1 SCORE:8");
+        outtextxy(100, height/2-30, "P2 SCORE:4");
+        outtextxy(width-400, height/2-30, "P1 SCORE:8");
     }
     if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 3)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:3");
-        outtextxy(width-400, height*3/4, "P1 SCORE:8");
+        outtextxy(100, height/2-30, "P2 SCORE:3");
+        outtextxy(width-400, height/2-30, "P1 SCORE:8");
     }
     if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 2)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:2");
-        outtextxy(width-400, height*3/4, "P1 SCORE:8");
+        outtextxy(100, height/2-30, "P2 SCORE:2");
+        outtextxy(width-400, height/2-30, "P1 SCORE:8");
     }
     if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 1)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:1");
-        outtextxy(width-400, height*3/4, "P1 SCORE:8");
+        outtextxy(100, height/2-30, "P2 SCORE:1");
+        outtextxy(width-400, height/2-30, "P1 SCORE:8");
     }
     if(nrPiesePlayer1 == 8 && nrPiesePlayer2 == 0)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:0");
-        outtextxy(width-400, height*3/4, "P1 SCORE:8");
+        outtextxy(100, height/2-30, "P2 SCORE:0");
+        outtextxy(width-400, height/2-30, "P1 SCORE:8");
     }
     if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 8)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:8");
-        outtextxy(width-400, height*3/4, "P1 SCORE:7");
+        outtextxy(100, height/2-30, "P2 SCORE:8");
+        outtextxy(width-400, height/2-30, "P1 SCORE:7");
     }
     if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 7)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:7");
-        outtextxy(width-400, height*3/4, "P1 SCORE:7");
+        outtextxy(100, height/2-30, "P2 SCORE:7");
+        outtextxy(width-400, height/2-30, "P1 SCORE:7");
     }
     if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 6)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:6");
-        outtextxy(width-400, height*3/4, "P1 SCORE:7");
+        outtextxy(100, height/2-30, "P2 SCORE:6");
+        outtextxy(width-400, height/2-30, "P1 SCORE:7");
     }
     if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 5)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:5");
-        outtextxy(width-400, height*3/4, "P1 SCORE:7");
+        outtextxy(100, height/2-30, "P2 SCORE:5");
+        outtextxy(width-400, height/2-30, "P1 SCORE:7");
     }
     if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 4)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:4");
-        outtextxy(width-400, height*3/4, "P1 SCORE:7");
+        outtextxy(100, height/2-30, "P2 SCORE:4");
+        outtextxy(width-400, height/2-30, "P1 SCORE:7");
     }
     if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 3)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:3");
-        outtextxy(width-400, height*3/4, "P1 SCORE:7");
+        outtextxy(100, height/2-30, "P2 SCORE:3");
+        outtextxy(width-400, height/2-30, "P1 SCORE:7");
     }
     if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 2)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:2");
-        outtextxy(width-400, height*3/4, "P1 SCORE:7");
+        outtextxy(100, height/2-30, "P2 SCORE:2");
+        outtextxy(width-400, height/2-30, "P1 SCORE:7");
     }
     if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 1)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:1");
-        outtextxy(width-400, height*3/4, "P1 SCORE:7");
+        outtextxy(100, height/2-30, "P2 SCORE:1");
+        outtextxy(width-400, height/2-30, "P1 SCORE:7");
     }
     if(nrPiesePlayer1 == 7 && nrPiesePlayer2 == 0)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:0");
-        outtextxy(width-400, height*3/4, "P1 SCORE:7");
+        outtextxy(100, height/2-30, "P2 SCORE:0");
+        outtextxy(width-400, height/2-30, "P1 SCORE:7");
     }
     if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 8)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:8");
-        outtextxy(width-400, height*3/4, "P1 SCORE:6");
+        outtextxy(100, height/2-30, "P2 SCORE:8");
+        outtextxy(width-400, height/2-30, "P1 SCORE:6");
     }
     if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 7)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:7");
-        outtextxy(width-400, height*3/4, "P1 SCORE:6");
+        outtextxy(100, height/2-30, "P2 SCORE:7");
+        outtextxy(width-400, height/2-30, "P1 SCORE:6");
     }
     if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 6)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:6");
-        outtextxy(width-400, height*3/4, "P1 SCORE:6");
+        outtextxy(100, height/2-30, "P2 SCORE:6");
+        outtextxy(width-400, height/2-30, "P1 SCORE:6");
     }
     if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 5)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:5");
-        outtextxy(width-400, height*3/4, "P1 SCORE:6");
+        outtextxy(100, height/2-30, "P2 SCORE:5");
+        outtextxy(width-400, height/2-30, "P1 SCORE:6");
     }
     if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 4)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:4");
-        outtextxy(width-400, height*3/4, "P1 SCORE:6");
+        outtextxy(100, height/2-30, "P2 SCORE:4");
+        outtextxy(width-400, height/2-30, "P1 SCORE:6");
     }
     if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 3)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:3");
-        outtextxy(width-400, height*3/4, "P1 SCORE:6");
+        outtextxy(100, height/2-30, "P2 SCORE:3");
+        outtextxy(width-400, height/2-30, "P1 SCORE:6");
     }
     if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 2)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:2");
-        outtextxy(width-400, height*3/4, "P1 SCORE:6");
+        outtextxy(100, height/2-30, "P2 SCORE:2");
+        outtextxy(width-400, height/2-30, "P1 SCORE:6");
     }
     if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 1)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:1");
-        outtextxy(width-400, height*3/4, "P1 SCORE:6");
+        outtextxy(100, height/2-30, "P2 SCORE:1");
+        outtextxy(width-400, height/2-30, "P1 SCORE:6");
     }
     if(nrPiesePlayer1 == 6 && nrPiesePlayer2 == 0)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:0");
-        outtextxy(width-400, height*3/4, "P1 SCORE:6");
+        outtextxy(100, height/2-30, "P2 SCORE:0");
+        outtextxy(width-400, height/2-30, "P1 SCORE:6");
     }
     if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 8)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:8");
-        outtextxy(width-400, height*3/4, "P1 SCORE:5");
+        outtextxy(100, height/2-30, "P2 SCORE:8");
+        outtextxy(width-400, height/2-30, "P1 SCORE:5");
     }
     if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 7)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:7");
-        outtextxy(width-400, height*3/4, "P1 SCORE:5");
+        outtextxy(100, height/2-30, "P2 SCORE:7");
+        outtextxy(width-400, height/2-30, "P1 SCORE:5");
     }
     if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 6)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:6");
-        outtextxy(width-400, height*3/4, "P1 SCORE:5");
+        outtextxy(100, height/2-30, "P2 SCORE:6");
+        outtextxy(width-400, height/2-30, "P1 SCORE:5");
     }
     if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 5)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:5");
-        outtextxy(width-400, height*3/4, "P1 SCORE:5");
+        outtextxy(100, height/2-30, "P2 SCORE:5");
+        outtextxy(width-400, height/2-30, "P1 SCORE:5");
     }
     if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 4)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:4");
-        outtextxy(width-400, height*3/4, "P1 SCORE:5");
+        outtextxy(100, height/2-30, "P2 SCORE:4");
+        outtextxy(width-400, height/2-30, "P1 SCORE:5");
     }
     if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 3)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:3");
-        outtextxy(width-400, height*3/4, "P1 SCORE:5");
+        outtextxy(100, height/2-30, "P2 SCORE:3");
+        outtextxy(width-400, height/2-30, "P1 SCORE:5");
     }
     if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 2)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:2");
-        outtextxy(width-400, height*3/4, "P1 SCORE:5");
+        outtextxy(100, height/2-30, "P2 SCORE:2");
+        outtextxy(width-400, height/2-30, "P1 SCORE:5");
     }
     if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 1)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:1");
-        outtextxy(width-400, height*3/4, "P1 SCORE:5");
+        outtextxy(100, height/2-30, "P2 SCORE:1");
+        outtextxy(width-400, height/2-30, "P1 SCORE:5");
     }
     if(nrPiesePlayer1 == 5 && nrPiesePlayer2 == 0)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:0");
-        outtextxy(width-400, height*3/4, "P1 SCORE:5");
+        outtextxy(100, height/2-30, "P2 SCORE:0");
+        outtextxy(width-400, height/2-30, "P1 SCORE:5");
     }
     if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 8)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:8");
-        outtextxy(width-400, height*3/4, "P1 SCORE:4");
+        outtextxy(100, height/2-30, "P2 SCORE:8");
+        outtextxy(width-400, height/2-30, "P1 SCORE:4");
     }
     if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 7)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:7");
-        outtextxy(width-400, height*3/4, "P1 SCORE:4");
+        outtextxy(100, height/2-30, "P2 SCORE:7");
+        outtextxy(width-400, height/2-30, "P1 SCORE:4");
     }
     if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 6)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:6");
-        outtextxy(width-400, height*3/4, "P1 SCORE:4");
+        outtextxy(100, height/2-30, "P2 SCORE:6");
+        outtextxy(width-400, height/2-30, "P1 SCORE:4");
     }
     if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 5)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:5");
-        outtextxy(width-400, height*3/4, "P1 SCORE:4");
+        outtextxy(100, height/2-30, "P2 SCORE:5");
+        outtextxy(width-400, height/2-30, "P1 SCORE:4");
     }
     if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 4)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:4");
-        outtextxy(width-400, height*3/4, "P1 SCORE:4");
+        outtextxy(100, height/2-30, "P2 SCORE:4");
+        outtextxy(width-400, height/2-30, "P1 SCORE:4");
     }
     if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 3)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:3");
-        outtextxy(width-400, height*3/4, "P1 SCORE:4");
+        outtextxy(100, height/2-30, "P2 SCORE:3");
+        outtextxy(width-400, height/2-30, "P1 SCORE:4");
     }
     if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 2)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:2");
-        outtextxy(width-400, height*3/4, "P1 SCORE:4");
+        outtextxy(100, height/2-30, "P2 SCORE:2");
+        outtextxy(width-400, height/2-30, "P1 SCORE:4");
     }
     if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 1)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:1");
-        outtextxy(width-400, height*3/4, "P1 SCORE:4");
+        outtextxy(100, height/2-30, "P2 SCORE:1");
+        outtextxy(width-400, height/2-30, "P1 SCORE:4");
     }
     if(nrPiesePlayer1 == 4 && nrPiesePlayer2 == 0)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:0");
-        outtextxy(width-400, height*3/4, "P1 SCORE:4");
+        outtextxy(100, height/2-30, "P2 SCORE:0");
+        outtextxy(width-400, height/2-30, "P1 SCORE:4");
     }
     if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 8)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:8");
-        outtextxy(width-400, height*3/4, "P1 SCORE:3");
+        outtextxy(100, height/2-30, "P2 SCORE:8");
+        outtextxy(width-400, height/2-30, "P1 SCORE:3");
     }
     if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 7)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:7");
-        outtextxy(width-400, height*3/4, "P1 SCORE:3");
+        outtextxy(100, height/2-30, "P2 SCORE:7");
+        outtextxy(width-400, height/2-30, "P1 SCORE:3");
     }
     if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 6)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:6");
-        outtextxy(width-400, height*3/4, "P1 SCORE:3");
+        outtextxy(100, height/2-30, "P2 SCORE:6");
+        outtextxy(width-400, height/2-30, "P1 SCORE:3");
     }
     if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 5)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:5");
-        outtextxy(width-400, height*3/4, "P1 SCORE:3");
+        outtextxy(100, height/2-30, "P2 SCORE:5");
+        outtextxy(width-400, height/2-30, "P1 SCORE:3");
     }
     if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 4)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:4");
-        outtextxy(width-400, height*3/4, "P1 SCORE:3");
+        outtextxy(100, height/2-30, "P2 SCORE:4");
+        outtextxy(width-400, height/2-30, "P1 SCORE:3");
     }
     if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 3)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:3");
-        outtextxy(width-400, height*3/4, "P1 SCORE:3");
+        outtextxy(100, height/2-30, "P2 SCORE:3");
+        outtextxy(width-400, height/2-30, "P1 SCORE:3");
     }
     if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 2)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:2");
-        outtextxy(width-400, height*3/4, "P1 SCORE:3");
+        outtextxy(100, height/2-30, "P2 SCORE:2");
+        outtextxy(width-400, height/2-30, "P1 SCORE:3");
     }
     if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 1)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:1");
-        outtextxy(width-400, height*3/4, "P1 SCORE:3");
+        outtextxy(100, height/2-30, "P2 SCORE:1");
+        outtextxy(width-400, height/2-30, "P1 SCORE:3");
     }
     if(nrPiesePlayer1 == 3 && nrPiesePlayer2 == 0)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:0");
-        outtextxy(width-400, height*3/4, "P1 SCORE:3");
+        outtextxy(100, height/2-30, "P2 SCORE:0");
+        outtextxy(width-400, height/2-30, "P1 SCORE:3");
     }
     if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 8)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:8");
-        outtextxy(width-400, height*3/4, "P1 SCORE:2");
+        outtextxy(100, height/2-30, "P2 SCORE:8");
+        outtextxy(width-400, height/2-30, "P1 SCORE:2");
     }
     if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 7)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:7");
-        outtextxy(width-400, height*3/4, "P1 SCORE:2");
+        outtextxy(100, height/2-30, "P2 SCORE:7");
+        outtextxy(width-400, height/2-30, "P1 SCORE:2");
     }
     if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 6)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:6");
-        outtextxy(width-400, height*3/4, "P1 SCORE:2");
+        outtextxy(100, height/2-30, "P2 SCORE:6");
+        outtextxy(width-400, height/2-30, "P1 SCORE:2");
     }
     if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 5)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:5");
-        outtextxy(width-400, height*3/4, "P1 SCORE:2");
+        outtextxy(100, height/2-30, "P2 SCORE:5");
+        outtextxy(width-400, height/2-30, "P1 SCORE:2");
     }
     if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 4)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:4");
-        outtextxy(width-400, height*3/4, "P1 SCORE:2");
+        outtextxy(100, height/2-30, "P2 SCORE:4");
+        outtextxy(width-400, height/2-30, "P1 SCORE:2");
     }
     if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 3)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:3");
-        outtextxy(width-400, height*3/4, "P1 SCORE:2");
+        outtextxy(100, height/2-30, "P2 SCORE:3");
+        outtextxy(width-400, height/2-30, "P1 SCORE:2");
     }
     if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 2)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:2");
-        outtextxy(width-400, height*3/4, "P1 SCORE:2");
+        outtextxy(100, height/2-30, "P2 SCORE:2");
+        outtextxy(width-400, height/2-30, "P1 SCORE:2");
     }
     if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 1)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:1");
-        outtextxy(width-400, height*3/4, "P1 SCORE:2");
+        outtextxy(100, height/2-30, "P2 SCORE:1");
+        outtextxy(width-400, height/2-30, "P1 SCORE:2");
     }
     if(nrPiesePlayer1 == 2 && nrPiesePlayer2 == 0)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:0");
-        outtextxy(width-400, height*3/4, "P1 SCORE:2");
+        outtextxy(100, height/2-30, "P2 SCORE:0");
+        outtextxy(width-400, height/2-30, "P1 SCORE:2");
     }
     if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 8)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:8");
-        outtextxy(width-400, height*3/4, "P1 SCORE:1");
+        outtextxy(100, height/2-30, "P2 SCORE:8");
+        outtextxy(width-400, height/2-30, "P1 SCORE:1");
     }
     if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 7)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:7");
-        outtextxy(width-400, height*3/4, "P1 SCORE:1");
+        outtextxy(100, height/2-30, "P2 SCORE:7");
+        outtextxy(width-400, height/2-30, "P1 SCORE:1");
     }
     if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 6)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:6");
-        outtextxy(width-400, height*3/4, "P1 SCORE:1");
+        outtextxy(100, height/2-30, "P2 SCORE:6");
+        outtextxy(width-400, height/2-30, "P1 SCORE:1");
     }
     if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 5)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:5");
-        outtextxy(width-400, height*3/4, "P1 SCORE:1");
+        outtextxy(100, height/2-30, "P2 SCORE:5");
+        outtextxy(width-400, height/2-30, "P1 SCORE:1");
     }
     if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 4)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:4");
-        outtextxy(width-400, height*3/4, "P1 SCORE:1");
+        outtextxy(100, height/2-30, "P2 SCORE:4");
+        outtextxy(width-400, height/2-30, "P1 SCORE:1");
     }
     if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 3)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:3");
-        outtextxy(width-400, height*3/4, "P1 SCORE:1");
+        outtextxy(100, height/2-30, "P2 SCORE:3");
+        outtextxy(width-400, height/2-30, "P1 SCORE:1");
     }
     if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 2)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:2");
-        outtextxy(width-400, height*3/4, "P1 SCORE:1");
+        outtextxy(100, height/2-30, "P2 SCORE:2");
+        outtextxy(width-400, height/2-30, "P1 SCORE:1");
     }
     if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 1)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:1");
-        outtextxy(width-400, height*3/4, "P1 SCORE:1");
+        outtextxy(100, height/2-30, "P2 SCORE:1");
+        outtextxy(width-400, height/2-30, "P1 SCORE:1");
     }
     if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 8)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:8");
-        outtextxy(width-400, height*3/4, "P1 SCORE:0");
+        outtextxy(100, height/2-30, "P2 SCORE:8");
+        outtextxy(width-400, height/2-30, "P1 SCORE:0");
     }
     if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 7)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:7");
-        outtextxy(width-400, height*3/4, "P1 SCORE:0");
+        outtextxy(100, height/2-30, "P2 SCORE:7");
+        outtextxy(width-400, height/2-30, "P1 SCORE:0");
     }
     if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 6)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:6");
-        outtextxy(width-400, height*3/4, "P1 SCORE:0");
+        outtextxy(100, height/2-30, "P2 SCORE:6");
+        outtextxy(width-400, height/2-30, "P1 SCORE:0");
     }
     if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 5)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:5");
-        outtextxy(width-400, height*3/4, "P1 SCORE:0");
+        outtextxy(100, height/2-30, "P2 SCORE:5");
+        outtextxy(width-400, height/2-30, "P1 SCORE:0");
     }
     if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 4)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:4");
-        outtextxy(width-400, height*3/4, "P1 SCORE:0");
+        outtextxy(100, height/2-30, "P2 SCORE:4");
+        outtextxy(width-400, height/2-30, "P1 SCORE:0");
     }
     if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 3)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:3");
-        outtextxy(width-400, height*3/4, "P1 SCORE:0");
+        outtextxy(100, height/2-30, "P2 SCORE:3");
+        outtextxy(width-400, height/2-30, "P1 SCORE:0");
     }
     if(nrPiesePlayer1 == 0 && nrPiesePlayer2 == 2)
     {
         setcolor(YELLOW);
-        outtextxy(100, height/4, "P2 SCORE:2");
-        outtextxy(width-400, height*3/4, "P1 SCORE:0");
+        outtextxy(100, height/2-30, "P2 SCORE:2");
+        outtextxy(width-400, height/2-30, "P1 SCORE:0");
     }
 }
 void cautaPiesaApasata(joc tabla[][10], int X, int Y,int &L,int &C)
@@ -940,7 +928,7 @@ void cautaPiesaApasata(joc tabla[][10], int X, int Y,int &L,int &C)
                     C=j;
                 }
 }
-void elimina_piesa(int lin,int col,joc tabla[][10])
+void eliminaPiesa(int lin,int col,joc tabla[][10])
 {
     setcolor(tabla[1][1].colour+8);
     setfillstyle(1,tabla[1][1].colour+8);
@@ -994,14 +982,14 @@ void verificaStergereNEGRU(int i, int j, joc tabla[][10], int &nrPiesePlayer2)
     }
     else if(i==1)
         if((tabla[i+1][j+1].player==player1&&tabla[i+1][j-1].player!=neocupat)
-            ||(tabla[i+1][j+1].player!=neocupat&&tabla[i+1][j-1].player==player1))
-            {
-                tabla[i][j].player=neocupat;
-                setcolor(tabla[1][1].colour+8);
-                setfillstyle(1,tabla[1][1].colour+8);
-                fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
-                nrPiesePlayer2--;
-            }
+                ||(tabla[i+1][j+1].player!=neocupat&&tabla[i+1][j-1].player==player1))
+        {
+            tabla[i][j].player=neocupat;
+            setcolor(tabla[1][1].colour+8);
+            setfillstyle(1,tabla[1][1].colour+8);
+            fillellipse(tabla[i][j].x,tabla[i][j].y,30,30);
+            nrPiesePlayer2--;
+        }
 }
 bool verificaPericol(joc tabla[][10], int i, int j)
 {
@@ -1053,33 +1041,36 @@ void verificaCastigator(int nrPiesePlayer1, int nrPiesePlayer2)
     int height=GetSystemMetrics(SM_CYSCREEN);
     if(nrPiesePlayer1 == 0||(nrPiesePlayer1+2<=nrPiesePlayer2&&nrPiesePlayer1==1))///3 piese asigura eliminarea unei piese in cazul 3<=3,nrPiesePlayer1=1 si nrPiesePlayer2=3
     {
+        delay(500);
         closegraph();
         initwindow(500,300,"WINNER",width/3,height/3);
         settextstyle(3,HORIZ_DIR,5);
         setcolor(tabla[1][1].colour+8);
-        outtextxy(30,50,"PLAYER 2 WON!");
+        outtextxy(60,120,"PLAYER 2 WON!");
         delay(5000);
         closegraph();
         initMeniu();
     }
     else if(nrPiesePlayer2 == 0||(nrPiesePlayer2+2<=nrPiesePlayer1&&nrPiesePlayer2==1))
     {
+        delay(500);
         closegraph();
         initwindow(500,300,"WINNER",width/3,height/3);
         settextstyle(3,HORIZ_DIR,5);
         setcolor(tabla[1][1].colour+8);
-        outtextxy(30,50,"PLAYER 1 WON!");
+        outtextxy(60,120,"PLAYER 1 WON!");
         delay(5000);
         closegraph();
         initMeniu();
     }
     else if(nrPiesePlayer1 == 1 && nrPiesePlayer2 == 1)
     {
+        delay(500);
         closegraph();
         initwindow(500,300,"WINNER",width/3,height/3);
         settextstyle(3,HORIZ_DIR,5);
         setcolor(tabla[1][1].colour+8);
-        outtextxy(30,50,"DRAW!");
+        outtextxy(170,120,"DRAW!");
         delay(5000);
         closegraph();
         initMeniu();
@@ -1097,13 +1088,17 @@ void playPVP()
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\pvp.jpg",600,200,800,300 );
     ///readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\back.png",0,height-150,150,height );
     ///left top right bottom
-    settextstyle(3,HORIZ_DIR,4);
-    outtextxy(100, height/4, "P2 SCORE:8");
-    outtextxy(width-400, height*3/4, "P1 SCORE:8");
-    for(int i=0;i<=9;++i)
+    settextstyle(4,HORIZ_DIR,3);
+    outtextxy(100, height/2-30, "P2 SCORE:8");
+    outtextxy(width-400, height/2-30, "P1 SCORE:8");
+    outtextxy(width/3,height-100,"PLAYER 1: YOUR TURN!");
+    outtextxy(width/3,20,"PLAYER 2 WAITING...      ");
+    outtextxy(20, height-40, "Save & Exit");
+    ///outtextxy(width/3-50,height-100,"PLAYER 1: YOUR TURN!");
+    for(int i=0; i<=9; ++i)
     {
         cout<<'\n';
-        for(int j=0;j<=9;++j)
+        for(int j=0; j<=9; ++j)
             cout<<tabla[i][j].player<<" ";
         cout<<'\n';
     }
@@ -1126,7 +1121,8 @@ void playPVP()
             if(elapsed>=interval)
             {
                 interval += 1;
-                sec=tabla[1][1].timer-(elapsed-d);
+                //sec=120-(elapsed-d);
+                sec=tabla[1][1].timer-(elapsed-0);
                 if(sec<100)
                     outtextxy(50,100,"        ");
                 char buffer [50];
@@ -1134,36 +1130,37 @@ void playPVP()
                 outtextxy(50,50,"TIME");
                 outtextxy(50,100,buffer);
 
-            if(tabla[1][1].timer-(elapsed-d)==0)
-            {
-                if(nrPiesePlayer1>nrPiesePlayer2)
+                if(120-(elapsed-d)==0)
                 {
-                    closegraph();
-                    initwindow(500,300,"WINNER",width/3,height/3);
-                    outtextxy(30,50,"PLAYER 1 WON!");
-                    delay(5000);
-                    closegraph();
-                    initMeniu();
+                    if(nrPiesePlayer1>nrPiesePlayer2)
+                    {
+                        closegraph();
+                        initwindow(500,300,"WINNER",width/3,height/3);
+                        outtextxy(30,50,"PLAYER 1 WON!");
+                        delay(5000);
+                        closegraph();
+                        initMeniu();
+                    }
+                    if(nrPiesePlayer1<nrPiesePlayer2)
+                    {
+                        closegraph();
+                        initwindow(500,300,"WINNER",width/3,height/3);
+                        outtextxy(30,50,"PLAYER 2 WON!");
+                        delay(5000);
+                        closegraph();
+                        initMeniu();
+                    }
+                    if(nrPiesePlayer1==nrPiesePlayer2)
+                    {
+                        closegraph();
+                        initwindow(500,300,"WINNER",width/3,height/3);
+                        outtextxy(30,50,"DRAW!");
+                        delay(5000);
+                        closegraph();
+                        initMeniu();
+                    }
                 }
-                if(nrPiesePlayer1<nrPiesePlayer2)
-                {
-                    closegraph();
-                    initwindow(500,300,"WINNER",width/3,height/3);
-                    outtextxy(30,50,"PLAYER 2 WON!");
-                    delay(5000);
-                    closegraph();
-                    initMeniu();
-                }
-                if(nrPiesePlayer1==nrPiesePlayer2)
-                {
-                    closegraph();
-                    initwindow(500,300,"WINNER",width/3,height/3);
-                    outtextxy(30,50,"DRAW!");
-                    delay(5000);
-                    closegraph();
-                    initMeniu();
-                }
-            }}
+            }
             if(ismouseclick(WM_LBUTTONDOWN))
             {
                 int L1,C1;
@@ -1186,18 +1183,18 @@ void playPVP()
 
                             FILE *progres;
                             progres=fopen("fisier.txt","w");
-                            int poz[101]={0},nr=0;
-                            for(int i=0;i<=9;++i)
-                                for(int j=0;j<=9;++j)
-                                    {
-                                        int coord=tabla[i][j].player;
-                                        cout<<coord<<" ";
-                                        //poz[++nr]=tabla[i][j].player;
-                                        fprintf(progres,"%d ",coord);
-                                        //fout<<coord<<" ";
-                                    }
-                            int timer=sec;
-                            fprintf(progres,"%d",timer);
+                            int poz[101]= {0},nr=0;
+                            for(int i=0; i<=9; ++i)
+                                for(int j=0; j<=9; ++j)
+                                {
+                                    int coord=tabla[i][j].player;
+                                    cout<<coord<<" ";
+                                    //poz[++nr]=tabla[i][j].player;
+                                    fprintf(progres,"%d ",coord);
+                                    //fout<<coord<<" ";
+                                }
+                                int timer=sec;
+                                fprintf(progres,"%d",timer);
                             fclose(progres);
                             //fwrite(&poz,sizeof(int),nr,progres);
                             closegraph(CURRENT_WINDOW);
@@ -1208,11 +1205,11 @@ void playPVP()
                         cout<<L<<" "<<C<<"\n";
 
                         if(clickedPlayer==rand)
-                       {
+                        {
                             if((tabla[L+1][C+1].player==neocupat||tabla[L+1][C-1].player==neocupat)||(tabla[L-1][C+1].player==neocupat||tabla[L-1][C-1].player==neocupat))///verifica piesa apasata ca sa nu fie blocata
                             {
                                 tabla[L][C].player=neocupat;
-                                elimina_piesa(L,C,tabla);
+                                eliminaPiesa(L,C,tabla);
                             }
                             //else clickedPlayer=neocupat;
                         }
@@ -1235,29 +1232,29 @@ void playPVP()
                     int width=GetSystemMetrics(SM_CXSCREEN);
                     int height=GetSystemMetrics(SM_CYSCREEN);
                     if(X>width*19/20&&Y<height/20)
-                            exit(0);
+                        exit(0);
                     if(X<150&&X>0&&Y<height&&Y>height-150)
-                        {
+                    {
 
-                            FILE *progres;
-                            progres=fopen("fisier.txt","w");
-                            int poz[101]={0},nr=0;
-                            for(int i=0;i<=9;++i)
-                                for(int j=0;j<=9;++j)
-                                    {
-                                        int coord=tabla[i][j].player;
-                                        cout<<coord<<" ";
-                                        //poz[++nr]=tabla[i][j].player;
-                                        fprintf(progres,"%d ",coord);
-                                        //fout<<coord<<" ";
-                                    }
+                        FILE *progres;
+                        progres=fopen("fisier.txt","w");
+                        int poz[101]= {0},nr=0;
+                        for(int i=0; i<=9; ++i)
+                            for(int j=0; j<=9; ++j)
+                            {
+                                int coord=tabla[i][j].player;
+                                cout<<coord<<" ";
+                                //poz[++nr]=tabla[i][j].player;
+                                fprintf(progres,"%d ",coord);
+                                //fout<<coord<<" ";
+                            }
                             int timer=sec;
-                            fprintf(progres,"%d",timer);
-                            fclose(progres);
-                            //fwrite(&poz,sizeof(int),nr,progres);
-                            closegraph(CURRENT_WINDOW);
-                            initMeniu();
-                        }
+                        fprintf(progres,"%d",timer);
+                        fclose(progres);
+                        //fwrite(&poz,sizeof(int),nr,progres);
+                        closegraph(CURRENT_WINDOW);
+                        initMeniu();
+                    }
                     int vminx=100,vminy=100, L=0,C=0;
                     cautaPiesaApasata(tabla,X,Y,L,C);
                     cout<<L<<" "<<C<<"\n";
@@ -1275,8 +1272,8 @@ void playPVP()
                         if(tabla[L][C].player==neocupat)
                         {
                             setcolor(YELLOW);
-                            outtextxy(width/3-50,height-100,"PLAYER 1: YOUR TURN!");
-                            outtextxy(width/3-50,20,"PLAYER 2 WAITING...      ");
+                            outtextxy(width/3,height-100,"PLAYER 1: YOUR TURN!");
+                            outtextxy(width/3,20,"PLAYER 2 WAITING...      ");
 
                             setcolor(BLACK);
                             setfillstyle(1,BLACK);
@@ -1309,8 +1306,8 @@ void playPVP()
                         if(tabla[L][C].player==neocupat)
                         {
                             setcolor(YELLOW);
-                            outtextxy(width/3-50,20, "PLAYER 2: YOUR TURN!");
-                            outtextxy(width/3-50,height-100,"PLAYER 1 WAITING...      ");
+                            outtextxy(width/3,20, "PLAYER 2: YOUR TURN!");
+                            outtextxy(width/3,height-100,"PLAYER 1 WAITING...      ");
                             setcolor(WHITE);
                             setfillstyle(1,WHITE);
                             fillellipse(tabla[L][C].x,tabla[L][C].y,20,20);
@@ -1807,17 +1804,18 @@ void playAgainstSoldierBOT()
     closegraph(CURRENT_WINDOW);
     initJoc();
     ///readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\hitler.jpg",575,110,200, 500);
-    //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
-    readimagefile("backbut.jpg",0,height-150,150,height);
+    readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
+    readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
     initCoordonate();
     //cleardevice();
 
     //PLAYER 2 = AI
     setcolor(YELLOW);
-    outtextxy(280,580, "P1");
-    outtextxy(255,10,"SOLDIER BOT");
-    outtextxy(width-500,50,"DIFFICULTY LEVEL:");
-    outtextxy(width-500,100,"EASY");
+    settextstyle(4,HORIZ_DIR,3);
+    outtextxy(width/2-150,40,"SOLDIER BOT");
+    outtextxy(width-400,80,"DIFFICULTY LEVEL:");
+    outtextxy(width-400,130,"EASY");
+    outtextxy(20, height-40, "BACK");
     int X,Y,time=2,castigator=0,rand=2, coloanaBot = 2;///rand stabileste cine trebuie sa mute piesa
     int I_ai=2, J_ai = coloanaBot, jCount=1, countMutariInitiale=1, piesaMutata[9]= {0};
     int liniaCurenta = 2,randMutare=1, nrPiesePlayer1 = 8, nrPiesePlayer2 = 8, i_hitler = 3;
@@ -1919,8 +1917,8 @@ void playAgainstSoldierBOT()
                                         break;
 
                                     }
-                                    if(gasit==1)
-                                        break;
+                                if(gasit==1)
+                                    break;
                             }
                             moveCounterSoldier=0;
                         }
@@ -1971,7 +1969,8 @@ void playAgainstSoldierBOT()
                             tabla[i_soldier][j_soldier].player=player2;
                             moveCounterSoldier++;
                         }
-                        else{
+                        else
+                        {
                             moveCounterSoldier=4;
                         }
 
@@ -2050,11 +2049,12 @@ void playAgainstHitlerBOT()
     //cleardevice();
 
     //PLAYER 2 = AI
+    settextstyle(4,HORIZ_DIR,3);
     setcolor(YELLOW);
-    outtextxy(280,580, "P1");
-    outtextxy(255,10,"HITLER BOT");
-    outtextxy(width-500,50,"DIFFICULTY LEVEL:");
-    outtextxy(width-500,100,"HARD");
+    outtextxy(width/2-150,40,"HITLER BOT");
+    outtextxy(width-400,80,"DIFFICULTY LEVEL:");
+    outtextxy(width-400,130,"HARD");
+    outtextxy(20, height-40, "BACK");
     //outtextxy(width-100, 530, "                                                             ");
 
     int X,Y,time=2,castigator=0,rand=2, coloanaBot = 2;///rand stabileste cine trebuie sa mute piesa
@@ -2306,11 +2306,6 @@ void playAgainstHitlerBOT()
 
                                 }
 
-                                cout<<verificaPericol(tabla, i_hitler+1,Col+1)<<"\n";
-                                cout<<verificaPericol(tabla, i_hitler+1, Col-1)<<"\n";
-                                cout<<verificaPericol(tabla, i_hitler-1, Col+1)<<"\n";
-                                cout<<verificaPericol(tabla, i_hitler-1, Col-1)<<"\n";
-
                                 if(tabla[i_hitler+1][Col+1].player == neocupat && tabla[i_hitler][Col].player==player2&& verificaPericol(tabla, i_hitler+1,Col+1)==false)
                                 {
 
@@ -2414,146 +2409,62 @@ void playAgainstHitlerBOT()
                                         tabla[i_hitler-1][Col2-1].player=player2;
 
                                     }
-
-                                }
-                                /*else
-                                {
-                                    cout<<endl;
-                                    cout<<"A INTRAT PE CAZUL FANTOMA"<<"\n";
-                                    int okay=0;
-                                    int i_bonus=i_hitler+1;
-
-                                    for(int j=2; j<=8; j+=2)
+                                    else
                                     {
-                                        if(tabla[i_bonus][j].player==player2)
-                                        {
-                                            if(tabla[i_bonus+1][j+1].player==neocupat && okay==0)
-                                            {
-                                                mutareDreaptaJOS(tabla, i_bonus,j);
-                                                tabla[i_bonus][j].player==neocupat;
-                                                tabla[i_bonus+1][j+1].player==player2;
-                                                okay=1;
-                                                break;
-                                            }
-                                            else if(tabla[i_bonus-1][j+1].player==neocupat && okay==0)
-                                            {
-                                                mutareDreaptaSUS(tabla, i_bonus,j);
-                                                tabla[i_bonus][j].player==neocupat;
-                                                tabla[i_bonus-1][j+1].player==player2;
-                                                okay=1;
-                                                break;
-                                            }
-                                            else if(tabla[i_bonus+1][j-1].player==neocupat && okay==0)
-                                            {
-                                                mutareStangaJOS(tabla, i_bonus,j);
-                                                tabla[i_bonus][j].player==neocupat;
-                                                tabla[i_bonus+1][j+1].player==player2;
-                                                okay=1;
-                                                break;
-                                            }
-                                            else if(tabla[i_bonus-1][j-1].player==neocupat && okay==0)
-                                            {
-                                                mutareStangaSUS(tabla, i_bonus,j);
-                                                tabla[i_bonus][j].player==neocupat;
-                                                tabla[i_bonus-1][j-1].player==player2;
-                                                okay=1;
-                                                break;
+                                        int okay=0;
+                                        int i_bonus=i_hitler+1;
 
+                                        for(int j=2; j<=8; j+=2)
+                                        {
+                                            if(tabla[i_bonus][j].player==player2)
+                                            {
+                                                if(tabla[i_bonus+1][j+1].player==neocupat && okay==0)
+                                                {
+                                                    mutareDreaptaJOS(tabla, i_bonus,j);
+                                                    tabla[i_bonus][j].player==neocupat;
+                                                    tabla[i_bonus+1][j+1].player==player2;
+                                                    okay=1;
+                                                    break;
+                                                }
+                                                else if(tabla[i_bonus-1][j+1].player==neocupat && okay==0)
+                                                {
+                                                    mutareDreaptaSUS(tabla, i_bonus,j);
+                                                    tabla[i_bonus][j].player==neocupat;
+                                                    tabla[i_bonus-1][j+1].player==player2;
+                                                    okay=1;
+                                                    break;
+                                                }
+                                                else if(tabla[i_bonus+1][j-1].player==neocupat && okay==0)
+                                                {
+                                                    mutareStangaJOS(tabla, i_bonus,j);
+                                                    tabla[i_bonus][j].player==neocupat;
+                                                    tabla[i_bonus+1][j+1].player==player2;
+                                                    okay=1;
+                                                    break;
+                                                }
+                                                else if(tabla[i_bonus-1][j-1].player==neocupat && okay==0)
+                                                {
+                                                    mutareStangaSUS(tabla, i_bonus,j);
+                                                    tabla[i_bonus][j].player==neocupat;
+                                                    tabla[i_bonus-1][j-1].player==player2;
+                                                    okay=1;
+                                                    break;
+
+                                                }
                                             }
+                                            if(okay==1)
+                                                break;
                                         }
-                                        if(okay==1)
-                                            break;
+
                                     }
 
-                                }*/
-
-                            }
-
-                        }
-
-
-
-
-                        /*if(tabla[I_ai+1][J_ai+1].player == neocupat)
-                        {
-                            mutareDreaptaJOS(tabla,I_ai,J_ai);
-                            tabla[I_ai][J_ai].player=neocupat;
-                            I_ai++;
-                            J_ai++;
-                            tabla[I_ai][J_ai].player=player2;
-                            jCount++;
-                        }
-                        else if(tabla[I_ai+1][J_ai-1].player == neocupat)
-                        {
-                            mutareStangaJOS(tabla,I_ai, J_ai);
-                            tabla[I_ai][J_ai].player=neocupat;
-                            I_ai++;
-                            J_ai--;
-                            tabla[I_ai][J_ai].player=player2;
-                            jCount++;
-                        }
-                        else if(tabla[I_ai-1][J_ai-1].player == neocupat)
-                        {
-                            mutareStangaSUS(tabla,I_ai, J_ai);
-                            tabla[I_ai][J_ai].player=neocupat;
-                            I_ai--;
-                            J_ai--;
-                            tabla[I_ai][J_ai].player=player2;
-                            jCount++;
-                        }
-                        else if(tabla[I_ai-1][J_ai+1].player == neocupat)
-                        {
-                            mutareDreaptaSUS(tabla,I_ai,J_ai);
-                            tabla[I_ai][J_ai].player=neocupat;
-                            I_ai--;
-                            J_ai++;
-                            tabla[I_ai][J_ai].player=player2;
-                            jCount++;
-                        }
-                        if(liniaCurenta == 2)
-                        {
-                            if(J_ai != 8)
-                            {
-                                if(jCount == 3)
-                                {
-                                    I_ai = 2;
-                                    coloanaBot += 2;
-                                    J_ai = coloanaBot;
-                                    jCount = 1;
-
                                 }
-                            }
-                            if(J_ai == 8)
-                            {
-                                liniaCurenta = 1;
-                                coloanaBot = 1;
-                                J_ai = 1;
-                                I_ai = 1;
-                            }
-                        }
-                        else
-                        {
 
-                            if(jCount == 3 && J_ai != 7)
-                            {
-                                I_ai = 1;
-                                coloanaBot+=2;
-                                J_ai = coloanaBot;
-                                jCount = 1;
 
                             }
-                            cout<<endl;
-                            cout<<jCount<<'\n';
-                        }
-                        */
 
-                        /*for(int i=1;i<=8;++i)
-                        {
-                            for(int j=1;j<=8;++j)
-                                cout<<tabla[i][j].player<<" ";
-                            cout<<'\n';
                         }
-                        */
+
                     }
                     for(int i=1; i<=8; ++i)
                     {
@@ -2601,8 +2512,8 @@ void initMeniuBOT()
 
     //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\difficulty.jpg",-40,-40,width+40,height+40);
     //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\backbut.jpg",0,height-150,150,height);
-    readimagefile("ai.jpg",-40,-40,width+40,height+40);
-    readimagefile("backbut.jpg",0,height-150,150,height);
+    readimagefile("img\\difficulty.jpg",-87,-80,width+83,height+80);
+    readimagefile("img\\backbut.jpg",0,height-150,150,height);
     //readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\ai.jpg",-40,-40,width+40,height+40);
     //readimagefile("‪C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.png",0,height-150,150,height);
 
@@ -2660,8 +2571,8 @@ void initpvpmeniu()
     //readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\load game.jpg",-40,-40,width+40,height+40);
     //readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\backbut.jpg",0,height-150,150,height);
 
-    readimagefile("load game.jpg",-40,-40,width+40,height+40);
-    readimagefile("backbut.jpg",0,height-150,150,height);
+    readimagefile("img\\loadgame.jpg",-87,-80,width+83,height+80);
+    readimagefile("img\\backbut.jpg",0,height-150,150,height);
     exitbutton();
     int x,y;
     int temp=1;
@@ -2701,8 +2612,8 @@ void initpvpmeniu()
                 }
                 tabla[1][1].timer=poz[nr];
                 int k=1;
-                for(int i=0;i<=9;++i)
-                    for(int j=0;j<=9;++j)
+                for(int i=0; i<=9; ++i)
+                    for(int j=0; j<=9; ++j)
                         tabla[i][j].player=poz[k],k++;
                 fclose(progres);
                 playPVP();
@@ -2718,7 +2629,7 @@ void initMeniu()
     cleardevice();
     //readimagefile("C:\\Users\\tudor\\OneDrive\\Desktop\\info\\test\\razboi2.jpg",-40,-40,width+40,height+40 );
     //readimagefile("C:\\Users\\Munteanu\\Desktop\\copie proiect\\pvp.jpg",-40,-40,width+40,height+40);
-    readimagefile("pvp.jpg",-40,-40,width+40,height+40);
+    readimagefile("img\\pvp_ai.jpg",-87,-80,width+83,height+80);
     exitbutton();
     int x,y;
     int temp=1;

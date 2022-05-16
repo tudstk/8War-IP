@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1638464077 source:c:\users\tudor\onedrive\desktop\info\r8.v1\main.cpp
+	<iostream>
+	<graphics.h>
+	<winbgim.h>
+	<cmath>
+
+1642146750 source:c:\users\tudor\onedrive\desktop\stuff\info\r8.v1\main.cpp
+	<iostream>
+	<graphics.h>
+	<winbgim.h>
+	<cmath>
+	<cstdlib>
+	<stdio.h>
+	<windows.h>
+	<time.h>
+
+1642150532 source:c:\users\tudor\onedrive\desktop\razboi-in-8\razboi-in-8\source\main.cpp
+	<iostream>
+	<graphics.h>
+	<winbgim.h>
+	<cmath>
+	<cstdlib>
+	<stdio.h>
+	<windows.h>
+	<time.h>
+
