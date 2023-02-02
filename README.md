@@ -1,8 +1,8 @@
-# Razboi in 8
+# 8War
 
 ## Overview
 
-Razboi in 8 is a ```2D game``` in which two players take part (```PvP or Player vs. Bot```) and your purpose is to eliminate as many soldiers as possible from the enemy army (represented by pieces).
+8War is a ```2D game``` in which two players take part (```PvP or Player vs. Bot```) and your purpose is to eliminate as many soldiers as possible from the enemy army (represented by pieces).
 
 This game was made in ```C++``` using ```graphics.h``` library.
 
